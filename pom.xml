@@ -17,7 +17,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.sourcesense.stone</groupId>
     <artifactId>stone-builder</artifactId>
     <packaging>pom</packaging>
@@ -26,9 +25,18 @@
     <name>Stone :: Parent</name>
     <description>Apache Sling integration with JBoss ModeShape</description>
 
-    <prerequisites>
-        <maven>2.2.1</maven>
-    </prerequisites>
+    <organization>
+        <name>Sourcesense</name>
+        <url>http://www.sourcesense.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <scm>
         <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/</connection>
@@ -36,10 +44,25 @@
         <url>https://dev.sourcesense.com/repos/dev/stone/trunk/</url>
     </scm>
 
+    <issueManagement>
+        <system>Pivotal Tracker</system>
+        <url>https://www.pivotaltracker.com/projects/199371</url>
+    </issueManagement>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
     <!-- List modules to be included in the build here ! -->
     <modules>
         <module>bundles/jcr/modeshape-server</module>
     </modules>
+
+    <build>
+        <plugins>
+            
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
