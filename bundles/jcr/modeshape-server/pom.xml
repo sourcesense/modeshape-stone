@@ -28,7 +28,7 @@
     <packaging>bundle</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>Stone :: Apache Sling - JBoss ModeShape Embedded Repository</name>
+    <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
     <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
 
     <scm>
@@ -37,7 +37,22 @@
         <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
     </scm>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <!--
              | generate the SCR descriptors
@@ -64,10 +79,9 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                            <encoding>UTF-8</encoding>
                             <resources>
                                 <resource>
-                                    <directory>target/scr-plugin-generated</directory>
+                                    <directory>${project.build.directory}/scr-plugin-generated</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
