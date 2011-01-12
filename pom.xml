@@ -78,6 +78,10 @@
                     <include>NOTICE</include>
                 </includes>
             </resource>
+
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
         </resources>
 
         <pluginManagement>
@@ -109,7 +113,7 @@
                     </executions>
                     <configuration>
                         <excludeDependencies>true</excludeDependencies>
-                        <manifestLocation>${project.build.directory}/classes</manifestLocation>
+                        <manifestLocation>${project.build.directory}/osgi</manifestLocation>
                     </configuration>
                 </plugin>
             </plugins>
@@ -159,7 +163,7 @@
                 <version>2.3.1</version>
                 <configuration>
                     <archive>
-                        <manifestFile>${project.build.directory}/classes/MANIFEST.MF</manifestFile>
+                        <manifestFile>${project.build.directory}/osgi/MANIFEST.MF</manifestFile>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
