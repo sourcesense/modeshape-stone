@@ -100,9 +100,9 @@
                         <Bundle-Activator>org.apache.sling.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
                         <!--
-                            org.apache.sling.jcr.modeshape.server;version=1.0,
-                            org.apache.sling.jcr.modeshape.server.security.*;version=1.0,
-                            org.apache.modeshape.core.security.principal;version=1.0
+                            org.apache.sling.jcr.modeshape.server;version=${project.version},
+                            org.apache.sling.jcr.modeshape.server.security.*;version=${project.version},
+                            org.apache.modeshape.core.security.principal;version=${project.version}
                         -->
                         </Export-Package>
                         <Private-Package>org.apache.sling.jcr.modeshape.server.impl.*,
