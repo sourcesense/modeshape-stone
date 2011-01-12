@@ -15,7 +15,7 @@
 | limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>com.sourcesense.stone</groupId>
@@ -27,47 +27,47 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
     <packaging>bundle</packaging>
-	<name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
-	<description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
+    <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
+    <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
 
-	<scm>
-		<connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
-		<developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
-		<url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
-	</scm>
+    <scm>
+        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
+        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
+        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
+    </scm>
 
     <build>
-		<plugins>
-			<!-- | generate the SCR descriptors -->
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-scr-plugin</artifactId>
-			</plugin>
+        <plugins>
+            <!-- | generate the SCR descriptors -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
 
-			<!-- | copy the SCR descriptors into the correct location | because the
-				maven-scr-plugin cannot be configured | to write the descriptors elsewhere -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.build.directory}/scr-plugin-generated</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <!-- | copy the SCR descriptors into the correct location | because the
+                maven-scr-plugin cannot be configured | to write the descriptors elsewhere -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/scr-plugin-generated</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -107,101 +107,103 @@
                             javax.jcr.*, <!-- org.apache.jackrabbit.api.*,
                             org.apache.jackrabbit.spi.*,-->
 
-							<!-- Logging -->
-							org.slf4j,
-							<!-- XML stuff -->
-							<!-- javax.xml.*, org.xml.sax.*, org.w3c.dom.*, -->
-							<!-- JAR Service Registry for Query -->
-							<!-- javax.imageio.spi, -->
+                            <!-- Logging -->
+                            org.slf4j,
+                            <!-- XML stuff -->
+                            <!-- javax.xml.*, org.xml.sax.*, org.w3c.dom.*, -->
+                            <!-- JAR Service Registry for Query -->
+                            <!-- javax.imageio.spi, -->
 
-							<!-- Exclude package, see JCR-2412 -->
-							<!-- !org.apache.jackrabbit.test, -->
+                            <!-- Exclude package, see JCR-2412 -->
+                            <!-- !org.apache.jackrabbit.test, -->
 
-							<!-- playground imports -->
-							<!-- org.apache.tika.*, -->
+                            <!-- playground imports -->
+                            <!-- org.apache.tika.*, -->
 
-							<!-- Jackrabbit internals -->
-							<!-- org.apache.jackrabbit.rmi.*, org.apache.jackrabbit.util, org.apache.jackrabbit.value,
-								org.apache.jackrabbit.commons.*, org.apache.jackrabbit.spi.commons.*, -->
+                            <!-- Jackrabbit internals -->
+                            <!-- org.apache.jackrabbit.rmi.*, org.apache.jackrabbit.util, org.apache.jackrabbit.value,
+                                org.apache.jackrabbit.commons.*, org.apache.jackrabbit.spi.commons.*, -->
 
-							<!-- optional JDBC driver import -->
-							<!-- com.microsoft.sqlserver.jdbc; oracle.jdbc; org.apache.derby.jdbc;
-								org.gjt.mm.mysql; org.h2; org.postgresql; resolution:=optional, -->
+                            <!-- optional JDBC driver import -->
+                            <!-- com.microsoft.sqlserver.jdbc; oracle.jdbc; org.apache.derby.jdbc;
+                                org.gjt.mm.mysql; org.h2; org.postgresql; resolution:=optional, -->
 
-							<!-- Required by concurrent lib SynchronizationTimer class -->
-							<!--
-							javax.swing.*;resolution:=optional
-							-->
-						</Import-Package>
-						<DynamicImport-Package>*</DynamicImport-Package>
+                            <!-- Required by concurrent lib SynchronizationTimer class -->
+                            <!--
+                            javax.swing.*;resolution:=optional
+                            -->
+                        </Import-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
 
-						<!-- Embedd some libraries -->
-						<Embed-Transitive>true</Embed-Transitive>
-						<Embed-Dependency>
-							<!-- jackrabbit-core, lucene-core, concurrent, commons-dbcp, commons-pool -->
-						</Embed-Dependency>
-						<_removeheaders>
-							Embed-Dependency,
-							Embed-Transitive,
-							Private-Package,
-							Include-Resource
+                        <!-- Embedd some libraries -->
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Dependency>
+                            <!-- jackrabbit-core, lucene-core, concurrent, commons-dbcp, commons-pool -->
+                        </Embed-Dependency>
+                        <_removeheaders>
+                            Embed-Dependency,
+                            Embed-Transitive,
+                            Private-Package,
+                            Include-Resource
                         </_removeheaders>
-					</instructions>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<excludePackageNames>
-						<!-- org.apache.sling.jcr.jackrabbit -->
-					</excludePackageNames>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <excludePackageNames>
+                        <!-- org.apache.sling.jcr.jackrabbit -->
+                    </excludePackageNames>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
-	<dependencies>
-		<dependency>
-			<groupId>javax.jcr</groupId>
-			<artifactId>jcr</artifactId>
-			<version>2.0</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>javax.jcr</groupId>
+            <artifactId>jcr</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.sling</groupId>
-			<artifactId>org.apache.sling.jcr.api</artifactId>
-			<version>2.0.6</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.api</artifactId>
+            <version>2.0.6</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.sling</groupId>
-			<artifactId>org.apache.sling.jcr.base</artifactId>
-			<version>2.1.0</version>
-			<scope>compile</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.base</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.modeshape</groupId>
-			<artifactId>modeshape-jcr</artifactId>
-			<version>2.3.0.Final</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr</artifactId>
+            <version>2.3.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>
