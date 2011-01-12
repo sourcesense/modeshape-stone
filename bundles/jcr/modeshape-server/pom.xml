@@ -26,7 +26,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
     <packaging>bundle</packaging>
-
     <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
     <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
 
