@@ -49,6 +49,16 @@
         <url>https://www.pivotaltracker.com/projects/199371</url>
     </issueManagement>
 
+    <mailingLists>
+        <mailingList>
+            <name>stone-dev</name>
+            <archive>http://groups.google.com/a/sourcesense.com/group/stone/topics</archive>
+            <subscribe>http://groups.google.com/a/sourcesense.com/group/stone/subscribe</subscribe>
+            <unsubscribe>http://groups.google.com/a/sourcesense.com/group/stone/subscribe</unsubscribe>
+            <post>stone@sourcesense.com</post>
+        </mailingList>
+    </mailingLists>
+
     <prerequisites>
         <maven>2.2.1</maven>
     </prerequisites>
