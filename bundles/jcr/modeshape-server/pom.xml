@@ -138,6 +138,7 @@
                         <!-- Embedd some libraries -->
                         <Embed-Transitive>true</Embed-Transitive>
                         <Embed-Dependency>
+                            modeshape-jcr
                             <!-- jackrabbit-core, lucene-core, concurrent, commons-dbcp, commons-pool -->
                         </Embed-Dependency>
                         <_removeheaders>
