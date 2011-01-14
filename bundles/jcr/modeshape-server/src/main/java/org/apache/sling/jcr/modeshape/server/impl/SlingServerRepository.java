@@ -52,7 +52,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     private RepositoryFactory repositoryFactory;
 
     @Override
-    protected Repository acquireRepository() {
+     public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
         return repository != NO_REPOSITORY ? repository : findSuitableRepository();
     }
@@ -81,7 +81,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     }
 
     @Override
-    protected void disposeRepository( Repository repository ) {
+    public void disposeRepository( Repository repository ) {
         super.disposeRepository(repository);
 
         if (repositoryFactory instanceof org.modeshape.jcr.api.RepositoryFactory) {

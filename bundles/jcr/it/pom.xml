@@ -25,11 +25,13 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
-    <packaging>bundle</packaging>
+    <groupId>com.sourcesense.stone.jcr</groupId>
+    <artifactId>it</artifactId>
+    <packaging>jar</packaging>
+    <!--
     <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
     <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
-
+    -->
     <scm>
         <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
         <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
@@ -38,90 +40,6 @@
 
     <build>
         <plugins>
-            <!-- | generate the SCR descriptors -->
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-scr-plugin</artifactId>
-            </plugin>
-
-            <!-- | copy the SCR descriptors into the correct location | because the
-                maven-scr-plugin cannot be configured | to write the descriptors elsewhere -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/scr-plugin-generated</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
-                        <!--
-                        <Bundle-Activator>org.apache.sling.jcr.modeshape.server.impl.Activator</Bundle-Activator>
-                        -->
-                        <Export-Package>
-                            org.apache.sling.jcr.modeshape.server.impl.*,
-                        </Export-Package>
-                        <Private-Package>
-                            org.apache.sling.jcr.modeshape.server.impl.*,
-
-                            <!-- Uncomment this if you want modeshape expanded into the bundle
-                                org.modeshape.*
-                            -->
-                        </Private-Package>
-                        <Import-Package>
-                            java.util.*,
-
-                            <!-- Sling and OSGi -->
-                            org.apache.sling.*,
-                            org.osgi.*,
-
-                            <!-- JCR and Jackrabbit API -->
-                            javax.jcr.*,
-
-                            <!-- Logging -->
-                            org.slf4j,
-                        </Import-Package>
-                        <DynamicImport-Package>*</DynamicImport-Package>
-
-                        <!-- Embedd some libraries -->
-                        <Embed-Transitive>true</Embed-Transitive>
-
-                        <Embed-Dependency>
-                            <!-- Uncomment this if you want the jars embedded into the bundle -->
-                            modeshape-jcr
-                        </Embed-Dependency>
-
-                        <_removeheaders>
-                            Embed-Dependency,
-                            Embed-Transitive,
-                            Private-Package,
-                            Include-Resource
-                        </_removeheaders>
-                    </instructions>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.ops4j.pax.exam</groupId>
                 <artifactId>maven-paxexam-plugin</artifactId>
@@ -134,7 +52,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
@@ -246,5 +163,44 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--
+         | Pax Exam API:
+        -->
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam</artifactId>
+            <version>${paxexam.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+         | During runtime Pax Exam will discover the OSGi container to use by searching metadata available into classpath.
+         | Pax Exam comes with a default container that uses [Pax Runner] for implementing the container requirements:
+        -->
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam-container-default</artifactId>
+            <version>${paxexam.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+         | If your test code is based on JUnit you will have to have the Junit support artifact:
+        -->
+        <dependency>
+          <groupId>org.ops4j.pax.exam</groupId>
+          <artifactId>pax-exam-junit</artifactId>
+          <version>${paxexam.version}</version>
+          <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
+
 </project>

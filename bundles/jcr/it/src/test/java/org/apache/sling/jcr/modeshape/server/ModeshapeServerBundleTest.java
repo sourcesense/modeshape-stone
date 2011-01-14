@@ -1,10 +1,9 @@
 package org.apache.sling.jcr.modeshape.server;
 
 import static org.junit.Assert.assertNotNull;
-import static org.ops4j.pax.exam.CoreOptions.felix;
-import static org.ops4j.pax.exam.CoreOptions.mavenConfiguration;
-import static org.ops4j.pax.exam.CoreOptions.options;
+import static org.ops4j.pax.exam.CoreOptions.*;
 
+import org.apache.sling.jcr.modeshape.server.impl.SlingServerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Option;
@@ -24,6 +23,7 @@ public class ModeshapeServerBundleTest {
     public void testMethod( BundleContext bundleContext ) {
         assertNotNull(bundleContext);
         System.out.println(bundleContext);
+        new SlingServerRepository();
     }
 
 }
