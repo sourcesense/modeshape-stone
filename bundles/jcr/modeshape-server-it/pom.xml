@@ -26,16 +26,13 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sourcesense.stone.jcr</groupId>
-    <artifactId>it</artifactId>
+    <artifactId>modeshape-server-it</artifactId>
     <packaging>jar</packaging>
-    <!--
-    <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
-    <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
-    -->
+
     <scm>
-        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
-        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
-        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
+        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</connection>
+        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</developerConnection>
+        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</url>
     </scm>
 
     <build>
@@ -73,6 +70,16 @@
     </properties>
 
     <dependencies>
+
+        <!-- The bundle we want to test -->
+        <dependency>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Bundles we depend on -->
         <dependency>
             <groupId>javax.jcr</groupId>
             <artifactId>jcr</artifactId>
@@ -106,21 +113,8 @@
 
         <dependency>
             <groupId>org.modeshape</groupId>
-            <artifactId>modeshape-jcr-api</artifactId>
-            <version>${modeshape.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr</artifactId>
             <version>${modeshape.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.4</version>
-            <scope>test</scope>
         </dependency>
 
         <!--
@@ -132,14 +126,12 @@
             <version>${jackrabbit.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-commons</artifactId>
             <version>${jackrabbit.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-rmi</artifactId>
@@ -156,12 +148,19 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- The ever-present test library -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
         </dependency>
 
         <!--
@@ -173,34 +172,17 @@
             <version>${paxexam.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!--
-         | During runtime Pax Exam will discover the OSGi container to use by searching metadata available into classpath.
-         | Pax Exam comes with a default container that uses [Pax Runner] for implementing the container requirements:
-        -->
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-default</artifactId>
             <version>${paxexam.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!--
-         | If your test code is based on JUnit you will have to have the Junit support artifact:
-        -->
         <dependency>
           <groupId>org.ops4j.pax.exam</groupId>
           <artifactId>pax-exam-junit</artifactId>
           <version>${paxexam.version}</version>
           <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.sourcesense.stone</groupId>
-            <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
-
 </project>
