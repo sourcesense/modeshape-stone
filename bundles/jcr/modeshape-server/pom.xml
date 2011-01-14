@@ -181,12 +181,13 @@
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr-api</artifactId>
             <version>${modeshape.version}</version>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr</artifactId>
