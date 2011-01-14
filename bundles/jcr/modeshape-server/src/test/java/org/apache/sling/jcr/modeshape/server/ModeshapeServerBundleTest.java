@@ -20,20 +20,20 @@ public class ModeshapeServerBundleTest {
     public static Option[] configuration() {
         return options(frameworks(felix()),
                        provision(mavenBundle().groupId("javax.jcr").artifactId("jcr").version("2.0"),
-                                 mavenBundle().groupId("org.osgi").artifactId("osgi.osgi.core").version("4.1.0"),
-                                 mavenBundle().groupId("org.osgi").artifactId("osgi.osgi.compendium").version("4.1.0"),
+                                 mavenBundle().groupId("org.osgi").artifactId("org.osgi.core").version("4.1.0"),
+                                 mavenBundle().groupId("org.osgi").artifactId("org.osgi.compendium").version("4.1.0"),
                                  mavenBundle().groupId("org.apache.jackrabbit").artifactId("jackrabbit-api").version("2.1.1"),
                                  mavenBundle().groupId("org.apache.jackrabbit").artifactId("jackrabbit-jcr-commons").version("2.1.1"),
                                  mavenBundle().groupId("org.apache.jackrabbit").artifactId("jackrabbit-jcr-rmi").version("2.1.1"),
                                  mavenBundle().groupId("org.slf4j").artifactId("slf4j-api").version("1.5.2"),
                                  mavenBundle().groupId("org.slf4j").artifactId("slf4j-simple").version("1.5.2"),
                                  mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.jcr.api").version("2.1.0"),
-                                 mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.jcr.base").version("2.1.0"),
-                                 mavenBundle().groupId("com.sourcesense.stone").artifactId("com.sourcesense.stone.jcr.modeshape.server")));
+                                 mavenBundle().groupId("org.apache.sling").artifactId("org.apache.sling.jcr.base").version("2.1.0")));
     }
 
     @Test
     public void testMethod( BundleContext bundleContext ) {
         assertNotNull(bundleContext);
+        System.out.println(bundleContext);
     }
 }
