@@ -47,14 +47,9 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
      */
     public static final String REPOSITORY_CONFIG_URL = "config";
 
-    /**
-     * @scr.property value=""
-     */
-    public static final String REPOSITORY_REGISTRATION_NAME = "name";
-
     private static final Repository NO_REPOSITORY = null;
 
-    // ---------- Repository Management ----------------------------------------
+    private RepositoryFactory repositoryFactory;
 
     @Override
     protected Repository acquireRepository() {
@@ -62,28 +57,35 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         return repository != NO_REPOSITORY ? repository : findSuitableRepository();
     }
 
-    private Repository findSuitableRepository( ) {
-        
-        @SuppressWarnings("unchecked")
+    private Repository findSuitableRepository() {
+        @SuppressWarnings( "unchecked" )
         Dictionary<String, Object> environment = this.getComponentContext().getProperties();
-        String configURL = (String) environment.get(REPOSITORY_CONFIG_URL);
-        
-        Map<String,String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL);
-        
+        String configURL = (String)environment.get(REPOSITORY_CONFIG_URL);
+
+        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL);
         Repository repository = null;
+
         for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
             try {
                 repository = factory.getRepository(parameters);
-                if (repository != null) break;
+                if (repository != null) {
+                    repositoryFactory = factory;
+                    return repository;
+                }
             } catch (RepositoryException e) {
                 e.printStackTrace();
             }
         }
-        return NO_REPOSITORY == repository ? NO_REPOSITORY : repository;
+
+        return NO_REPOSITORY;
     }
 
     @Override
     protected void disposeRepository( Repository repository ) {
         super.disposeRepository(repository);
+
+        if (repositoryFactory instanceof org.modeshape.jcr.api.RepositoryFactory) {
+            ((org.modeshape.jcr.api.RepositoryFactory)repositoryFactory).shutdown();
+        }
     }
 }

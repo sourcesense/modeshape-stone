@@ -80,11 +80,7 @@
                         <Bundle-Activator>org.apache.sling.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         -->
                         <Export-Package>
-                        <!--
-                            org.apache.sling.jcr.modeshape.server;version=${project.version},
-                            org.apache.sling.jcr.modeshape.server.security.*;version=${project.version},
-                            org.apache.modeshape.core.security.principal;version=${project.version}
-                        -->
+                            com.apache.sling.jcr.modeshape.server
                         </Export-Package>
                         <Private-Package>org.apache.sling.jcr.modeshape.server.impl.*,
                             <!-- Uncomment this if you want modeshape expanded into the bundle
@@ -123,6 +119,20 @@
                     </instructions>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>maven-paxexam-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-config</id>
+                        <goals>
+                            <goal>generate-depends-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -131,11 +141,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <excludePackageNames>
-                        <!-- org.apache.sling.jcr.jackrabbit -->
-                    </excludePackageNames>
-                </configuration>
             </plugin>
         </plugins>
     </reporting>
@@ -177,6 +182,43 @@
             <artifactId>modeshape-jcr</artifactId>
             <version>2.3.0.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+        Pax Exam API:
+        -->
+        <dependency>
+          <groupId>org.ops4j.pax.exam</groupId>
+          <artifactId>pax-exam</artifactId>
+          <version>1.2.0</version>
+          <scope>test</scope>
+        </dependency>
+        <!--
+        During runtime Pax Exam will discover the OSGi container to use by searching metadata available into classpath.
+        Pax Exam comes with a default container that uses [Pax Runner] for implementing the container requirements:
+        -->
+        <dependency>
+          <groupId>org.ops4j.pax.exam</groupId>
+          <artifactId>pax-exam-container-default</artifactId>
+          <version>1.2.0</version>
+          <scope>test</scope>
+        </dependency>
+        <!--
+        If your test code is based on JUnit you will have to have the Junit support artifact:
+        -->
+        <dependency>
+          <groupId>org.ops4j.pax.exam</groupId>
+          <artifactId>pax-exam-junit</artifactId>
+          <version>1.2.0</version>
+          <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
