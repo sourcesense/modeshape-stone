@@ -145,6 +145,10 @@
         </plugins>
     </reporting>
 
+    <properties>
+        <modeshape.version>2.3.0.Final</modeshape.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>javax.jcr</groupId>
@@ -179,8 +183,14 @@
 
         <dependency>
             <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr-api</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr</artifactId>
-            <version>2.3.0.Final</version>
+            <version>${modeshape.version}</version>
         </dependency>
 
         <dependency>
