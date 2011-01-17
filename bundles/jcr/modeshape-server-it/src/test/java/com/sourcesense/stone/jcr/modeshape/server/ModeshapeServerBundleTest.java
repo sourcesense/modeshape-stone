@@ -1,4 +1,4 @@
-package org.apache.sling.jcr.modeshape.server;
+package com.sourcesense.stone.jcr.modeshape.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
