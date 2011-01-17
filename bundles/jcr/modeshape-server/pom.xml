@@ -80,10 +80,10 @@
                         <Bundle-Activator>org.apache.sling.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         -->
                         <Export-Package>
-                            org.apache.sling.jcr.modeshape.server.impl.*,
+                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
                         </Export-Package>
                         <Private-Package>
-                            org.apache.sling.jcr.modeshape.server.impl.*,
+                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
 
                             <!-- Uncomment this if you want modeshape expanded into the bundle
                                 org.modeshape.*
