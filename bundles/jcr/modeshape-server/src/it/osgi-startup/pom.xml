@@ -165,16 +165,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!--
-         | just for test purposes, but let's think about
-         | using Guava instead for different purposes
-        -->
         <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0-rc3</version>
-            <scope>provided</scope>
-            <optional>true</optional>
+            <scope>test</scope>
         </dependency>
 
         <!--
