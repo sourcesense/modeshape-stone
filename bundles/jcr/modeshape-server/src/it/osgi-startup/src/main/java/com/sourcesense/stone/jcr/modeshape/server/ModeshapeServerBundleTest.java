@@ -21,65 +21,57 @@ import org.osgi.framework.BundleContext;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-@RunWith( JUnit4TestRunner.class )
+@RunWith(JUnit4TestRunner.class)
 public class ModeshapeServerBundleTest {
 
     @Configuration
     public static Option[] configuration() {
-        return options(felix(),
-                       mavenConfiguration(),
-                       wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3")));
+        return options(felix(), mavenConfiguration());
     }
 
     @Test
-    public void shouldHaveNotNullBundleContext( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveNotNullBundleContext(BundleContext bundleContext) throws Exception {
         assertNotNull(bundleContext);
-
     }
 
     @Test
-    public void shouldHaveModeshapeServerBundleLoaded( BundleContext bundleContext ) {
-
+    public void shouldHaveModeshapeServerBundleLoaded(BundleContext bundleContext) {
         Bundle[] bundles = bundleContext.getBundles();
         assertTrue(bundles.length != 0);
 
         assertTrue(symbolicNamesListFor(bundles).contains("com.sourcesense.stone.jcr.modeshape.server"));
-
     }
 
     @Test
-    public void shouldHaveReferencesToModeshapeLibraries( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveReferencesToModeshapeLibraries(BundleContext bundleContext) throws Exception {
         Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
 
-        @SuppressWarnings( "unchecked" )
+        @SuppressWarnings("unchecked")
         Dictionary<String, String> manifestContent = modeshapeServerBundle.getHeaders();
 
         String bundleClassPath = manifestContent.get("Bundle-ClassPath");
-        
+
         assertTrue(bundleClassPath.contains("modeshape-jcr-2.3.0.Final.jar"));
     }
 
     @Test
-    public void shouldHaveModeshapeServerStarted( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveModeshapeServerStarted(BundleContext bundleContext) throws Exception {
         Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
 
         assertEquals(Bundle.ACTIVE, modeshapeServerBundle.getState());
     }
 
-    private List<String> symbolicNamesListFor( Bundle[] bundles ) {
-
+    private List<String> symbolicNamesListFor(Bundle[] bundles) {
         return Lists.transform(Arrays.asList(bundles), new Function<Bundle, String>() {
 
             @Override
-            public String apply( Bundle bundle ) {
+            public String apply(Bundle bundle) {
                 return bundle.getSymbolicName();
             }
         });
     }
 
-    private Bundle getBundle( String bundleSymbolicName,
-                              Bundle[] bundles ) {
-
+    private Bundle getBundle(String bundleSymbolicName, Bundle[] bundles) {
         for (Bundle bundle : bundles) {
             if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
                 return bundle;
@@ -88,4 +80,5 @@ public class ModeshapeServerBundleTest {
 
         return null;
     }
+
 }

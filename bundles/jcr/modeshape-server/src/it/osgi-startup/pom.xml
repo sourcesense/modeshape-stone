@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-| Copyright 2011 Sourcesense
-|
-| Licensed under the Apache License, Version 2.0 (the "License");
-| you may not use this file except in compliance with the License.
-| You may obtain a copy of the License at
-|
-| http://www.apache.org/licenses/LICENSE-2.0
-|
-| Unless required by applicable law or agreed to in writing, software
-| distributed under the License is distributed on an "AS IS" BASIS,
-| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-| See the License for the specific language governing permissions and
-| limitations under the License.
+ | Copyright 2011 Sourcesense
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ | http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -21,19 +21,13 @@
         <groupId>com.sourcesense.stone</groupId>
         <artifactId>stone-builder</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../../pom.xml</relativePath>
+        <relativePath>../../../../../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sourcesense.stone.jcr</groupId>
     <artifactId>modeshape-server-it</artifactId>
     <packaging>jar</packaging>
-
-    <scm>
-        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</connection>
-        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</developerConnection>
-        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server-it</url>
-    </scm>
 
     <build>
         <plugins>
@@ -70,8 +64,9 @@
     </properties>
 
     <dependencies>
-
-        <!-- The bundle we want to test -->
+        <!--
+         | The bundle we want to test
+        -->
         <dependency>
             <groupId>com.sourcesense.stone</groupId>
             <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
@@ -79,7 +74,9 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Bundles we depend on -->
+        <!--
+         | Bundles we depend on
+        -->
         <dependency>
             <groupId>javax.jcr</groupId>
             <artifactId>jcr</artifactId>
@@ -126,12 +123,14 @@
             <version>${jackrabbit.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-commons</artifactId>
             <version>${jackrabbit.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-rmi</artifactId>
@@ -148,6 +147,7 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -155,12 +155,23 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- The ever-present test library -->
+        <!--
+         | The ever-present test library
+        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.4</version>
-            <scope>test</scope>
+        </dependency>
+
+        <!--
+         | just for test purposes, but let's think about
+         | using Guava instead for different purposes
+        -->
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0-rc3</version>
         </dependency>
 
         <!--
@@ -170,19 +181,19 @@
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam</artifactId>
             <version>${paxexam.version}</version>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-default</artifactId>
             <version>${paxexam.version}</version>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
-          <groupId>org.ops4j.pax.exam</groupId>
-          <artifactId>pax-exam-junit</artifactId>
-          <version>${paxexam.version}</version>
-          <scope>test</scope>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam-junit</artifactId>
+            <version>${paxexam.version}</version>
         </dependency>
     </dependencies>
+
 </project>
