@@ -28,7 +28,7 @@ public class ModeshapeServerBundleTest {
     public static Option[] configuration() {
         return options(felix(),
                 mavenConfiguration(),
-                wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3"));
+                wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3")));
     }
 
     @Test
