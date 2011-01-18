@@ -279,60 +279,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <!--
-              Allow the integration tests to be excluded, as they might be slow
-            -->
-            <id>integrationTests</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <!--
-                <module>launchpad/test-services</module>
-                <module>launchpad/test-services-war</module>
-                <module>launchpad/integration-tests</module>
-                <module>launchpad/testing</module>
-                -->
-            </modules>
-        </profile>
-
-        <profile>
-            <!--
-              Run the integration tests against a war distribution
-            -->
-            <id>warIntegrationTests</id>
-            <modules>
-                <!--
-                <module>launchpad/test-services</module>
-                <module>launchpad/test-services-war</module>
-                <module>launchpad/integration-tests</module>
-                <module>launchpad/testing</module>
-                <module>launchpad/testing-war</module>
-                -->
-            </modules>
-        </profile>
-
-        <!-- Profile for including samples -->
-        <!--
-        <profile>
-            <id>withSamples</id>
-            <modules>
-                <module>samples</module>
-            </modules>
-        </profile>
-        -->
-
-        <!-- Profile for including contrib -->
-        <!--
-        <profile>
-            <id>withContrib</id>
-            <modules>
-                <module>contrib</module>
-            </modules>
-        </profile>
-        -->
     </profiles>
 
     <properties>
