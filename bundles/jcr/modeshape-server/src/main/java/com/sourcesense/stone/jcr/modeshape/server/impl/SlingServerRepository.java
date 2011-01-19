@@ -1,19 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import java.util.Collections;
@@ -25,12 +9,15 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.ComponentContext;
 
 /**
  * The <code>SlingServerRepository</code> TODO
- * 
+ * add  policy="require"
  * @scr.component label="%repository.name" description="%repository.description" name=
- *                "org.apache.sling.jcr.modeshape.server.SlingServerRepository" configurationFactory="true" policy="require"
+ *                "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository" configurationFactory="true"
  * @scr.property name="service.vendor" value="JBoss"
  * @scr.property name="service.description" value="Factory for embedded Modeshape Repository Instances"
  */
@@ -51,6 +38,27 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private RepositoryFactory repositoryFactory;
 
+    @Override
+    protected void activate( ComponentContext componentContext ) throws Exception {
+        
+        System.out.println("*******************************************");
+        System.out.println("Sono nell'activate");
+        System.out.println("*******************************************");
+        
+        ServiceReference configurationAdminServiceReference = componentContext.getBundleContext().getServiceReference(ConfigurationAdmin.class.getName());
+        System.out.println("*******************************************");
+        System.out.println("configuration admin service reference = " + configurationAdminServiceReference.getBundle().getSymbolicName());
+        System.out.println("*******************************************");
+        
+        ConfigurationAdmin configurationAdmin = (ConfigurationAdmin)componentContext.getBundleContext().getService(configurationAdminServiceReference);
+        System.out.println("*******************************************");
+        System.out.println("configuration admin = " + configurationAdmin.toString());
+        System.out.println("*******************************************");
+
+        //        super.activate(arg0);
+    }
+    
+    
     @Override
      public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
