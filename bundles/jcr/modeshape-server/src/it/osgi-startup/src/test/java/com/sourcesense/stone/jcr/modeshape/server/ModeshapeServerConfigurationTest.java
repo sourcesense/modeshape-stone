@@ -28,11 +28,25 @@ public class ModeshapeServerConfigurationTest extends AbstractTestCase {
     }
 
     @Test
-    public void shouldHaveConfigAdminServiceRegistered( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveConfigAdminServiceReference( BundleContext bundleContext ) throws Exception {
 
-        final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
-        ServiceReference sr = bundleContext.getServiceReference(CONFIG_ADMIN_NAME);
+        ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
 
         assertNotNull(sr);
+    }
+
+    @Test
+    public void shouldHaveConfigAdminServiceRegistered( BundleContext bundleContext ) throws Exception {
+        
+        ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
+        ConfigurationAdmin ca = (ConfigurationAdmin) bundleContext.getService(sr);
+        
+        assertNotNull(ca);
+    }
+
+    private ServiceReference getConfigurationAdminServiceReferenceFrom( BundleContext bundleContext ) {
+        final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
+        ServiceReference sr = bundleContext.getServiceReference(CONFIG_ADMIN_NAME);
+        return sr;
     }
 }

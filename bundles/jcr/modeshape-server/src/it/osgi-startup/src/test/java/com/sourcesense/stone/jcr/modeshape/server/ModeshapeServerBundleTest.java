@@ -5,9 +5,7 @@ import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.sym
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Dictionary;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
@@ -47,5 +45,18 @@ public class ModeshapeServerBundleTest extends AbstractTestCase {
         Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
 
         assertEquals(Bundle.ACTIVE, modeshapeServerBundle.getState());
+    }
+    
+    @Test
+    public void shouldHaveActivatorRegistered(BundleContext bundleContext ) throws Exception {
+        
+        Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
+        
+        @SuppressWarnings( "unchecked" )
+        Dictionary<String, String> manifestContent = modeshapeServerBundle.getHeaders();
+        
+        String activatorClassName = manifestContent.get("Bundle-Activator");
+        
+        assertEquals("com.sourcesense.stone.jcr.modeshape.server.impl.Activator", activatorClassName);
     }
 }
