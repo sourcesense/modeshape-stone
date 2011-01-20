@@ -9,9 +9,6 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.ComponentContext;
 
 /**
  * The <code>SlingServerRepository</code> TODO
@@ -38,27 +35,6 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private RepositoryFactory repositoryFactory;
 
-    @Override
-    protected void activate( ComponentContext componentContext ) throws Exception {
-        
-        System.out.println("*******************************************");
-        System.out.println("Sono nell'activate");
-        System.out.println("*******************************************");
-        
-        ServiceReference configurationAdminServiceReference = componentContext.getBundleContext().getServiceReference(ConfigurationAdmin.class.getName());
-        System.out.println("*******************************************");
-        System.out.println("configuration admin service reference = " + configurationAdminServiceReference.getBundle().getSymbolicName());
-        System.out.println("*******************************************");
-        
-        ConfigurationAdmin configurationAdmin = (ConfigurationAdmin)componentContext.getBundleContext().getService(configurationAdminServiceReference);
-        System.out.println("*******************************************");
-        System.out.println("configuration admin = " + configurationAdmin.toString());
-        System.out.println("*******************************************");
-
-        //        super.activate(arg0);
-    }
-    
-    
     @Override
      public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
