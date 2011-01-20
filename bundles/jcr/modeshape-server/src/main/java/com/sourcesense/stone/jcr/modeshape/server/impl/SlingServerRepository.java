@@ -17,7 +17,7 @@ import org.osgi.service.component.ComponentContext;
  * The <code>SlingServerRepository</code> TODO
  * add  policy="require"
  * @scr.component label="%repository.name" description="%repository.description" name=
- *                "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository" configurationFactory="true"
+ *                "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository" configurationFactory="true" policy="require"
  * @scr.property name="service.vendor" value="JBoss"
  * @scr.property name="service.description" value="Factory for embedded Modeshape Repository Instances"
  */
