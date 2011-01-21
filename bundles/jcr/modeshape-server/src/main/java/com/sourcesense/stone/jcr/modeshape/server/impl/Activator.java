@@ -27,6 +27,11 @@ public class Activator implements BundleActivator, ServiceListener {
         } else {
             bundleContext.addServiceListener(this, "(" + Constants.OBJECTCLASS + "=" + CONFIG_ADMIN_NAME + ")");
         }
+
+        AccessManagerFactoryTracker accessManagerFactoryTracker = getAccessManagerFactoryTracker();
+        if (null == accessManagerFactoryTracker) {
+            createAccessManagerFactoryTracker(bundleContext).open();
+        }
     }
 
     @Override
@@ -37,6 +42,14 @@ public class Activator implements BundleActivator, ServiceListener {
 
     protected ActivatorHelper getActivatorHelper() {
         return new ActivatorHelper();
+    }
+
+    protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
+        return null;
+    }
+
+    protected AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
+        return new AccessManagerFactoryTracker(bundleContext);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class ActivatorTest {
     public void shouldVerifyConfigurationWhenConfigurationAdminServiceReferenceIsFound() throws Exception {
 
         ServiceReference configurationAdminServiceReference = mock(ServiceReference.class);
-        
+
         BundleContext bundleContext = mock(BundleContext.class);
         when(bundleContext.getServiceReference(CONFIG_ADMIN_NAME)).thenReturn(configurationAdminServiceReference);
 
@@ -47,5 +48,49 @@ public class ActivatorTest {
         activator.start(bundleContext);
 
         verify(bundleContext).addServiceListener(activator, "(" + Constants.OBJECTCLASS + "=" + CONFIG_ADMIN_NAME + ")");
+    }
+
+    @Test
+    public void shouldOpenAccessManagerFactoryTrackerOnlyTheFirstTime() throws Exception {
+        BundleContext bundleContext = mock(BundleContext.class);
+
+        final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
+        Activator activator = new Activator() {
+            @Override
+            protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
+                return null;
+            }
+
+            @Override
+            protected AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
+                return accessManagerFactoryTracker;
+            }
+        };
+
+        activator.start(bundleContext);
+
+        verify(accessManagerFactoryTracker).open();
+    }
+
+    @Test
+    public void shouldNotOpenAccessManagerFactoryTrackerWhenAlreadyOpened() throws Exception {
+        BundleContext bundleContext = mock(BundleContext.class);
+
+        final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
+        Activator activator = new Activator() {
+            @Override
+            protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
+                return mock(AccessManagerFactoryTracker.class);
+            }
+
+            @Override
+            protected AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
+                return accessManagerFactoryTracker;
+            }
+        };
+
+        activator.start(bundleContext);
+
+        verify(accessManagerFactoryTracker, never()).open();
     }
 }
