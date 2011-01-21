@@ -10,7 +10,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 public class Activator implements BundleActivator, ServiceListener {
 
-    private static final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();;
+    private static final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
+    private AccessManagerFactoryTracker accessManagerFactoryTracker;
+    private ActivatorHelper activatorHelper;;
 
     @Override
     public void serviceChanged( ServiceEvent event ) {
@@ -20,24 +22,32 @@ public class Activator implements BundleActivator, ServiceListener {
 
     @Override
     public void start( BundleContext bundleContext ) throws Exception {
+        if (null == activatorHelper) {
+            this.activatorHelper = getActivatorHelper();
+        }
+        
         ServiceReference configurationAdminServiceReference = bundleContext.getServiceReference(CONFIG_ADMIN_NAME);
 
         if (null != configurationAdminServiceReference) {
-            getActivatorHelper().verifyConfiguration(configurationAdminServiceReference);
+            activatorHelper.verifyConfiguration(configurationAdminServiceReference);
         } else {
             bundleContext.addServiceListener(this, "(" + Constants.OBJECTCLASS + "=" + CONFIG_ADMIN_NAME + ")");
         }
 
         AccessManagerFactoryTracker accessManagerFactoryTracker = getAccessManagerFactoryTracker();
         if (null == accessManagerFactoryTracker) {
-            createAccessManagerFactoryTracker(bundleContext).open();
+            accessManagerFactoryTracker = this.accessManagerFactoryTracker = activatorHelper.createAccessManagerFactoryTracker(bundleContext);
         }
+        accessManagerFactoryTracker.open();
     }
 
     @Override
-    public void stop( BundleContext context ) throws Exception {
-        // TODO Auto-generated method stub
-
+    public void stop( BundleContext bundleContext ) throws Exception {
+        AccessManagerFactoryTracker managerFactoryTracker = getAccessManagerFactoryTracker();
+        
+        if (null != managerFactoryTracker) {
+            managerFactoryTracker.close();
+        }
     }
 
     protected ActivatorHelper getActivatorHelper() {
@@ -45,11 +55,6 @@ public class Activator implements BundleActivator, ServiceListener {
     }
 
     protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
-        return null;
+        return this.accessManagerFactoryTracker;
     }
-
-    protected AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
-        return new AccessManagerFactoryTracker(bundleContext);
-    }
-
 }

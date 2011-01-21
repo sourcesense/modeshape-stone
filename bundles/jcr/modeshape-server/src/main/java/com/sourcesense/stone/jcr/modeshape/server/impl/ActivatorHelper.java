@@ -1,11 +1,16 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 public class ActivatorHelper {
 
-    public  boolean verifyConfiguration( ServiceReference configurationAdminServiceReference ) {
+    boolean verifyConfiguration( ServiceReference configurationAdminServiceReference ) {
         return false;
+    }
+
+    AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
+        return new AccessManagerFactoryTracker(bundleContext);
     }
 
 }
