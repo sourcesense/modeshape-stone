@@ -15,7 +15,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 
-
 @RunWith( JUnit4TestRunner.class )
 public class ModeshapeServerConfigurationTest extends AbstractTestCase {
 
@@ -23,13 +22,11 @@ public class ModeshapeServerConfigurationTest extends AbstractTestCase {
     public static Option[] configuration() {
         return options(felix(),
                        mavenConfiguration(),
-                       wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3")),
-                       mavenBundle("org.ops4j.pax.confman", "pax-confman-propsloader", "0.2.2").startLevel(10));
+                       wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3")));
     }
 
     @Test
     public void shouldHaveConfigAdminServiceReference( BundleContext bundleContext ) throws Exception {
-
         ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
 
         assertNotNull(sr);
@@ -37,10 +34,10 @@ public class ModeshapeServerConfigurationTest extends AbstractTestCase {
 
     @Test
     public void shouldHaveConfigAdminServiceRegistered( BundleContext bundleContext ) throws Exception {
-        
+
         ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
-        ConfigurationAdmin ca = (ConfigurationAdmin) bundleContext.getService(sr);
-        
+        ConfigurationAdmin ca = (ConfigurationAdmin)bundleContext.getService(sr);
+
         assertNotNull(ca);
     }
 

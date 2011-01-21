@@ -41,7 +41,7 @@ public class ModeshapeServerBundleTest extends AbstractTestCase {
     }
 
     @Test
-    public void shouldHaveModeshapeServerStarted( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveModeshapeServerActive( BundleContext bundleContext ) throws Exception {
         Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
 
         assertEquals(Bundle.ACTIVE, modeshapeServerBundle.getState());

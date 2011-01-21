@@ -9,6 +9,7 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
+import org.osgi.service.component.ComponentContext;
 
 /**
  * The <code>SlingServerRepository</code> TODO
@@ -35,6 +36,16 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private RepositoryFactory repositoryFactory;
 
+    @Override
+    protected void activate( ComponentContext arg0 ) throws Exception {
+        System.out.println("*************************");
+        System.out.println("*************************");
+        System.out.println("*************************");
+        System.out.println("*************************");
+        System.out.println("*************************");
+        super.activate(arg0);
+    }
+    
     @Override
      public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
