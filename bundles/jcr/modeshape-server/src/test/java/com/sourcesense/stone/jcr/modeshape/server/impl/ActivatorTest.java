@@ -3,6 +3,7 @@ package com.sourcesense.stone.jcr.modeshape.server.impl;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -31,7 +32,7 @@ public class ActivatorTest {
             protected ActivatorHelper getActivatorHelper() {
                 return activatorHelper;
             }
-            
+
             @Override
             protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
                 return accessManagerFactoryTracker;
@@ -91,7 +92,7 @@ public class ActivatorTest {
         BundleContext bundleContext = mock(BundleContext.class);
 
         final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
-        
+
         Activator activator = new Activator() {
             @Override
             protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
@@ -99,9 +100,26 @@ public class ActivatorTest {
             }
         };
 
-        activator.start(bundleContext);
         activator.stop(bundleContext);
 
         verify(accessManagerFactoryTracker).close();
+    }
+
+    @Test
+    public void shouldNotCloseAccessManagerFactoryTrackerOnStopBecauseNotOpened() throws Exception {
+        BundleContext bundleContext = mock(BundleContext.class);
+
+        final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
+
+        Activator activator = new Activator() {
+            @Override
+            protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
+                return null;
+            }
+        };
+
+        activator.stop(bundleContext);
+
+        verify(accessManagerFactoryTracker, never()).close();
     }
 }
