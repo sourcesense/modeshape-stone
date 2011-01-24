@@ -12,20 +12,26 @@ public class Activator implements BundleActivator, ServiceListener {
 
     private static final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
     private AccessManagerFactoryTracker accessManagerFactoryTracker;
-    private ActivatorHelper activatorHelper;;
+    private ActivatorHelper activatorHelper;
+    private BundleContext bundleContext;
 
     @Override
     public void serviceChanged( ServiceEvent event ) {
-        // TODO Auto-generated method stub
+        if (event.getType() == ServiceEvent.REGISTERED) {
 
+            getActivatorHelper().verifyConfiguration(event.getServiceReference());
+            bundleContext.removeServiceListener(this);
+        }
     }
 
     @Override
     public void start( BundleContext bundleContext ) throws Exception {
+        this.bundleContext = bundleContext;
+
         if (null == activatorHelper) {
             this.activatorHelper = getActivatorHelper();
         }
-        
+
         ServiceReference configurationAdminServiceReference = bundleContext.getServiceReference(CONFIG_ADMIN_NAME);
 
         if (null != configurationAdminServiceReference) {
@@ -44,7 +50,7 @@ public class Activator implements BundleActivator, ServiceListener {
     @Override
     public void stop( BundleContext bundleContext ) throws Exception {
         AccessManagerFactoryTracker managerFactoryTracker = getAccessManagerFactoryTracker();
-        
+
         if (null != managerFactoryTracker) {
             managerFactoryTracker.close();
         }

@@ -1,12 +1,17 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
+import static org.mockito.Matchers.*;
+
+import java.lang.reflect.Field;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -121,5 +126,61 @@ public class ActivatorTest {
         activator.stop(bundleContext);
 
         verify(accessManagerFactoryTracker, never()).close();
+    }
+
+    @Test
+    public void shouldVerifyConfigurationWhenServiceEventRegisteredIsNotifiedAndRemoveServiceListener() throws Exception {
+
+        final ActivatorHelper activatorHelper = mock(ActivatorHelper.class);
+        Activator activator = new Activator() {
+            @Override
+            protected ActivatorHelper getActivatorHelper() {
+                return activatorHelper;
+            }
+        };
+        
+        BundleContext bundleContext = mock(BundleContext.class);
+        injectBundleContextInto(activator, bundleContext);
+        
+        ServiceEvent serviceEvent = mock(ServiceEvent.class);
+        when(serviceEvent.getType()).thenReturn(ServiceEvent.REGISTERED);
+        
+        ServiceReference aServiceReference = null; // It does not matter here
+        when(serviceEvent.getServiceReference()).thenReturn(aServiceReference );
+        
+        
+        activator.serviceChanged(serviceEvent);
+
+        verify(activatorHelper).verifyConfiguration(aServiceReference);
+        verify(bundleContext).removeServiceListener(activator);
+    }
+    
+    @Test
+    public void shouldNotVerifyConfigurationAndRemoveServiceListenerWhenServiceEventRegisteredIsNotNotified() throws Exception {
+        
+        final ActivatorHelper activatorHelper = mock(ActivatorHelper.class);
+        Activator activator = new Activator() {
+            @Override
+            protected ActivatorHelper getActivatorHelper() {
+                return activatorHelper;
+            }
+        };
+        
+        BundleContext bundleContext = mock(BundleContext.class);
+        injectBundleContextInto(activator, bundleContext);
+        
+        ServiceEvent serviceEvent = mock(ServiceEvent.class);
+        when(serviceEvent.getType()).thenReturn(ServiceEvent.MODIFIED);
+        
+        activator.serviceChanged(serviceEvent);
+        
+        verify(activatorHelper, never()).verifyConfiguration((ServiceReference)anyObject());
+        verify(bundleContext, never()).removeServiceListener((ServiceListener)anyObject());
+    }
+
+    private void injectBundleContextInto( Activator activator, BundleContext bundleContext ) throws NoSuchFieldException, IllegalAccessException {
+        Field activatorBundleContext = Activator.class.getDeclaredField("bundleContext");
+        activatorBundleContext.setAccessible(true);
+        activatorBundleContext.set(activator, bundleContext);
     }
 }
