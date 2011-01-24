@@ -134,6 +134,7 @@
                     <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                     <streamLogs>true</streamLogs>
                     <ignoreFailures>false</ignoreFailures>
+                    <postBuildHookScript>verify.bsh</postBuildHookScript>
                     <pomIncludes>
                         <pomInclude>**/pom.xml</pomInclude>
                     </pomIncludes>
