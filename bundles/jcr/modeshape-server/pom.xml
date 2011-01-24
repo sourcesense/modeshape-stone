@@ -81,14 +81,14 @@
                 <configuration>
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
-                        <!-- <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator> -->
+                        <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
                             com.sourcesense.stone.jcr.modeshape.server.impl.*,
                         </Export-Package>
                         <Private-Package>
                             com.sourcesense.stone.jcr.modeshape.server.impl.*,
 
-                            <!-- Uncomment this if you want modeshape expanded into the bundle 
+                            <!-- Uncomment this if you want modeshape expanded into the bundle
                                 org.modeshape.* -->
                         </Private-Package>
                         <Import-Package>
@@ -210,19 +210,25 @@
             <version>${modeshape.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.4</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.5.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.8.5</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 </project>
