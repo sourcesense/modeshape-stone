@@ -1,12 +1,15 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import java.net.URL;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.ServiceLoader;
+
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
+
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.osgi.service.component.ComponentContext;
@@ -30,7 +33,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
      * 
      * @scr.property value=""
      */
-    public static final String REPOSITORY_CONFIG_URL = "config";
+    public static final String REPOSITORY_CONFIG_URL = "file:repository.xml?repositoryName=MyRepository";
 
     private static final Repository NO_REPOSITORY = null;
 
@@ -55,9 +58,10 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     private Repository findSuitableRepository() {
         @SuppressWarnings( "unchecked" )
         Dictionary<String, Object> environment = this.getComponentContext().getProperties();
-        String configURL = (String)environment.get(REPOSITORY_CONFIG_URL);
+        //String configURL = (String)environment.get(REPOSITORY_CONFIG_URL);
+        URL configURL = this.getClass().getResource("/repository.xml");
 
-        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL);
+        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL.toString() + "?repositoryName=MyRepository");
         Repository repository = null;
 
         for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
