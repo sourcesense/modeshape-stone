@@ -133,6 +133,7 @@
                     <projectsDirectory>src/it</projectsDirectory>
                     <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                     <streamLogs>true</streamLogs>
+                    <ignoreFailures>false</ignoreFailures>
                     <pomIncludes>
                         <pomInclude>**/pom.xml</pomInclude>
                     </pomIncludes>
