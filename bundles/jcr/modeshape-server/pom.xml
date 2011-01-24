@@ -1,216 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- | Copyright 2011 Sourcesense | | Licensed under the Apache License, 
-	Version 2.0 (the "License"); | you may not use this file except in compliance 
-	with the License. | You may obtain a copy of the License at | | http://www.apache.org/licenses/LICENSE-2.0 
-	| | Unless required by applicable law or agreed to in writing, software | 
-	distributed under the License is distributed on an "AS IS" BASIS, | WITHOUT 
-	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. | See the 
-	License for the specific language governing permissions and | limitations 
-	under the License. -->
+<!--
+| Copyright 2011 Sourcesense
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+| http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>com.sourcesense.stone</groupId>
-		<artifactId>stone-builder</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../../../pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>com.sourcesense.stone</groupId>
+        <artifactId>stone-builder</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
-	<packaging>bundle</packaging>
-	<name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
-	<description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+    <packaging>bundle</packaging>
+    <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
+    <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
 
-	<scm>
-		<connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
-		<developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
-		<url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
-	</scm>
+    <scm>
+        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
+        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
+        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
+    </scm>
 
-	<build>
-		<plugins>
-			<!-- | generate the SCR descriptors -->
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-scr-plugin</artifactId>
-			</plugin>
+    <build>
+        <plugins>
+            <!--
+             | generate the SCR descriptors
+            -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
 
-			<!-- | copy the SCR descriptors into the correct location | because the 
-				maven-scr-plugin cannot be configured | to write the descriptors elsewhere -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.build.directory}/scr-plugin-generated</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <!--
+             | copy the SCR descriptors into the correct location
+             | because the maven-scr-plugin cannot be configured
+             | to write the descriptors elsewhere
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/scr-plugin-generated</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Bundle-Category>sling,jcr,modeshape</Bundle-Category>
-						<!-- <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator> -->
-						<Export-Package>
-							com.sourcesense.stone.jcr.modeshape.server.impl.*,
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
+                        <!-- <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator> -->
+                        <Export-Package>
+                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
                         </Export-Package>
-						<Private-Package>
-							com.sourcesense.stone.jcr.modeshape.server.impl.*,
+                        <Private-Package>
+                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
 
-							<!-- Uncomment this if you want modeshape expanded into the bundle 
-								org.modeshape.* -->
-						</Private-Package>
-						<Import-Package>
-							java.util.*,
+                            <!-- Uncomment this if you want modeshape expanded into the bundle 
+                                org.modeshape.* -->
+                        </Private-Package>
+                        <Import-Package>
+                            java.util.*,
 
-							<!-- Sling and OSGi -->
-							org.apache.sling.*,
-							org.osgi.*,
+                            <!-- Sling and OSGi -->
+                            org.apache.sling.*,
+                            org.osgi.*,
 
-							<!-- JCR and Jackrabbit API -->
-							javax.jcr.*,
+                            <!-- JCR and Jackrabbit API -->
+                            javax.jcr.*,
 
-							<!-- Logging -->
-							org.slf4j,
-						</Import-Package>
-						<DynamicImport-Package>*</DynamicImport-Package>
+                            <!-- Logging -->
+                            org.slf4j,
+                        </Import-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
 
-						<!-- Embedd some libraries -->
-						<Embed-Transitive>true</Embed-Transitive>
+                        <!-- Embedd some libraries -->
+                        <Embed-Transitive>true</Embed-Transitive>
 
-						<Embed-Dependency>
-							<!-- Uncomment this if you want the jars embedded into the bundle -->
-							modeshape-jcr
-						</Embed-Dependency>
+                        <Embed-Dependency>
+                            <!-- Uncomment this if you want the jars embedded into the bundle -->
+                            modeshape-jcr
+                        </Embed-Dependency>
 
-						<_removeheaders>
-							Embed-Dependency,
-							Embed-Transitive,
-							Private-Package,
-							Include-Resource
+                        <_removeheaders>
+                            Embed-Dependency,
+                            Embed-Transitive,
+                            Private-Package,
+                            Include-Resource
                         </_removeheaders>
-					</instructions>
-				</configuration>
-			</plugin>
+                    </instructions>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-invoker-plugin</artifactId>
-				<version>1.5</version>
-				<configuration>
-					<debug>true</debug>
-					<projectsDirectory>src/it</projectsDirectory>
-					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-					<pomIncludes>
-						<pomInclude>**/pom.xml</pomInclude>
-					</pomIncludes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>install</goal>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <debug>true</debug>
+                    <projectsDirectory>src/it</projectsDirectory>
+                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                    <pomIncludes>
+                        <pomInclude>**/pom.xml</pomInclude>
+                    </pomIncludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>install</goal>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 
-	<properties>
-		<sling.version>2.1.0</sling.version>
-		<modeshape.version>2.3.0.Final</modeshape.version>
-		<jackrabbit.version>2.2.0</jackrabbit.version>
-		<slf4j.version>1.5.0</slf4j.version>
-	</properties>
+    <properties>
+        <sling.version>2.1.0</sling.version>
+        <modeshape.version>2.3.0.Final</modeshape.version>
+        <jackrabbit.version>2.2.0</jackrabbit.version>
+        <slf4j.version>1.5.0</slf4j.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>javax.jcr</groupId>
-			<artifactId>jcr</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>javax.jcr</groupId>
+            <artifactId>jcr</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.sling</groupId>
-			<artifactId>org.apache.sling.jcr.api</artifactId>
-			<version>${sling.version}</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.api</artifactId>
+            <version>${sling.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.sling</groupId>
-			<artifactId>org.apache.sling.jcr.base</artifactId>
-			<version>${sling.version}</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.base</artifactId>
+            <version>${sling.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.modeshape</groupId>
-			<artifactId>modeshape-jcr-api</artifactId>
-			<version>${modeshape.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr-api</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.modeshape</groupId>
-			<artifactId>modeshape-jcr</artifactId>
-			<version>${modeshape.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.8.5</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
