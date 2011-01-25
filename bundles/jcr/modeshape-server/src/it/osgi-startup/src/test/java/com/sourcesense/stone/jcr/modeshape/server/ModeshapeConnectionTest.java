@@ -33,7 +33,7 @@ public class ModeshapeConnectionTest extends AbstractTestCase {
 					.getServiceReference(SlingServerRepository.class.getName());
 			SlingServerRepository ssr = (SlingServerRepository) modeshapeServer
 					.getService(ssrr);
-			//assertNotNull(ssr.getDefaultWorkspace());
+			assertNotNull(ssr);
 		} catch (Exception ex) {
 			throw ex;
 		} finally {
