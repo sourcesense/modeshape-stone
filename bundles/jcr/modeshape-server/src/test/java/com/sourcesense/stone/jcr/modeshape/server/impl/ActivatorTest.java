@@ -46,7 +46,7 @@ public class ActivatorTest {
 
         activator.start(bundleContext);
 
-        verify(activatorHelper).verifyConfiguration(configurationAdminServiceReference, bundleContext);
+        verify(activatorHelper).verifyConfiguration(configurationAdminServiceReference);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class ActivatorTest {
         
         activator.serviceChanged(serviceEvent);
 
-        verify(activatorHelper).verifyConfiguration(aServiceReference, bundleContext);
+        verify(activatorHelper).verifyConfiguration(aServiceReference);
         verify(bundleContext).removeServiceListener(activator);
     }
     
@@ -174,7 +174,7 @@ public class ActivatorTest {
         
         activator.serviceChanged(serviceEvent);
         
-        verify(activatorHelper, never()).verifyConfiguration((ServiceReference)anyObject(), (BundleContext)anyObject());
+        verify(activatorHelper, never()).verifyConfiguration((ServiceReference)anyObject());
         verify(bundleContext, never()).removeServiceListener((ServiceListener)anyObject());
     }
 

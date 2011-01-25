@@ -19,7 +19,7 @@ public class Activator implements BundleActivator, ServiceListener {
     public void serviceChanged( ServiceEvent event ) {
         if (event.getType() == ServiceEvent.REGISTERED) {
 
-            getActivatorHelper().verifyConfiguration(event.getServiceReference(), bundleContext);
+            getActivatorHelper().verifyConfiguration(event.getServiceReference());
             bundleContext.removeServiceListener(this);
         }
     }
@@ -35,7 +35,7 @@ public class Activator implements BundleActivator, ServiceListener {
         ServiceReference configurationAdminServiceReference = bundleContext.getServiceReference(CONFIG_ADMIN_NAME);
 
         if (null != configurationAdminServiceReference) {
-            activatorHelper.verifyConfiguration(configurationAdminServiceReference, bundleContext);
+            activatorHelper.verifyConfiguration(configurationAdminServiceReference);
         } else {
             bundleContext.addServiceListener(this, "(" + Constants.OBJECTCLASS + "=" + CONFIG_ADMIN_NAME + ")");
         }
@@ -57,7 +57,7 @@ public class Activator implements BundleActivator, ServiceListener {
     }
 
     protected ActivatorHelper getActivatorHelper() {
-        return new ActivatorHelper();
+        return activatorHelper == null ? new ActivatorHelper(bundleContext) : activatorHelper;
     }
 
     protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {

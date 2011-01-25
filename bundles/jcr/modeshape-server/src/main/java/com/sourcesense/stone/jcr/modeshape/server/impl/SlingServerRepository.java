@@ -1,16 +1,12 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
-import java.io.IOException;
 import java.net.URL;
 import javax.jcr.Repository;
-import javax.jcr.RepositoryException;
-import javax.jcr.RepositoryFactory;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.modeshape.common.collection.Problem;
 import org.modeshape.jcr.JcrConfiguration;
 import org.modeshape.jcr.JcrEngine;
-import org.xml.sax.SAXException;
 
 /**
  * The <code>SlingServerRepository</code> TODO add policy="require"
@@ -31,11 +27,14 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
      * 
      * @scr.property value=""
      */
-    public static final String REPOSITORY_CONFIG_URL = "file:repository.xml?repositoryName=MyRepository";
+    public static final String REPOSITORY_CONFIG_URL = "config";
 
+    /**
+     * @scr.property value=""
+     */
+    public static final String REPOSITORY_REGISTRATION_NAME = "name";
+    
     private static final Repository NO_REPOSITORY = null;
-
-    private RepositoryFactory repositoryFactory;
 
     private JcrEngine engine;
 
@@ -46,31 +45,22 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     }
 
     private Repository findSuitableRepository() {
-//        URL configURL = new URL("file://Users/anv/modeshape-repository.xml");
-
-//        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL.toString()
-//                                                                                           + "?repositoryName=MyRepository");
-//        Repository repository = null;
+        URL configURL = this.getClass().getResource("modeshape-repository.xml");
 
         JcrConfiguration configuration = new JcrConfiguration();
 
         try {
-            configuration.loadFrom("file://Users/anv/modeshape-repository.xml");
+            configuration.loadFrom(configURL);
             if (!configuration.getProblems().isEmpty()) {
                 for (Problem problem : configuration.getProblems()) {
                     System.out.println("********* " + problem.getMessageString());
                 }
-            }
-            else {
+            } else {
                 engine = configuration.build();
                 engine.start();
                 return engine.getRepository("MyRepository");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (RepositoryException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
