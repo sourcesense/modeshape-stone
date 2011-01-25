@@ -144,7 +144,6 @@
                 <version>1.5</version>
                 <configuration>
                     <debug>true</debug>
-                    <projectsDirectory>src/it</projectsDirectory>
                     <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                     <streamLogs>true</streamLogs>
                     <ignoreFailures>false</ignoreFailures>
