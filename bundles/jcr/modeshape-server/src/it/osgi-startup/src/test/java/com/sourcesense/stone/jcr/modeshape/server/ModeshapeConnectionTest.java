@@ -20,24 +20,22 @@ public class ModeshapeConnectionTest extends AbstractTestCase {
 	public void shouldTakeTheDefaultWorkspace(BundleContext bundleContext)
 			throws Exception {
 		ServiceReference ssrr = null;
-		BundleContext modeshapeServer = null;
 		try {
-			modeshapeServer = bundleContext.getBundle(2).getBundleContext();
 			Dictionary<String, String> serviceProperties = new Hashtable<String, String>();
 			serviceProperties.put(Constants.SERVICE_VENDOR, "JBoss");
 			serviceProperties.put(Constants.SERVICE_DESCRIPTION, "Test service for SlingRepository");
-			modeshapeServer.registerService(
+			bundleContext.registerService(
 					SlingServerRepository.class.getName(),
 					new SlingServerRepository(), serviceProperties);
-			ssrr = modeshapeServer
+			ssrr = bundleContext
 					.getServiceReference(SlingServerRepository.class.getName());
-			SlingServerRepository ssr = (SlingServerRepository) modeshapeServer
+			SlingServerRepository ssr = (SlingServerRepository) bundleContext
 					.getService(ssrr);
 			assertNotNull(ssr);
 		} catch (Exception ex) {
 			throw ex;
 		} finally {
-			modeshapeServer.ungetService(ssrr);
+			bundleContext.ungetService(ssrr);
 		}
 	}
 }
