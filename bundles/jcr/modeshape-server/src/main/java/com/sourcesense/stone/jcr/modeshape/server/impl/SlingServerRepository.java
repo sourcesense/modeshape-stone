@@ -1,20 +1,22 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.Map;
-import java.util.ServiceLoader;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
+import org.modeshape.common.collection.Problem;
+import org.modeshape.jcr.JcrConfiguration;
+import org.modeshape.jcr.JcrEngine;
+import org.xml.sax.SAXException;
 
 /**
- * The <code>SlingServerRepository</code> TODO
- * add  policy="require"
+ * The <code>SlingServerRepository</code> TODO add policy="require"
+ * 
  * @scr.component label="%repository.name" description="%repository.description" name=
- *                "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository" configurationFactory="true"
+ *                "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository" configurationFactory="true" policy="require"
  * @scr.property name="service.vendor" value="JBoss"
  * @scr.property name="service.description" value="Factory for embedded Modeshape Repository Instances"
  */
@@ -35,28 +37,41 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private RepositoryFactory repositoryFactory;
 
+    private JcrEngine engine;
+
     @Override
-     public Repository acquireRepository() {
+    public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
         return repository == NO_REPOSITORY ? findSuitableRepository() : repository;
     }
 
     private Repository findSuitableRepository() {
-        URL configURL = this.getClass().getResource("/repository.xml");
+//        URL configURL = new URL("file://Users/anv/modeshape-repository.xml");
 
-        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL.toString() + "?repositoryName=MyRepository");
-        Repository repository = null;
+//        Map<String, String> parameters = Collections.singletonMap("org.modeshape.jcr.URL", configURL.toString()
+//                                                                                           + "?repositoryName=MyRepository");
+//        Repository repository = null;
 
-        for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
-            try {
-                repository = factory.getRepository(parameters);
-                if (repository != null) {
-                    repositoryFactory = factory;
-                    return repository;
+        JcrConfiguration configuration = new JcrConfiguration();
+
+        try {
+            configuration.loadFrom("file://Users/anv/modeshape-repository.xml");
+            if (!configuration.getProblems().isEmpty()) {
+                for (Problem problem : configuration.getProblems()) {
+                    System.out.println("********* " + problem.getMessageString());
                 }
-            } catch (RepositoryException e) {
-                e.printStackTrace();
             }
+            else {
+                engine = configuration.build();
+                engine.start();
+                return engine.getRepository("MyRepository");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
         }
 
         return NO_REPOSITORY;
@@ -66,8 +81,6 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     public void disposeRepository( Repository repository ) {
         super.disposeRepository(repository);
 
-        if (repositoryFactory instanceof org.modeshape.jcr.api.RepositoryFactory) {
-            ((org.modeshape.jcr.api.RepositoryFactory)repositoryFactory).shutdown();
-        }
+        engine.shutdown();
     }
 }

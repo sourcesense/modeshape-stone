@@ -84,12 +84,13 @@
                         <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
                             com.sourcesense.stone.jcr.modeshape.server.impl.*,
+                            org.modeshape.*,
                         </Export-Package>
                         <Private-Package>
                             com.sourcesense.stone.jcr.modeshape.server.impl.*,
 
-                            <!-- Uncomment this if you want modeshape expanded into the bundle
-                                org.modeshape.* -->
+                            <!-- Uncomment this if you want modeshape expanded into the bundle -->
+                                org.modeshape.*
                         </Private-Package>
                         <Import-Package>
                             java.util.*,
@@ -103,6 +104,13 @@
 
                             <!-- Logging -->
                             org.slf4j,
+                            
+                            <!-- Modeshape -->
+                            <!-- 
+                            org.modeshape.repository.*,
+                            org.modeshape.jcr.*,
+                            org.modeshape.graph.mimetype*,
+                             -->
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
 
@@ -111,7 +119,13 @@
 
                         <Embed-Dependency>
                             <!-- Uncomment this if you want the jars embedded into the bundle -->
-                            modeshape-jcr
+                            <!-- 
+                            modeshape-jcr,
+                            modeshape-jcr-api,
+                            modeshape-repository,
+                            modeshape-common,
+                            modeshape-graph,
+                             -->
                         </Embed-Dependency>
 
                         <_removeheaders>
@@ -213,6 +227,24 @@
             <version>${modeshape.version}</version>
         </dependency>
 
+		<dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-repository</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-common</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-graph</artifactId>
+            <version>${modeshape.version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>

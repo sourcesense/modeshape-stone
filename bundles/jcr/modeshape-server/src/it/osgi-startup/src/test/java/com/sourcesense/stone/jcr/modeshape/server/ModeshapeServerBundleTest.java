@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.Dictionary;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
@@ -29,6 +30,7 @@ public class ModeshapeServerBundleTest extends AbstractTestCase {
     }
 
     @Test
+    @Ignore
     public void shouldHaveReferencesToModeshapeLibraries( BundleContext bundleContext ) throws Exception {
         Bundle modeshapeServerBundle = getBundle("com.sourcesense.stone.jcr.modeshape.server", bundleContext.getBundles());
 
