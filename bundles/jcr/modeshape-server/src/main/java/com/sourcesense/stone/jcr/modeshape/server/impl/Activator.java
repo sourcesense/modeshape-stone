@@ -42,7 +42,7 @@ public class Activator implements BundleActivator, ServiceListener {
 
         AccessManagerFactoryTracker accessManagerFactoryTracker = getAccessManagerFactoryTracker();
         if (null == accessManagerFactoryTracker) {
-            accessManagerFactoryTracker = this.accessManagerFactoryTracker = activatorHelper.createAccessManagerFactoryTracker(bundleContext);
+            accessManagerFactoryTracker = this.accessManagerFactoryTracker = activatorHelper.createAccessManagerFactoryTracker();
         }
         accessManagerFactoryTracker.open();
     }

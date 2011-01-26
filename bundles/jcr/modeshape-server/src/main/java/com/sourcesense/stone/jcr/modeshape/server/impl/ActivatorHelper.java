@@ -26,26 +26,23 @@ public class ActivatorHelper {
         this.bundleContext = bundleContext;
     }
 
-    boolean verifyConfiguration( ServiceReference configurationAdminServiceReference ) {
+    void verifyConfiguration( ServiceReference configurationAdminServiceReference ) {
         ConfigurationAdmin ca = (ConfigurationAdmin)bundleContext.getService(configurationAdminServiceReference);
         if (ca == null) {
             log.error("verifyConfiguration: Failed to get Configuration Admin Service from Service Reference");
-            return false;
+            return;
         }
 
         try {
-            getConfigurationOrCreateANewOne(ca);
-            return true;
+            createNewConfigurationIfDoesNotExist(ca);
         } catch (Throwable t) {
             log.error("verifyConfiguration: Cannot check or define configuration", t);
         } finally {
             bundleContext.ungetService(configurationAdminServiceReference);
         }
-
-        return false;
     }
 
-    private void getConfigurationOrCreateANewOne( ConfigurationAdmin configurationAdmin ) throws Exception {
+    private void createNewConfigurationIfDoesNotExist( ConfigurationAdmin configurationAdmin ) throws Exception {
         Configuration[] cfgs = configurationAdmin.listConfigurations("(" + ConfigurationAdmin.SERVICE_FACTORYPID + "="
                                                                      + SERVER_REPOSITORY_FACTORY_PID + ")");
         if (cfgs != null && cfgs.length > 0) {
@@ -58,6 +55,7 @@ public class ActivatorHelper {
 
     private void createNewConfiguration( ConfigurationAdmin configurationAdmin ) throws Exception {
         Hashtable<String, String> defaultConfig = new Hashtable<String, String>();
+
         final String overrideUrl = bundleContext.getProperty(RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY);
         if (overrideUrl != null && overrideUrl.length() > 0) {
             defaultConfig.put(RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY, overrideUrl);
@@ -65,7 +63,7 @@ public class ActivatorHelper {
                      + ", using it to create the default configuration");
 
         } else {
-            initDefaultConfig(defaultConfig);
+            defaultConfig = initDefaultConfig();
         }
 
         Configuration config = configurationAdmin.createFactoryConfiguration(SERVER_REPOSITORY_FACTORY_PID);
@@ -74,10 +72,12 @@ public class ActivatorHelper {
         log.info("verifyConfiguration: Created configuration {} for {}", config.getPid(), config.getFactoryPid());
     }
 
-    private void initDefaultConfig( Hashtable<String, String> defaultConfig ) throws Exception {
+    private Hashtable<String, String> initDefaultConfig() throws Exception {
+        Hashtable<String, String> defaultConfig = new Hashtable<String, String>();
+
         File homeDir = getConfigurationUtils().getHomeDir();
         if (homeDir == null) {
-            return;
+            return defaultConfig;
         }
 
         String configFileUrl = getConfigurationUtils().getConfigFileUrl(homeDir);
@@ -92,13 +92,14 @@ public class ActivatorHelper {
         defaultConfig.put(AbstractSlingRepository.PROPERTY_ADMIN_PASS, "not-used");
         defaultConfig.put(AbstractSlingRepository.PROPERTY_ANONYMOUS_PASS, "not-used");
 
+        return defaultConfig;
     }
 
     protected ConfigurationUtils getConfigurationUtils() {
         return this.configurationUtils == null ? new ConfigurationUtils(bundleContext) : this.configurationUtils;
     }
 
-    AccessManagerFactoryTracker createAccessManagerFactoryTracker( BundleContext bundleContext ) {
+    AccessManagerFactoryTracker createAccessManagerFactoryTracker() {
         return new AccessManagerFactoryTracker(bundleContext);
     }
 

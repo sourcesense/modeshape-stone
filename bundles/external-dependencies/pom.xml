@@ -17,23 +17,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+<!--
     <parent>
         <groupId>com.sourcesense.stone</groupId>
         <artifactId>stone-builder</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
-
+-->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+    <groupId>com.sourcesense.stone</groupId>
+    <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
-    <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
+    <name>Stone :: Apache Sling - ModeShape external dependencies</name>
+    <description>Bundle providing embedded ModeShape and all its dependencies</description>
 
     <scm>
-        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</connection>
-        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</developerConnection>
-        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/modeshape-server</url>
+        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/external-dependencies</connection>
+        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/external-dependencies</developerConnection>
+        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/jcr/external-dependencies</url>
     </scm>
 
     <build>
@@ -81,22 +84,26 @@
                 <configuration>
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
-                        <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
-                            com.sourcesense.stone.jcr.modeshape.server,
-                            <!--org.modeshape.graph.mimetype-->
+                            org.modeshape.*,
+                            com.google.common.*,
+                            net.jcip.annotations.*,
+                            org.joda.time.*,
+                            org.apache.lucene.*,
                         </Export-Package>
                         <Private-Package>
-                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
-
                             <!-- Uncomment this if you want modeshape expanded into the bundle -->
-                            <!-- org.modeshape.*,
-
+                            org.modeshape.*,
+<!--
                             com.google.common.collect,
-                            -->
+-->
                         </Private-Package>
                         <Import-Package>
                             java.util.*,
+                            java.io.*,
+                            java.security.*,
+                            java.net.*,
+                            org.xml.sax.*,
 
                             <!-- Sling and OSGi -->
                             org.apache.sling.*,
@@ -107,9 +114,9 @@
 
                             <!-- Logging -->
                             org.slf4j,
-
-                            org.modeshape.jcr.*,
 <!--
+                            org.modeshape.jcr.*,
+
                             com.google.common.collect,
                                 net.jcip.annotations,
 								org.joda.time,
@@ -148,6 +155,7 @@
                 <version>1.5</version>
                 <configuration>
                     <debug>true</debug>
+                    <projectsDirectory>src/it</projectsDirectory>
                     <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                     <streamLogs>true</streamLogs>
                     <ignoreFailures>false</ignoreFailures>
@@ -211,11 +219,13 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
@@ -280,6 +290,31 @@
 			<version>1.0-rc3</version>
 		</dependency>
 
+<dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-snowball</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-regex</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-misc</artifactId>
+      <version>3.0.2</version>
+    </dependency>
 	</dependencies>
 
 </project>

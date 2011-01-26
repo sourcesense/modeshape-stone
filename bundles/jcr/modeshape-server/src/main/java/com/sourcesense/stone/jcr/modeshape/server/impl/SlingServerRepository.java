@@ -33,7 +33,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
      * @scr.property value=""
      */
     public static final String REPOSITORY_REGISTRATION_NAME = "name";
-    
+
     private static final Repository NO_REPOSITORY = null;
 
     private JcrEngine engine;

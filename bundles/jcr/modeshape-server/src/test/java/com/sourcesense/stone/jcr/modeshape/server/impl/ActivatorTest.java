@@ -29,7 +29,7 @@ public class ActivatorTest {
 
         final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
         final ActivatorHelper activatorHelper = mock(ActivatorHelper.class);
-        when(activatorHelper.createAccessManagerFactoryTracker(bundleContext)).thenReturn(accessManagerFactoryTracker);
+        when(activatorHelper.createAccessManagerFactoryTracker()).thenReturn(accessManagerFactoryTracker);
 
         Activator activator = new Activator() {
 
@@ -73,7 +73,7 @@ public class ActivatorTest {
 
         final AccessManagerFactoryTracker accessManagerFactoryTracker = mock(AccessManagerFactoryTracker.class);
         final ActivatorHelper activatorHelper = mock(ActivatorHelper.class);
-        when(activatorHelper.createAccessManagerFactoryTracker(bundleContext)).thenReturn(accessManagerFactoryTracker);
+        when(activatorHelper.createAccessManagerFactoryTracker()).thenReturn(accessManagerFactoryTracker);
 
         Activator activator = new Activator() {
             @Override
@@ -89,7 +89,7 @@ public class ActivatorTest {
 
         activator.start(bundleContext);
 
-        verify(activatorHelper).createAccessManagerFactoryTracker(bundleContext);
+        verify(activatorHelper).createAccessManagerFactoryTracker();
     }
 
     @Test
