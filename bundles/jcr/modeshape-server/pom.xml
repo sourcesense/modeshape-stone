@@ -83,18 +83,9 @@
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
                         <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
-                            com.sourcesense.stone.jcr.modeshape.server,
-                            <!--org.modeshape.graph.mimetype-->
+                            com.sourcesense.stone.jcr.modeshape.server.*,
                         </Export-Package>
-                        <Private-Package>
-                            com.sourcesense.stone.jcr.modeshape.server.impl.*,
-
-                            <!-- Uncomment this if you want modeshape expanded into the bundle -->
-                            <!-- org.modeshape.*,
-
-                            com.google.common.collect,
-                            -->
-                        </Private-Package>
+                        <Private-Package></Private-Package>
                         <Import-Package>
                             java.util.*,
 
@@ -109,28 +100,13 @@
                             org.slf4j,
 
                             org.modeshape.jcr.*,
-<!--
-                            com.google.common.collect,
-                                net.jcip.annotations,
-								org.joda.time,
-                                org.joda.time.format,
--->
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
 
                         <!-- Embedd some libraries -->
                         <Embed-Transitive>true</Embed-Transitive>
 
-                        <Embed-Dependency>
-                            <!-- Uncomment this if you want the jars embedded into the bundle -->
-                            <!--
-                            modeshape-jcr,
-                            modeshape-jcr-api,
-                            modeshape-repository,
-                            modeshape-common,
-                            modeshape-graph,
-                             -->
-                        </Embed-Dependency>
+                        <Embed-Dependency></Embed-Dependency>
 
                         <_removeheaders>
                             Embed-Dependency,
@@ -220,19 +196,7 @@
 
         <dependency>
             <groupId>org.modeshape</groupId>
-            <artifactId>modeshape-jcr-api</artifactId>
-            <version>${modeshape.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr</artifactId>
-            <version>${modeshape.version}</version>
-        </dependency>
-
-		<dependency>
-            <groupId>org.modeshape</groupId>
-            <artifactId>modeshape-repository</artifactId>
             <version>${modeshape.version}</version>
         </dependency>
 
@@ -242,18 +206,12 @@
             <version>${modeshape.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.modeshape</groupId>
-            <artifactId>modeshape-graph</artifactId>
-            <version>${modeshape.version}</version>
-        </dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.5.0</version>
 		</dependency>
-
+ 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -266,18 +224,6 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.8.5</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.collections</groupId>
-			<artifactId>google-collections</artifactId>
-			<version>1.0-rc3</version>
 		</dependency>
 
 	</dependencies>

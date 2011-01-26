@@ -18,11 +18,11 @@ public abstract class AbstractTestCase {
     @Configuration
     public static Option[] configuration() {
         return options(felix(),
-                       mavenConfiguration(),
+                       mavenConfiguration()
                        /*if[DEBUG]
                        vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
                        end[DEBUG]*/
-                       wrappedBundle(mavenBundle("com.google.collections", "google-collections").version("1.0-rc3")));
+                       );
     }
 
 }
