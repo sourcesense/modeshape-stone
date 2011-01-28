@@ -99,7 +99,7 @@
                             <!-- Logging -->
                             org.slf4j,
 
-                            org.modeshape.jcr.*,
+                            org.modeshape.*;version=${modeshape.version},
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
 
@@ -211,7 +211,7 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.5.0</version>
 		</dependency>
- 
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

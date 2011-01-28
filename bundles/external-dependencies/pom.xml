@@ -85,18 +85,13 @@
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
                         <Export-Package>
-                            org.modeshape.*,
-                            com.google.common.*,
-                            net.jcip.annotations.*,
-                            org.joda.time.*,
-                            org.apache.lucene.*,
+                            org.modeshape.*;version=${modeshape.version},
+                            com.google.common.*;version=1.0,
+                            net.jcip.annotations.*;version=1.0,
+                            org.joda.time.*;version=1.6,
+                            org.apache.lucene.*;version=3.0.2,
                         </Export-Package>
                         <Private-Package>
-                            <!-- Uncomment this if you want modeshape expanded into the bundle -->
-                            org.modeshape.*,
-<!--
-                            com.google.common.collect,
--->
                         </Private-Package>
                         <Import-Package>
                             java.util.*,
@@ -114,14 +109,7 @@
 
                             <!-- Logging -->
                             org.slf4j,
-<!--
-                            org.modeshape.jcr.*,
 
-                            com.google.common.collect,
-                                net.jcip.annotations,
-                                org.joda.time,
-                                org.joda.time.format,
--->
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
 
@@ -129,14 +117,6 @@
                         <Embed-Transitive>true</Embed-Transitive>
 
                         <Embed-Dependency>
-                            <!-- Uncomment this if you want the jars embedded into the bundle -->
-                            <!--
-                            modeshape-jcr,
-                            modeshape-jcr-api,
-                            modeshape-repository,
-                            modeshape-common,
-                            modeshape-graph,
-                             -->
                         </Embed-Dependency>
 
                         <_removeheaders>
@@ -290,38 +270,30 @@
             <version>1.0-rc3</version>
         </dependency>
 
-        <!--
-         | required Lucene dependencies
-        -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-snowball</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-regex</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-misc</artifactId>
             <version>3.0.2</version>
         </dependency>
-    </dependencies>
-
+	</dependencies>
 </project>
