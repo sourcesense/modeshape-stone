@@ -12,11 +12,11 @@ public class ExternalDependenciesBundleTest extends AbstractTestCase {
 
     @Test
     public void shouldExposeExecutionContextClass() throws Exception {
-        
+
         ExecutionContext executionContext = new ExecutionContext();
         assertNotNull(executionContext);
     }
-    
+
     @Test
     public void shouldExposeJcrConfiguration() throws Exception {
         JcrConfiguration configuration = new JcrConfiguration();

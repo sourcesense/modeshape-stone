@@ -1,21 +1,20 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
+import static org.junit.Assert.assertNotNull;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
-import static org.junit.Assert.assertNotNull;
 import com.sourcesense.stone.jcr.modeshape.server.impl.SlingServerRepository;
 
 @RunWith( JUnit4TestRunner.class )
 public class ModeshapeConnectionTest extends AbstractTestCase {
 
     @Test
-    public void shouldTakeTheDefaultWorkspace( BundleContext bundleContext ) throws Exception {
+    public void shouldTakeTheDefaultWorkspace( ) throws Exception {
         ServiceReference serviceReference = null;
         try {
             Dictionary<String, String> serviceProperties = new Hashtable<String, String>();

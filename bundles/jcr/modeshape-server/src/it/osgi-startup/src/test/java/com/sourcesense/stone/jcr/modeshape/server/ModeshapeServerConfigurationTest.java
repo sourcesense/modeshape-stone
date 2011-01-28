@@ -1,7 +1,6 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
 import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
@@ -13,14 +12,14 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ModeshapeServerConfigurationTest extends AbstractTestCase {
 
     @Test
-    public void shouldHaveConfigAdminServiceReference( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveConfigAdminServiceReference() throws Exception {
         ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
 
         assertNotNull(sr);
     }
 
     @Test
-    public void shouldHaveConfigAdminServiceRegistered( BundleContext bundleContext ) throws Exception {
+    public void shouldHaveConfigAdminServiceRegistered() throws Exception {
 
         ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
         ConfigurationAdmin ca = (ConfigurationAdmin)bundleContext.getService(sr);
