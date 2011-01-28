@@ -4,6 +4,11 @@ import static org.ops4j.pax.exam.CoreOptions.felix;
 import static org.ops4j.pax.exam.CoreOptions.mavenConfiguration;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
+
+/*if[DEBUG]
+import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.vmOption;
+end[DEBUG]*/
+
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
