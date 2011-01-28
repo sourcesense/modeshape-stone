@@ -89,6 +89,13 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.bundle.test</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!--
          | Bundles we depend on
