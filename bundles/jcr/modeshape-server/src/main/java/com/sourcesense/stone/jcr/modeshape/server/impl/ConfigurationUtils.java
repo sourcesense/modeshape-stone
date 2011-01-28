@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 public class ConfigurationUtils {
 
-    private static final String SLING_HOME = "sling.home";
-    private static final String SLING_REPOSITORY_HOME = "sling.repository.home";
+    static final String SLING_HOME = "sling.home";
+    static final String SLING_REPOSITORY_HOME = "sling.repository.home";
     private static final String SLING_REPOSITORY_NAME = "sling.repository.name";
     private static final String MODESHAPE_REPOSITORY_XML = "modeshape-repository.xml";
 
