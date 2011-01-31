@@ -194,6 +194,9 @@
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
 
+		<!--
+			ModeShape
+		-->
         <dependency>
             <groupId>org.modeshape</groupId>
             <artifactId>modeshape-jcr</artifactId>
@@ -226,6 +229,12 @@
 			<scope>test</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 
 </project>

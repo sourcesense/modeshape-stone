@@ -17,14 +17,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-<!--
-    <parent>
-        <groupId>com.sourcesense.stone</groupId>
-        <artifactId>stone-builder</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../../pom.xml</relativePath>
-    </parent>
--->
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sourcesense.stone</groupId>
     <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
@@ -85,13 +77,19 @@
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
                         <Export-Package>
+                        	<!--
                             org.modeshape.*;version=${modeshape.version},
+                            -->
                             com.google.common.*;version=1.0,
                             net.jcip.annotations.*;version=1.0,
                             org.joda.time.*;version=1.6,
-                            org.apache.lucene.*;version=3.0.2,
+                            org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                         </Export-Package>
                         <Private-Package>
+                            com.google.common.*;version=1.0,
+                            net.jcip.annotations.*;version=1.0,
+                            org.joda.time.*;version=1.6,
+                            org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                         </Private-Package>
                         <Import-Package>
                             java.util.*,
@@ -101,12 +99,14 @@
                             org.xml.sax.*,
 
                             <!-- Sling and OSGi -->
+                            <!--
                             org.apache.sling.*,
                             org.osgi.*,
-
+-->
                             <!-- JCR and Jackrabbit API -->
+<!--
                             javax.jcr.*,
-
+-->
                             <!-- Logging -->
                             org.slf4j,
 

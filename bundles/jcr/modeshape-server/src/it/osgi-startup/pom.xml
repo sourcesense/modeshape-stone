@@ -66,20 +66,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.sourcesense.stone</groupId>
-            <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr</artifactId>
-            <version>1.6.0</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!--
          | The bundle we want to test
         -->
@@ -89,10 +75,64 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        
+
+		<!--
+			ModeShape bundles
+		-->
+		<dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-common</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-graph</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-jcr-api</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-repository</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-search-lucene</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-cnd</artifactId>
+            <version>${modeshape.version}</version>
+            <scope>provided</scope>
+        </dependency>
+		<!--
+			Extra bundle
+		-->
+		<dependency>
             <groupId>com.sourcesense.stone</groupId>
-            <artifactId>com.sourcesense.stone.bundle.test</artifactId>
+            <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -135,6 +175,13 @@
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.configadmin</artifactId>
             <version>1.2.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr</artifactId>
+            <version>1.6.0</version>
             <scope>provided</scope>
         </dependency>
 

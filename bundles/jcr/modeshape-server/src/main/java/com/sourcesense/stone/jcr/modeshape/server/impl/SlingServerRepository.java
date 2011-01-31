@@ -1,14 +1,12 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URL;
-import java.util.Formatter;
 import javax.jcr.Repository;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.modeshape.common.collection.Problem;
 import org.modeshape.common.component.ClassLoaderFactory;
+import org.modeshape.graph.ExecutionContext;
 import org.modeshape.jcr.JcrConfiguration;
 import org.modeshape.jcr.JcrEngine;
 import org.osgi.framework.Bundle;
@@ -66,80 +64,49 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
         URL configURL = new URL(configFilePath);
 
-//        ExecutionContext executionContext = new ExecutionContext() {
-//            @Override
-//            public ClassLoader getClassLoader( String... classpath ) {
-//                return new ClassLoader() {
-//                    @Override
-//                    protected Class<?> findClass( String name ) throws ClassNotFoundException {
-//
-//                        Bundle[] bundles = getComponentContext().getBundleContext().getBundles();
-//                        for (Bundle bundle : bundles) {
-//                            try {
-//                                return bundle.loadClass(name);
-//                            } catch (ClassNotFoundException e) {
-//                                if (log.isInfoEnabled()) {
-//                                    log.info("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
-//                                }
-//                            }
-//                        }
-//                        throw new ClassNotFoundException(String.format("Class with name %s not found in loaded bundles", name));
-//                    }
-//                };
-//            }
-//        };
-        
-        JcrConfiguration configuration = new JcrConfiguration();
-        configuration.withClassLoaderFactory(new ClassLoaderFactory() {
-            
-            @Override
-            public ClassLoader getClassLoader( String... classpath ) {
-                return new ClassLoader() {
-                    @Override
-                    protected Class<?> findClass( String name ) throws ClassNotFoundException {
+        ExecutionContext executionContext = new ExecutionContext() {
 
-                        Bundle[] bundles = getComponentContext().getBundleContext().getBundles();
-                        for (Bundle bundle : bundles) {
-                            try {
-                                return bundle.loadClass(name);
-                            } catch (ClassNotFoundException e) {
-                                if (log.isInfoEnabled()) {
-                                    log.info("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
+            @Override
+            protected ClassLoaderFactory getClassLoaderFactory() {
+                return new ClassLoaderFactory() {
+
+                    @Override
+                    public ClassLoader getClassLoader( String... classpath ) {
+                        return new ClassLoader() {
+                            @Override
+                            protected Class<?> findClass( String name ) throws ClassNotFoundException {
+
+                                Bundle[] bundles = getComponentContext().getBundleContext().getBundles();
+                                for (Bundle bundle : bundles) {
+                                    try {
+                                        @SuppressWarnings( "rawtypes" )
+                                        Class loadedClass = bundle.loadClass(name);
+                                        if (log.isInfoEnabled()) {
+                                            log.info("Class {} found in bundle {}", name, bundle.getSymbolicName());
+                                        }
+                                        return loadedClass;
+                                    } catch (ClassNotFoundException e) {
+                                        if (log.isInfoEnabled()) {
+                                            log.info("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
+                                        }
+                                    }
                                 }
+                                throw new ClassNotFoundException(String.format("Class with name %s not found in loaded bundles",
+                                                                               name));
                             }
-                        }
-                        throw new ClassNotFoundException(String.format("Class with name %s not found in loaded bundles", name));
+                        };
                     }
                 };
             }
-        });
-        
-        
+        };
+
+        JcrConfiguration configuration = new JcrConfiguration(executionContext);
+
         try {
             configuration.loadFrom(configURL);
             if (!configuration.getProblems().isEmpty()) {
-                Formatter fmt = new Formatter().format("Some error occurred while loading configuration '%s'%n%n", configURL);
-                int index = 1;
                 for (Problem problem : configuration.getProblems()) {
-                    fmt.format("%s) %s%n", index++, problem.getMessageString());
-
-                    Throwable cause = problem.getThrowable();
-                    if (cause != null) {
-                        StringWriter writer = new StringWriter();
-                        cause.printStackTrace(new PrintWriter(writer));
-                        fmt.format("Caused by: %s", writer.getBuffer());
-                    }
-
-                    fmt.format("%n");
-                }
-
-                if (configuration.getProblems().size() == 1) {
-                    fmt.format("1 error");
-                } else {
-                    fmt.format("%s errors", configuration.getProblems().size());
-                }
-                if (log.isInfoEnabled()) {
-                    log.info(fmt.toString());
+                    log.error(problem.getMessageString());
                 }
             } else {
                 engine = configuration.build();
