@@ -38,16 +38,35 @@ public class IntegrationTestUtil {
 
     static int countConfigurationsFor( BundleContext bundleContext,
                                        String factoryPid ) throws IOException, InvalidSyntaxException {
-        ServiceReference configurationAdminServiceReference = bundleContext.getServiceReference(ConfigurationAdmin.class.getName());
-        ConfigurationAdmin configurationAdminService = (ConfigurationAdmin)bundleContext.getService(configurationAdminServiceReference);
+        Configuration[] modeShapeRepositoryConfigurations = getConfigurationsFor(bundleContext, factoryPid);
+        return null == modeShapeRepositoryConfigurations ? 0 : modeShapeRepositoryConfigurations.length;
+    }
 
+    static Configuration[] getConfigurationsFor( BundleContext bundleContext,
+                                                 String factoryPid ) throws IOException, InvalidSyntaxException {
+        ConfigurationAdmin configurationAdminService = getConfigurationAdminService(bundleContext);
         Configuration[] modeShapeRepositoryConfigurations = configurationAdminService.listConfigurations("("
                                                                                                          + ConfigurationAdmin.SERVICE_FACTORYPID
                                                                                                          + "=" + factoryPid + ")");
-        return modeShapeRepositoryConfigurations.length;
+        return modeShapeRepositoryConfigurations;
     }
-    
-    static int countModeShapeRepositoryConfigurations(BundleContext bundleContext) throws IOException, InvalidSyntaxException {
+
+    static ConfigurationAdmin getConfigurationAdminService( BundleContext bundleContext ) {
+        ServiceReference configurationAdminServiceReference = bundleContext.getServiceReference(ConfigurationAdmin.class.getName());
+        ConfigurationAdmin configurationAdminService = (ConfigurationAdmin)bundleContext.getService(configurationAdminServiceReference);
+        return configurationAdminService;
+    }
+
+    static int countModeShapeRepositoryConfigurations( BundleContext bundleContext ) throws IOException, InvalidSyntaxException {
         return countConfigurationsFor(bundleContext, ActivatorHelper.SERVER_REPOSITORY_FACTORY_PID);
+    }
+
+    static void removeModeShapeRepositoryConfigurations( BundleContext bundleContext ) throws IOException, InvalidSyntaxException {
+        Configuration[] modeShapeRepositoryConfigurations = getConfigurationsFor(bundleContext,
+                                                                                 ActivatorHelper.SERVER_REPOSITORY_FACTORY_PID);
+
+        for (Configuration modeShapeConfiguration : modeShapeRepositoryConfigurations) {
+            modeShapeConfiguration.delete();
+        }
     }
 }
