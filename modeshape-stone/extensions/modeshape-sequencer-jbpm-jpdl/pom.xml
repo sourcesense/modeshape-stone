@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>modeshape-sequencer-jbpm-jpdl</artifactId>
 	<packaging>jar</packaging>
+	<version>2.4.0.Final-stone-SNAPSHOT</version>
 	<name>ModeShape jBPM jPDL Sequencer</name>
 	<description>
 		ModeShape Sequencer that processes jPDL XML document

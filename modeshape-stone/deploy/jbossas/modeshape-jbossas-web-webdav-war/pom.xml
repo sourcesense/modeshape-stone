@@ -4,7 +4,7 @@
 		<artifactId>modeshape</artifactId>
 		<groupId>org.modeshape</groupId>
 		<version>2.4.0.Final-stone-SNAPSHOT</version>
-		<relativePath>../../../</relativePath>
+		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>modeshape-jbossas-web-webdav-war</artifactId>
 	<packaging>war</packaging>

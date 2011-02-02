@@ -8,7 +8,9 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
+  <groupId>org.modeshape.examples</groupId>
   <artifactId>modeshape-example-sequencers</artifactId>
+  <version>2.4.0.Final-stone-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>ModeShape Sequencer Examples</name>
   <description>Examples that showcase how to use sequencers with a JCR repository.</description>
