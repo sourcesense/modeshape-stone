@@ -64,9 +64,9 @@
                         </resource>
                     </webResources>
                 
-                    <excludes>
+                    <!-- excludes>
                         <exclude>**/*slf4j*.jar</exclude>
-                    </excludes>
+                    </excludes -->
                 </configuration>
             </plugin>
 			<plugin>
