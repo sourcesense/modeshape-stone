@@ -500,7 +500,7 @@ public class AstNode implements Iterable<AstNode> {
      */
     @Override
     public String toString() {
-        return getString(ExecutionContext.DEFAULT_CONTEXT);
+        return getString(ExecutionContext.getDefaultContext());
     }
 
     /**
