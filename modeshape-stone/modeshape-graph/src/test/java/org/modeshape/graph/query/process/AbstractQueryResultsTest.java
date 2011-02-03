@@ -53,7 +53,7 @@ import org.modeshape.graph.query.validate.Schemata;
  */
 public abstract class AbstractQueryResultsTest extends AbstractQueryTest {
 
-    protected ExecutionContext executionContext = ExecutionContext.DEFAULT_CONTEXT;
+    protected ExecutionContext executionContext = ExecutionContext.getDefaultContext();
     protected TypeSystem typeSystem = executionContext.getValueFactories().getTypeSystem();
 
     protected Path path( String name ) {

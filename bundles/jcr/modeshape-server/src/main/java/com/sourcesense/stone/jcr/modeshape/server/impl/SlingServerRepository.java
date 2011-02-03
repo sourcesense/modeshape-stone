@@ -64,17 +64,9 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         URL configURL = new URL(configFilePath);
 
         ExecutionContext executionContext = new ExecutionContext() {
-
             @Override
             protected ClassLoaderFactory getClassLoaderFactory() {
-//                return new BundleClassLoaderFactory(getComponentContext());
-                return new ClassLoaderFactory() {
-                    
-                    @Override
-                    public ClassLoader getClassLoader( String... classpath ) {
-                        return SlingServerRepository.class.getClassLoader();
-                    }
-                };
+                return new BundleClassLoaderFactory(getComponentContext());
             }
         };
 

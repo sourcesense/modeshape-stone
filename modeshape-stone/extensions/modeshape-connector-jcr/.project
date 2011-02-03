@@ -1,23 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>modeshape-connector-jcr</name>
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.maven.ide.eclipse.maven2Builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.maven.ide.eclipse.maven2Nature</nature>
-	</natures>
+  <name>modeshape-connector-jcr</name>
+  <comment>ModeShape Connector that interfaces with a JCR instance running in the same process.</comment>
+  <projects>
+    <project>modeshape-cnd</project>
+    <project>modeshape-common</project>
+    <project>modeshape-graph</project>
+    <project>modeshape-jcr</project>
+    <project>modeshape-jcr-api</project>
+    <project>modeshape-repository</project>
+    <project>modeshape-search-lucene</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.maven.ide.eclipse.maven2Builder</name>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.maven.ide.eclipse.maven2Nature</nature>
+  </natures>
 </projectDescription>

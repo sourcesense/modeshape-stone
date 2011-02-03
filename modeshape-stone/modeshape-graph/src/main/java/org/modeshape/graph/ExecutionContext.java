@@ -61,7 +61,7 @@ import org.modeshape.graph.property.basic.ThreadSafeNamespaceRegistry;
 @Immutable
 public class ExecutionContext implements ClassLoaderFactory, Cloneable {
 
-    public static final ExecutionContext DEFAULT_CONTEXT = new ExecutionContext();
+//    public static final ExecutionContext DEFAULT_CONTEXT = new ExecutionContext();
 
     private final ClassLoaderFactory classLoaderFactory;
     private final PropertyFactory propertyFactory;
@@ -166,6 +166,7 @@ public class ExecutionContext implements ClassLoaderFactory, Cloneable {
     private MimeTypeDetector createDefaultMimeTypeDetector() {
         MimeTypeDetectors detectors = new MimeTypeDetectors();
         detectors.addDetector(ExtensionBasedMimeTypeDetector.CONFIGURATION);
+        detectors.setClassLoaderFactory(getClassLoaderFactory());
         return detectors;
     }
 
@@ -468,5 +469,9 @@ public class ExecutionContext implements ClassLoaderFactory, Cloneable {
         public void logout() {
         }
 
+    }
+
+    public static ExecutionContext getDefaultContext() {
+        return new ExecutionContext();
     }
 }
