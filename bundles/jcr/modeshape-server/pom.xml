@@ -157,7 +157,7 @@
 
     <properties>
         <sling.version>2.1.0</sling.version>
-        <modeshape.version>2.3.0.Final</modeshape.version>
+        <modeshape.version>2.4.0.Final-stone-SNAPSHOT</modeshape.version>
         <jackrabbit.version>2.2.0</jackrabbit.version>
         <slf4j.version>1.5.0</slf4j.version>
     </properties>

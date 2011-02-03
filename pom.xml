@@ -65,6 +65,7 @@
 
     <!-- List modules to be included in the build here ! -->
     <modules>
+        <module>modeshape-stone</module>
         <module>bundles/external-dependencies</module>
         <module>bundles/jcr/modeshape-server</module>
     </modules>
