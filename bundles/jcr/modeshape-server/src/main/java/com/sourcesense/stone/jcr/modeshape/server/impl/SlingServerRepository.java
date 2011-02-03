@@ -9,7 +9,6 @@ import org.modeshape.common.component.ClassLoaderFactory;
 import org.modeshape.graph.ExecutionContext;
 import org.modeshape.jcr.JcrConfiguration;
 import org.modeshape.jcr.JcrEngine;
-import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,33 +67,12 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
             @Override
             protected ClassLoaderFactory getClassLoaderFactory() {
+//                return new BundleClassLoaderFactory(getComponentContext());
                 return new ClassLoaderFactory() {
-
+                    
                     @Override
                     public ClassLoader getClassLoader( String... classpath ) {
-                        return new ClassLoader() {
-                            @Override
-                            protected Class<?> findClass( String name ) throws ClassNotFoundException {
-
-                                Bundle[] bundles = getComponentContext().getBundleContext().getBundles();
-                                for (Bundle bundle : bundles) {
-                                    try {
-                                        @SuppressWarnings( "rawtypes" )
-                                        Class loadedClass = bundle.loadClass(name);
-                                        if (log.isInfoEnabled()) {
-                                            log.info("Class {} found in bundle {}", name, bundle.getSymbolicName());
-                                        }
-                                        return loadedClass;
-                                    } catch (ClassNotFoundException e) {
-                                        if (log.isInfoEnabled()) {
-                                            log.info("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
-                                        }
-                                    }
-                                }
-                                throw new ClassNotFoundException(String.format("Class with name %s not found in loaded bundles",
-                                                                               name));
-                            }
-                        };
+                        return SlingServerRepository.class.getClassLoader();
                     }
                 };
             }
