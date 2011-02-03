@@ -76,7 +76,6 @@
                 <configuration>
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
-                        <Bundle-Activator>com.sourcesense.stone.jcr.modeshape.server.impl.Activator</Bundle-Activator>
                         <Export-Package>
                             com.sourcesense.stone.test.services.*,
                         </Export-Package>
