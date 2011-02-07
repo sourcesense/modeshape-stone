@@ -59,12 +59,12 @@ public class SequencingServiceTest {
     @Before
     public void beforeEach() {
         ExecutionContext context = new ExecutionContext();
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(context);
         configSource.setDefaultWorkspaceName("default");
         Path configPath = context.getValueFactories().getPathFactory().create("/");
 
         sources = new RepositoryLibrary(configSource, "default", configPath, context, new LocalObservationBus());
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName(REPOSITORY_SOURCE_NAME);
         sources.addSource(source);
 

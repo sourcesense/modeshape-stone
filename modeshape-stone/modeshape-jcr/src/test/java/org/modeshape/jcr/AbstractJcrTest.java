@@ -107,7 +107,7 @@ public abstract class AbstractJcrTest {
     @Before
     public void beforeEach() throws Exception {
         // Set up the store ...
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName("store");
         // Use a connection factory so we can count the number of connections that were made
         RepositoryConnectionFactory connectionFactory = new RepositoryConnectionFactory() {

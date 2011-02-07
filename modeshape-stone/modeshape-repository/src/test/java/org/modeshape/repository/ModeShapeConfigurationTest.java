@@ -178,7 +178,7 @@ public class ModeShapeConfigurationTest {
 
     @Test
     public void shoulLoadConfigurationFromRepositorySource() throws Exception {
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("name");
         configuration.loadFrom(source);
         assertThat(configuration.getProblems().isEmpty(), is(true));
@@ -205,7 +205,7 @@ public class ModeShapeConfigurationTest {
 
     @Test
     public void shouldLoadConfigurationFromInMemoryRepositorySource() {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(context);
         configSource.setName("config repo");
         configuration.loadFrom(configSource).and().save();
         assertThat(configuration, is(notNullValue()));
@@ -536,7 +536,7 @@ public class ModeShapeConfigurationTest {
             this.parents = new Stack<Path>();
 
             String name = "Handler Source";
-            source = new InMemoryRepositorySource();
+            source = new InMemoryRepositorySource(context);
             source.setName(name);
 
             this.graph = Graph.create(source, context);

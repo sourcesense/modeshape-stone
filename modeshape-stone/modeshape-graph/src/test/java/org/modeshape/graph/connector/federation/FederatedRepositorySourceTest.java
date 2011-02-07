@@ -82,7 +82,7 @@ public class FederatedRepositorySourceTest {
         context = new ExecutionContext();
         configurationSourceName = "configuration";
         repositoryName = "Test Repository";
-        configRepositorySource = new InMemoryRepositorySource();
+        configRepositorySource = new InMemoryRepositorySource(context);
         configRepositorySource.setName("Configuration Repository");
 
         repositoryContext = new RepositoryContext() {

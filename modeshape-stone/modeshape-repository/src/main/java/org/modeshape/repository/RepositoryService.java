@@ -23,6 +23,7 @@
  */
 package org.modeshape.repository;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
@@ -309,7 +310,13 @@ public class RepositoryService implements AdministeredService, Observer {
         Object instance = null;
         try {
             Class<?> sourceClass = classLoader.loadClass(classname);
-            instance = sourceClass.newInstance();
+            try {
+                Constructor<?> constructorWithExecutionContextAsParameter = sourceClass.getConstructor(ExecutionContext.class);
+                instance = constructorWithExecutionContextAsParameter.newInstance(context);
+            }
+            catch (Exception e) {
+                instance = sourceClass.newInstance();
+            }
         } catch (ClassNotFoundException err) {
             problems.addError(err, RepositoryI18n.unableToLoadClassUsingClasspath, classname, classpath);
         } catch (IllegalAccessException err) {

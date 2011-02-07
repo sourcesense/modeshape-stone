@@ -657,7 +657,7 @@ public class JcrRepository implements Repository {
             // (The federation connector refers to this configuration as an "offset mirror".)
             systemWorkspaceName = "jcr:system";
             systemSourceName = "jcr:system source";
-            transientSystemSource = new InMemoryRepositorySource();
+            transientSystemSource = new InMemoryRepositorySource(executionContext);
             transientSystemSource.setName(systemSourceName);
             transientSystemSource.setDefaultWorkspaceName(systemWorkspaceName);
             connectionFactoryWithSystem = new DelegatingConnectionFactory(connectionFactory, transientSystemSource);

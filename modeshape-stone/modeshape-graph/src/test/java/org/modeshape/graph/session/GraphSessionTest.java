@@ -71,7 +71,7 @@ public class GraphSessionTest {
     public void beforeEach() throws Exception {
         context = new ExecutionContext();
         pathFactory = context.getValueFactories().getPathFactory();
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName("store");
         // Use a connection factory so we can count the number of connections that were made
         RepositoryConnectionFactory connectionFactory = new RepositoryConnectionFactory() {

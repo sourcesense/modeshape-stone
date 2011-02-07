@@ -93,7 +93,7 @@ public abstract class AbstractFederatedRepositorySourceIntegrationTest {
         repositoryName = "Test Repository";
 
         // Set up the configuration repository ...
-        configRepositorySource = new InMemoryRepositorySource();
+        configRepositorySource = new InMemoryRepositorySource(context);
         configRepositorySource.setName("Configuration Repository");
         configRepositorySource.setDefaultWorkspaceName(configurationWorkspaceName);
 
@@ -211,7 +211,7 @@ public abstract class AbstractFederatedRepositorySourceIntegrationTest {
         InMemoryRepositorySource source = sources.get(sourceName);
         if (source == null) {
             // Add a new source with this name ...
-            source = new InMemoryRepositorySource();
+            source = new InMemoryRepositorySource(context);
             source.setName(sourceName);
             sources.put(sourceName, source);
             final InMemoryRepositorySource newSource = source;

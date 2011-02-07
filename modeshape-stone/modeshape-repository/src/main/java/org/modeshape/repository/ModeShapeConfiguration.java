@@ -123,7 +123,7 @@ public class ModeShapeConfiguration {
         this.context = context;
 
         // Create the in-memory repository source in which the content will be stored ...
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName(DEFAULT_CONFIGURATION_SOURCE_NAME);
         source.setDefaultWorkspaceName(DEFAULT_WORKSPACE_NAME);
 
@@ -276,7 +276,7 @@ public class ModeShapeConfiguration {
         CheckArg.isNotNull(configurationFileInputStream, "configurationFileInputStream");
 
         // Create the in-memory repository source in which the content will be stored ...
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName(DEFAULT_CONFIGURATION_SOURCE_NAME);
         source.setDefaultWorkspaceName(DEFAULT_WORKSPACE_NAME);
 

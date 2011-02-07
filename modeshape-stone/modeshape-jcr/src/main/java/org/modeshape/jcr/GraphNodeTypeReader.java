@@ -273,7 +273,7 @@ class GraphNodeTypeReader implements Iterable<NodeTypeDefinition> {
     @SuppressWarnings( "cast" )
     public void read( String content,
                       String resourceName ) {
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("Node Type Import Source");
         Graph graph = Graph.create(source, context);
 

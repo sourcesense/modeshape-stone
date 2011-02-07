@@ -193,7 +193,7 @@ public class Graph {
      * @throws IllegalArgumentException if the context parameter is null
      */
     public static Graph create( ExecutionContext context ) {
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("Transient source");
         return create(source, context);
     }

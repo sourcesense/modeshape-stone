@@ -89,16 +89,16 @@ public abstract class AbstractSessionTest {
         workspaceName = "workspace1";
         final String repositorySourceName = "repository";
 
-        // Set up the source ...
-        source = new InMemoryRepositorySource();
-        source.setName(workspaceName);
-        source.setDefaultWorkspaceName(workspaceName);
-
         // Set up the execution context ...
         context = new ExecutionContext();
         // Register the test namespace
         context.getNamespaceRegistry().register(TestLexicon.Namespace.PREFIX, TestLexicon.Namespace.URI);
         PathFactory pathFactory = context.getValueFactories().getPathFactory();
+
+        // Set up the source ...
+        source = new InMemoryRepositorySource(context);
+        source.setName(workspaceName);
+        source.setDefaultWorkspaceName(workspaceName);
 
         // Set up the initial content ...
         graph = JcrGraph.create(source, context);

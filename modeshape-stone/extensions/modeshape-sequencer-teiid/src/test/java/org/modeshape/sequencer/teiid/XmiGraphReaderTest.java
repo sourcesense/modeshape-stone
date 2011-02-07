@@ -51,7 +51,7 @@ public class XmiGraphReaderTest {
     @Before
     public void beforeEach() {
         context = new ExecutionContext();
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("Source");
         graph = Graph.create(source, context);
         subgraph = graph.getSubgraphOfDepth(1).at("/");

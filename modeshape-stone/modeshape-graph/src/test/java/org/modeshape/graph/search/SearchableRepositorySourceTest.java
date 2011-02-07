@@ -90,7 +90,7 @@ public class SearchableRepositorySourceTest {
         schemata = ImmutableSchemata.createBuilder(typeSystem).addTable("t1", "c1", "c2", "c3").build();
         sql = new SqlQueryParser();
 
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("source1");
         this.wrapped = source;
 
@@ -219,7 +219,7 @@ public class SearchableRepositorySourceTest {
             }
         };
         final AtomicInteger called = new AtomicInteger(0);
-        wrapped = new InMemoryRepositorySource() {
+        wrapped = new InMemoryRepositorySource(context) {
             private static final long serialVersionUID = 1L;
 
             @Override

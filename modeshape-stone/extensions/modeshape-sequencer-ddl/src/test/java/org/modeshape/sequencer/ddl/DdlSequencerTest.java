@@ -77,7 +77,7 @@ public class DdlSequencerTest {
         context.getNamespaceRegistry().register(PostgresDdlLexicon.Namespace.PREFIX, PostgresDdlLexicon.Namespace.URI);
         context.getNamespaceRegistry().register(MySqlDdlLexicon.Namespace.PREFIX, MySqlDdlLexicon.Namespace.URI);
 
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("actual");
         graph = Graph.create(source, context);
 

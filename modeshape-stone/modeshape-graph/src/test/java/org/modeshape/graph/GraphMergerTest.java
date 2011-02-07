@@ -51,7 +51,7 @@ public class GraphMergerTest {
     public void beforeEaach() {
         context = new ExecutionContext();
 
-        graphSource = new InMemoryRepositorySource();
+        graphSource = new InMemoryRepositorySource(context);
         graphSource.setName("Graph source");
 
         initialContentSource = new XmlFileRepositorySource();

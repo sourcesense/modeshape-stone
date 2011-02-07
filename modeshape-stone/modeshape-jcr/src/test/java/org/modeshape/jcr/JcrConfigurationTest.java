@@ -174,7 +174,7 @@ public class JcrConfigurationTest {
 
     @Test
     public void shouldAllowSettingUpConfigurationRepositoryWithDifferentWorkspaceName() throws Exception {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(context());
         configSource.setName("config2");
         configSource.setRetryLimit(5);
         configuration.loadFrom(configSource, "workspaceXYZ");

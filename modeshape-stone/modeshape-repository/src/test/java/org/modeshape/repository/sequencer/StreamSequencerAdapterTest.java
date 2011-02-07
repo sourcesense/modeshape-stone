@@ -93,7 +93,7 @@ public class StreamSequencerAdapterTest {
         this.sequencerOutput = new SequencerOutputMap(this.context.getValueFactories());
         final SequencerOutputMap finalOutput = sequencerOutput;
 
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName(repositorySourceName);
         graph = Graph.create(source.getConnection(), context);
         this.streamSequencer = new StreamSequencer() {
@@ -606,7 +606,7 @@ public class StreamSequencerAdapterTest {
     public void shouldSequenceInputFromOneGraphAndSaveOutputToAnotherGraph() throws Exception {
         // Set up the second source ...
         String repositorySourceName2 = "repository2";
-        InMemoryRepositorySource source2 = new InMemoryRepositorySource();
+        InMemoryRepositorySource source2 = new InMemoryRepositorySource(context);
         source2.setName(repositorySourceName2);
         Graph graph2 = Graph.create(source2.getConnection(), context);
         seqContext = new SequencerContext(context, graph, graph2, now);

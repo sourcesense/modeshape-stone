@@ -34,6 +34,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.common.collection.Problem;
+import org.modeshape.graph.ExecutionContext;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.inmemory.InMemoryRepositorySource;
 import org.modeshape.graph.connector.path.cache.InMemoryWorkspaceCache.InMemoryCachePolicy;
@@ -73,7 +74,7 @@ public class ModeShapeEngineTest {
 
     @Test
     public void shouldAllowCreatingWithConfigRepository() throws InterruptedException {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(new ExecutionContext());
         configSource.setName("config repo");
         engine = new ModeShapeConfiguration().loadFrom(configSource).build();
         engine.start();
@@ -92,7 +93,7 @@ public class ModeShapeEngineTest {
 
     @Test
     public void shouldAllowCreatingMultipleRepositorySources() throws Exception {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(new ExecutionContext());
         configSource.setName("config repo");
         engine = new ModeShapeConfiguration().loadFrom(configSource)
                                              .and()
@@ -123,7 +124,7 @@ public class ModeShapeEngineTest {
 
     @Test
     public void shouldAllowAddingMimeTypeDetectors() throws Exception {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(new ExecutionContext());
         configSource.setName("config repo");
         engine = new ModeShapeConfiguration().loadFrom(configSource)
                                              .and()
@@ -148,7 +149,7 @@ public class ModeShapeEngineTest {
 
     @Test
     public void shouldAllowAddingSequencers() throws Exception {
-        InMemoryRepositorySource configSource = new InMemoryRepositorySource();
+        InMemoryRepositorySource configSource = new InMemoryRepositorySource(new ExecutionContext());
         configSource.setName("config repo");
         engine = new ModeShapeConfiguration().loadFrom(configSource)
                                              .and()

@@ -252,7 +252,7 @@ public class XmlFileRepositorySource implements RepositorySource, ObjectFactory 
     public synchronized RepositoryConnection getConnection() throws RepositorySourceException {
         if (inMemorySource == null) {
             // Initialize the source and load the content ...
-            inMemorySource = new InMemoryRepositorySource();
+            inMemorySource = new InMemoryRepositorySource(defaultContext);
             inMemorySource.setName(name);
 
             if (content != null && content.length() != 0) {

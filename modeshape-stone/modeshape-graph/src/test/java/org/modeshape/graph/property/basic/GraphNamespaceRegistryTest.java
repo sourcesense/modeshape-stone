@@ -71,7 +71,7 @@ public class GraphNamespaceRegistryTest extends AbstractNamespaceRegistryTest<Gr
             propertyFactory.create(nameFactory.create("other:something2"), "Some other value2")};
 
         // Set up the repository that we'll be using ...
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName("namespace repository");
         graph = Graph.create(source, context);
 

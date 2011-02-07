@@ -60,15 +60,16 @@ public abstract class AbstractJcrAccessTest {
 
         String workspaceName = "workspace1";
 
-        // Set up the source ...
-        source = new InMemoryRepositorySource();
-        source.setName(workspaceName);
-        source.setDefaultWorkspaceName(workspaceName);
 
         // Set up the execution context ...
         ExecutionContext context = new ExecutionContext();
         // Register the test namespace
         context.getNamespaceRegistry().register(TestLexicon.Namespace.PREFIX, TestLexicon.Namespace.URI);
+
+        // Set up the source ...
+        source = new InMemoryRepositorySource(context);
+        source.setName(workspaceName);
+        source.setDefaultWorkspaceName(workspaceName);
 
         // Stub out the connection factory ...
         RepositoryConnectionFactory connectionFactory = new RepositoryConnectionFactory() {

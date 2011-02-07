@@ -42,7 +42,7 @@ public class InMemoryRepositoryTest {
         context = new ExecutionContext();
         repositoryContext = mock(RepositoryContext.class);
         when(repositoryContext.getExecutionContext()).thenReturn(context);
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName("SomeName");
         source.setRootNodeUuid(UUID.randomUUID());
         source.initialize(repositoryContext);

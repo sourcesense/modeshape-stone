@@ -75,7 +75,7 @@ public class RepositoryServiceTest {
         context.getNamespaceRegistry().register(ModeShapeLexicon.Namespace.PREFIX, ModeShapeLexicon.Namespace.URI);
         configSourceName = "configSource";
         configWorkspaceName = null;
-        configRepositorySource = new InMemoryRepositorySource();
+        configRepositorySource = new InMemoryRepositorySource(context);
         configRepositorySource.setName(configSourceName);
         configRepositorySource.setDefaultWorkspaceName("default");
         configRepository = Graph.create(configRepositorySource, context);

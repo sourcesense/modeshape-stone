@@ -100,13 +100,14 @@ public class JcrRepositoryTest {
         MockitoAnnotations.initMocks(this);
         sourceName = "repository";
 
-        // Set up the source ...
-        source = new InMemoryRepositorySource();
-        source.setName(sourceName);
 
         // Set up the execution context ...
         context = new ExecutionContext();
         credentials = new SimpleCredentials("superuser", "superuser".toCharArray());
+
+        // Set up the source ...
+        source = new InMemoryRepositorySource(context);
+        source.setName(sourceName);
 
         // Stub out the connection factory ...
         connectionFactory = new RepositoryConnectionFactory() {
@@ -636,7 +637,7 @@ public class JcrRepositoryTest {
     @Test
     public void shouldHaveAvailableWorkspacesMatchingThoseInSourceContainingJustDefaultWorkspace() throws Exception {
         // Set up the source ...
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName(sourceName);
         sourceGraph = Graph.create(source(), context);
 
@@ -656,7 +657,7 @@ public class JcrRepositoryTest {
     @Test
     public void shouldHaveAvailableWorkspacesMatchingThoseInSourceContainingPredefinedWorkspaces() throws Exception {
         // Set up the source ...
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName(sourceName);
         source.setPredefinedWorkspaceNames(new String[] {"ws1", "ws2", "ws3"});
         source.setDefaultWorkspaceName("ws1");

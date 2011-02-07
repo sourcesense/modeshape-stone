@@ -398,7 +398,7 @@ public class JackrabbitXmlNodeTypeReader extends GraphNodeTypeReader {
                               Problems problems,
                               String resourceName ) throws SAXException, IOException {
             ExecutionContext context = destination.getExecutionContext();
-            InMemoryRepositorySource source = new InMemoryRepositorySource();
+            InMemoryRepositorySource source = new InMemoryRepositorySource(context);
             source.setName("XML Import Source");
             Graph graph = Graph.create(source, context);
             graph.importXmlFrom(content).into("/");

@@ -185,7 +185,7 @@ public class CndFromEcore {
             debug(TeiidI18n.readingEcoreFile, ecoreFileName);
             StringBuilder sb = new StringBuilder();
             try {
-                InMemoryRepositorySource source = new InMemoryRepositorySource();
+                InMemoryRepositorySource source = new InMemoryRepositorySource(context);
                 source.setName(ecoreName);
                 Graph graph = Graph.create(source, context);
                 graph.importXmlFrom(ecoreFileName).into("/"); // file path or URL or even on classpath

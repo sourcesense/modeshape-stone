@@ -42,7 +42,7 @@ public class InMemoryConnectorWorkspaceTest extends WorkspaceConnectorTest {
      */
     @Override
     protected RepositorySource setUpSource() {
-        InMemoryRepositorySource source = new InMemoryRepositorySource();
+        InMemoryRepositorySource source = new InMemoryRepositorySource(null);
         source.setName("Test Repository");
         return source;
     }

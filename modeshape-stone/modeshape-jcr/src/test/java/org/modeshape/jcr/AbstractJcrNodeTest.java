@@ -634,7 +634,7 @@ public class AbstractJcrNodeTest extends AbstractJcrTest {
     @Test
     public void shouldReturnFalseFromIsSameIfTheRepositoryInstanceIsDifferent() throws Exception {
         // Set up the store ...
-        InMemoryRepositorySource source2 = new InMemoryRepositorySource();
+        InMemoryRepositorySource source2 = new InMemoryRepositorySource(context);
         source2.setName("store");
         Graph store2 = Graph.create(source2, context);
         store2.importXmlFrom(AbstractJcrTest.class.getClassLoader().getResourceAsStream("cars.xml")).into("/");
@@ -657,7 +657,7 @@ public class AbstractJcrNodeTest extends AbstractJcrTest {
     @Test
     public void shouldReturnFalseFromIsSameIfTheWorkspaceNameIsDifferent() throws Exception {
         // Set up the store ...
-        InMemoryRepositorySource source2 = new InMemoryRepositorySource();
+        InMemoryRepositorySource source2 = new InMemoryRepositorySource(context);
         source2.setName("store");
         Graph store2 = Graph.create(source2, context);
         store2.importXmlFrom(AbstractJcrTest.class.getClassLoader().getResourceAsStream("cars.xml")).into("/");
@@ -691,7 +691,7 @@ public class AbstractJcrNodeTest extends AbstractJcrTest {
     @Test
     public void shouldReturnFalseFromIsSameIfTheNodeUuidIsDifferent() throws Exception {
         // Set up the store ...
-        InMemoryRepositorySource source2 = new InMemoryRepositorySource();
+        InMemoryRepositorySource source2 = new InMemoryRepositorySource(context);
         source2.setName("store");
         Graph store2 = Graph.create(source2, context);
         store2.importXmlFrom(AbstractJcrTest.class.getClassLoader().getResourceAsStream("cars.xml")).into("/");
@@ -725,7 +725,7 @@ public class AbstractJcrNodeTest extends AbstractJcrTest {
     @Test
     public void shouldReturnTrueFromIsSameIfTheNodeUuidAndWorkspaceNameAndRepositoryInstanceAreSame() throws Exception {
         // Set up the store ...
-        InMemoryRepositorySource source2 = new InMemoryRepositorySource();
+        InMemoryRepositorySource source2 = new InMemoryRepositorySource(context);
         source2.setName("store");
         Graph store2 = Graph.create(source2, context);
         store2.importXmlFrom(AbstractJcrTest.class.getClassLoader().getResourceAsStream("cars.xml")).into("/");

@@ -50,7 +50,7 @@ public class GraphSequencerOutputTest {
     public void beforeEach() {
         context = new ExecutionContext();
 
-        final InMemoryRepositorySource source = new InMemoryRepositorySource();
+        final InMemoryRepositorySource source = new InMemoryRepositorySource(context);
         source.setName("actual");
         RepositoryContext repositoryContext = new RepositoryContext() {
             @SuppressWarnings( "synthetic-access" )

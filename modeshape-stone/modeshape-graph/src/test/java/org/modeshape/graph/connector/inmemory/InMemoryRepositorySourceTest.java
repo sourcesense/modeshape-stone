@@ -34,7 +34,7 @@ public class InMemoryRepositorySourceTest {
         repositoryContext = mock(RepositoryContext.class);
         when(repositoryContext.getExecutionContext()).thenReturn(context);
 
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName("In-Memory Repository Source");
         source.setPredefinedWorkspaceNames(predefinedWorkspaces);
         // Have to do this or the comparison later will be off when the default workspace is also created

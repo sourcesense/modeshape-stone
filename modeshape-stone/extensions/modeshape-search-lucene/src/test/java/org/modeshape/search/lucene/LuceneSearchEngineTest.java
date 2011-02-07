@@ -100,7 +100,7 @@ public class LuceneSearchEngineTest {
         depthToRead = 10;
 
         // Set up the source and graph instance ...
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName(sourceName);
         content = Graph.create(source, context);
 

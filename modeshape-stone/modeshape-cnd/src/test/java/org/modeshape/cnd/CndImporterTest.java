@@ -77,7 +77,7 @@ public class CndImporterTest {
         context.getNamespaceRegistry().register(JcrNtLexicon.Namespace.PREFIX, JcrNtLexicon.Namespace.URI);
 
         // Set up the repository and graph ...
-        repository = new InMemoryRepositorySource();
+        repository = new InMemoryRepositorySource(context);
         repository.setName("NodeTypes");
         graph = Graph.create(repository, context);
 

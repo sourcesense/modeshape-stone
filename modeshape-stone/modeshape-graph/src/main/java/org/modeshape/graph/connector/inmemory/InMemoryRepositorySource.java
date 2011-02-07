@@ -182,9 +182,9 @@ public class InMemoryRepositorySource implements BaseRepositorySource, ObjectFac
     /**
      * Create a repository source instance.
      */
-    public InMemoryRepositorySource() {
-        this(new ExecutionContext());
-    }
+//    public InMemoryRepositorySource() {
+//        this(new ExecutionContext());
+//    }
     
     public InMemoryRepositorySource(ExecutionContext defaultContext) {
         super();
@@ -472,7 +472,7 @@ public class InMemoryRepositorySource implements BaseRepositorySource, ObjectFac
             }
 
             // Create the source instance ...
-            InMemoryRepositorySource source = new InMemoryRepositorySource();
+            InMemoryRepositorySource source = new InMemoryRepositorySource(defaultContext);
             if (sourceName != null) source.setName(sourceName);
             if (rootNodeUuidString != null) source.setRootNodeUuid(UUID.fromString(rootNodeUuidString));
             if (defaultWorkspaceName != null) source.setDefaultWorkspaceName(defaultWorkspaceName);

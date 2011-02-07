@@ -111,10 +111,10 @@ public class LuceneSearchEngineObservationTest {
         sw = new Stopwatch();
 
         sourceName = "source";
-        source = new InMemoryRepositorySource();
+        source = new InMemoryRepositorySource(context);
         source.setName(sourceName);
         content = Graph.create(source, context);
-        unsearchedSource = new InMemoryRepositorySource();
+        unsearchedSource = new InMemoryRepositorySource(context);
         unsearchedSource.setName(sourceName);
         unsearchedContent = Graph.create(unsearchedSource, context);
 
@@ -316,7 +316,7 @@ public class LuceneSearchEngineObservationTest {
     @Test
     public void shouldEstimateTimeToIndexContent() {
         // Prime the reading of the files ...
-        InMemoryRepositorySource prime = new InMemoryRepositorySource();
+        InMemoryRepositorySource prime = new InMemoryRepositorySource(context);
         prime.setName(sourceName);
         Graph primeGraph = Graph.create(prime, context);
         primeGraph.createWorkspace().named(workspaceName1);
