@@ -1,7 +1,9 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.jcr.Repository;
+import javax.jcr.RepositoryException;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.modeshape.common.collection.Problem;
@@ -58,36 +60,44 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     private Repository findSuitableRepository() throws Exception {
 
         String configFilePath = (String)getComponentContext().getProperties().get("config");
-
+        
         log.info("Reading configuration from {}", configFilePath);
-
+        
         URL configURL = new URL(configFilePath);
-
+        
         ExecutionContext executionContext = new ExecutionContext() {
             @Override
             protected ClassLoaderFactory getClassLoaderFactory() {
                 return new BundleClassLoaderFactory(getComponentContext());
             }
         };
-
+        
         JcrConfiguration configuration = new JcrConfiguration(executionContext);
-
+        
         try {
             configuration.loadFrom(configURL);
             if (!configuration.getProblems().isEmpty()) {
-                for (Problem problem : configuration.getProblems()) {
-                    log.error(problem.getMessageString());
-                }
+                logProblems(configuration);
             } else {
-                engine = configuration.build();
-                engine.start();
-                return engine.getRepository("MyRepository");
+                return startModeShapeRepository(configuration);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         return NO_REPOSITORY;
+    }
+
+    private Repository startModeShapeRepository( JcrConfiguration configuration ) throws RepositoryException {
+        engine = configuration.build();
+        engine.start();
+        return engine.getRepository("MyRepository");
+    }
+
+    private void logProblems( JcrConfiguration configuration ) {
+        for (Problem problem : configuration.getProblems()) {
+            log.error(problem.getMessageString());
+        }
     }
 
     @Override
