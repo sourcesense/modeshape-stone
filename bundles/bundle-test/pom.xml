@@ -153,10 +153,10 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.5.0</version>
 		</dependency>
-
-        <dependency>
+		
+		<dependency>
             <groupId>com.sourcesense.stone</groupId>
-            <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+            <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

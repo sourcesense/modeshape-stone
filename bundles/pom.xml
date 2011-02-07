@@ -35,6 +35,7 @@
 
     <!-- List modules to be included in the build here ! -->
     <modules>
+    	<module>bundle-test</module>
         <module>external-dependencies</module>
         <module>jcr/modeshape-server</module>
     </modules>
