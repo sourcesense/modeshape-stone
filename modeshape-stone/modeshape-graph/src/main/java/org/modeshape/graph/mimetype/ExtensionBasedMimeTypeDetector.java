@@ -26,6 +26,7 @@ package org.modeshape.graph.mimetype;
 import java.io.InputStream;
 import java.util.Map;
 import net.jcip.annotations.Immutable;
+import org.modeshape.common.component.ClassLoaderFactory;
 import org.modeshape.common.util.MimeTypeUtil;
 
 /**
@@ -51,6 +52,10 @@ public class ExtensionBasedMimeTypeDetector extends MimeTypeUtil implements Mime
         super();
     }
 
+	public ExtensionBasedMimeTypeDetector(ClassLoaderFactory classLoaderFactory) {
+        super(classLoaderFactory);
+    }
+    
     /**
      * Create an instance of the extension-based MIME type detector by using the supplied mappings. The set of extension patterns
      * to MIME-types is loaded from the "{@link MimeTypeUtil#MIME_TYPE_EXTENSIONS_RESOURCE_PATH org/modeshape/mime.types}"

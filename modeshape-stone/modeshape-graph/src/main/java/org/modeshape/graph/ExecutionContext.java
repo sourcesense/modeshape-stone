@@ -164,9 +164,8 @@ public class ExecutionContext implements ClassLoaderFactory, Cloneable {
     }
 
     private MimeTypeDetector createDefaultMimeTypeDetector() {
-        MimeTypeDetectors detectors = new MimeTypeDetectors();
+        MimeTypeDetectors detectors = new MimeTypeDetectors(getClassLoaderFactory());
         detectors.addDetector(ExtensionBasedMimeTypeDetector.CONFIGURATION);
-        detectors.setClassLoaderFactory(getClassLoaderFactory());
         return detectors;
     }
 
@@ -175,7 +174,7 @@ public class ExecutionContext implements ClassLoaderFactory, Cloneable {
      * 
      * @return the class loader factory implementation; never null
      */
-    protected ClassLoaderFactory getClassLoaderFactory() {
+    ClassLoaderFactory getClassLoaderFactory() {
         return classLoaderFactory;
     }
 

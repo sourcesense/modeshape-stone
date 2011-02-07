@@ -134,10 +134,13 @@ public class InMemoryRepositorySource implements BaseRepositorySource, ObjectFac
 
     private CachePolicy defaultCachePolicy;
     private transient InMemoryRepository repository;
-    private transient ExecutionContext defaultContext = new ExecutionContext();
+    private transient ExecutionContext defaultContext;
     private transient RepositoryContext repositoryContext = new DefaultRepositoryContext();
 
+	
     protected class DefaultRepositoryContext implements RepositoryContext {
+    
+        
         /**
          * {@inheritDoc}
          * 
@@ -180,7 +183,12 @@ public class InMemoryRepositorySource implements BaseRepositorySource, ObjectFac
      * Create a repository source instance.
      */
     public InMemoryRepositorySource() {
+        this(new ExecutionContext());
+    }
+    
+    public InMemoryRepositorySource(ExecutionContext defaultContext) {
         super();
+        this.defaultContext = defaultContext;
     }
 
     /**

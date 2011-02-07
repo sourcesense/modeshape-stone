@@ -50,10 +50,14 @@ public final class MimeTypeDetectors implements MimeTypeDetector {
     private Logger logger;
 
     public MimeTypeDetectors() {
-        library = new ComponentLibrary<MimeTypeDetector, MimeTypeDetectorConfig>(true);
-        library.setClassLoaderFactory(DEFAULT_CLASSLOADER_FACTORY);
+        this(DEFAULT_CLASSLOADER_FACTORY);
     }
 
+    public MimeTypeDetectors(ClassLoaderFactory classLoaderFactory) {
+        library = new ComponentLibrary<MimeTypeDetector, MimeTypeDetectorConfig>(true);
+        library.setClassLoaderFactory(classLoaderFactory);        
+    }
+    
     /**
      * Adds the configuration for a MIME-type detector <em>before</em> any previously added configurations, or updates any
      * existing one that represents the {@link MimeTypeDetectorConfig#equals(Object) same configuration}
