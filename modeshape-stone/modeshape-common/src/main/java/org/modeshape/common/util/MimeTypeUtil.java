@@ -79,10 +79,10 @@ public class MimeTypeUtil {
      *        be null if the default mappings are to be used
      */
     public MimeTypeUtil( Map<String, String> extensionsToMimeTypes ) {
-        this(extensionsToMimeTypes, true);
+        this(extensionsToMimeTypes, true, Thread.currentThread().getContextClassLoader());
     }
 
-    /**
+	/**
      * Create an instance of the extension-based MIME type detector by using the supplied mappings. If requested, the set of
      * extension patterns to MIME-types is loaded from the "org/modeshape/mime.types" classpath resource and any supplied
      * extension mappings override any default mappings.
@@ -94,7 +94,23 @@ public class MimeTypeUtil {
      */
     public MimeTypeUtil( Map<String, String> extensionsToMimeTypes,
                          boolean initWithDefaults ) {
-        Map<String, String> mappings = initWithDefaults ? getDefaultMappings() : new HashMap<String, String>();
+        this(extensionsToMimeTypes, initWithDefaults, Thread.currentThread().getContextClassLoader());
+    }
+    
+    /**
+     * Create an instance of the extension-based MIME type detector by using the supplied mappings. If requested, the set of
+     * extension patterns to MIME-types is loaded from the "org/modeshape/mime.types" classpath resource and any supplied
+     * extension mappings override any default mappings.
+     * 
+     * @param extensionsToMimeTypes the mapping of extension patterns to MIME types, which will override the default mappings; may
+     *        be null if the default mappings are to be used
+     * @param initWithDefaults true if the default mappings are to be loaded first, or false if the default mappings are not to be
+     *        used at all
+     * @param classLoader the class loader to look for the resource file resolution
+     */
+    public MimeTypeUtil( Map<String, String> extensionsToMimeTypes,
+                         boolean initWithDefaults, ClassLoader classLoader) {
+        Map<String, String> mappings = initWithDefaults ? getMappingsWith(classLoader) : new HashMap<String, String>();
         if (extensionsToMimeTypes != null) {
             for (Map.Entry<String, String> entry : extensionsToMimeTypes.entrySet()) {
                 String extensionString = entry.getKey();
@@ -133,11 +149,15 @@ public class MimeTypeUtil {
      * @return the default mappings; never null
      */
     protected static Map<String, String> getDefaultMappings() {
-        Map<String, Set<String>> duplicates = new HashMap<String, Set<String>>();
-        return load(Thread.currentThread().getContextClassLoader().getResourceAsStream(MIME_TYPE_EXTENSIONS_RESOURCE_PATH),
-                    duplicates);
+		return getMappingsWith(Thread.currentThread().getContextClassLoader());
     }
 
+	protected static Map<String, String> getMappingsWith( ClassLoader classLoader ) {
+        Map<String, Set<String>> duplicates = new HashMap<String, Set<String>>();
+        return load(classLoader.getResourceAsStream(MIME_TYPE_EXTENSIONS_RESOURCE_PATH),
+                    duplicates);
+    }
+    
     /**
      * Load the extensions from the supplied stream, which may provide the contents in the format of property file or a
      * tab-delimited *nix-style MIME types file (common in web servers and libraries). If an extension applies to more than one

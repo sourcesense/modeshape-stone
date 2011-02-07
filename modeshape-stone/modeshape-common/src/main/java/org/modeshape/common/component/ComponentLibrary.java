@@ -24,6 +24,8 @@
 
 package org.modeshape.common.component;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -339,7 +341,12 @@ public class ComponentLibrary<ComponentType, ConfigType extends ComponentConfig>
      */
     @SuppressWarnings( "unchecked" )
     protected ComponentType doCreateInstance( Class<?> componentClass ) throws InstantiationException, IllegalAccessException {
-        return (ComponentType)componentClass.newInstance();
+        try {
+            Constructor<?> constructor = componentClass.getConstructor(ClassLoaderFactory.class);
+            return (ComponentType)constructor.newInstance(getClassLoaderFactory());
+        } catch (Exception exception) {
+            return (ComponentType)componentClass.newInstance();
+        }
     }
 
     /**
