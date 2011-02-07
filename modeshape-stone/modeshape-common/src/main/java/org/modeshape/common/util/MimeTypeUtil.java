@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.jcip.annotations.Immutable;
 import org.modeshape.common.CommonI18n;
+import org.modeshape.common.component.ClassLoaderFactory;
 import org.modeshape.common.i18n.I18n;
 
 /**
@@ -68,6 +69,10 @@ public class MimeTypeUtil {
      */
     public MimeTypeUtil() {
         this(null, true);
+    }
+    
+    public MimeTypeUtil( ClassLoaderFactory classLoaderFactory ) {
+        this(null, true, classLoaderFactory.getClassLoader(new String[]{}));
     }
 
     /**
