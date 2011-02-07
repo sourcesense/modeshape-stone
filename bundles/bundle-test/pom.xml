@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+| Copyright 2011 Sourcesense
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+| http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>com.sourcesense.stone</groupId>
+        <artifactId>stone-bundles</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../../../../pom.xml</relativePath>
+    </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>com.sourcesense.stone.bundle.test</artifactId>
+    <groupId>com.sourcesense.stone</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <name>Stone Test Bundle</name>
+    <description>Bundle providing testing for Stone</description>
+
+    <scm>
+        <connection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/bundle-test</connection>
+        <developerConnection>scm:svn:https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/bundle-test</developerConnection>
+        <url>https://dev.sourcesense.com/repos/dev/stone/trunk/bundles/bundle-test</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <!--
+             | generate the SCR descriptors
+            -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
+
+            <!--
+             | copy the SCR descriptors into the correct location
+             | because the maven-scr-plugin cannot be configured
+             | to write the descriptors elsewhere
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/scr-plugin-generated</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
+                        <Export-Package>
+                            com.sourcesense.stone.test.services.*,
+                        </Export-Package>
+                        <Private-Package></Private-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+
+                        <!-- Embedd some libraries -->
+                        <Embed-Transitive>true</Embed-Transitive>
+
+                        <Embed-Dependency></Embed-Dependency>
+
+                        <_removeheaders>
+                            Embed-Dependency,
+                            Embed-Transitive,
+                            Private-Package,
+                            Include-Resource
+                        </_removeheaders>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <properties>
+        <sling.version>2.1.0</sling.version>
+        <slf4j.version>1.5.0</slf4j.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.api</artifactId>
+            <version>${sling.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.base</artifactId>
+            <version>${sling.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+        <dependency>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+	</dependencies>
+
+</project>
