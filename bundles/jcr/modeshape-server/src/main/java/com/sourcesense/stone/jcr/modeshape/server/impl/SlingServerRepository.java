@@ -1,6 +1,5 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
@@ -67,7 +66,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         
         ExecutionContext executionContext = new ExecutionContext() {
             @Override
-            protected ClassLoaderFactory getClassLoaderFactory() {
+            public ClassLoaderFactory getClassLoaderFactory() {
                 return new BundleClassLoaderFactory(getComponentContext());
             }
         };
@@ -91,7 +90,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     private Repository startModeShapeRepository( JcrConfiguration configuration ) throws RepositoryException {
         engine = configuration.build();
         engine.start();
-        return engine.getRepository("MyRepository");
+        return engine.getRepository("test");
     }
 
     private void logProblems( JcrConfiguration configuration ) {

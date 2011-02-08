@@ -110,7 +110,7 @@ public class ModeShapeEngine {
         this.logger = Logger.getLogger(getClass());
 
         // Use the configuration's context ...
-        this.detectors = new MimeTypeDetectors();
+        this.detectors = new MimeTypeDetectors(context.getClassLoaderFactory());
         this.context = context.with(detectors).with(engineId);
 
         // And set up the scanner ...

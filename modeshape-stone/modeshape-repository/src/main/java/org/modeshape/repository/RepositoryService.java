@@ -306,7 +306,7 @@ public class RepositoryService implements AdministeredService, Observer {
         // Create the instance ...
         String classname = stringFactory.create(classnameProperty.getValues().next());
         String[] classpath = classpathProperty == null ? new String[] {} : stringFactory.create(classpathProperty.getValuesAsArray());
-        ClassLoader classLoader = context.getClassLoader(classpath);
+        ClassLoader classLoader = context.getClassLoaderFactory().getClassLoader(classpath);
         Object instance = null;
         try {
             Class<?> sourceClass = classLoader.loadClass(classname);

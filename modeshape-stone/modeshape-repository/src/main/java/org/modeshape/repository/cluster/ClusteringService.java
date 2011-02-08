@@ -107,7 +107,7 @@ public class ClusteringService implements AdministeredService, ObservationBus {
             throw new IllegalStateException(RepositoryI18n.unableToChangeExecutionContextWhileRunning.text());
         }
         this.executionContext = executionContext;
-        this.busLibrary.setClassLoaderFactory(executionContext);
+        this.busLibrary.setClassLoaderFactory(executionContext.getClassLoaderFactory());
     }
 
     /**
