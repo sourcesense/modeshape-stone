@@ -174,7 +174,7 @@ public class ExecutionContext implements ClassLoaderFactory, Cloneable {
      * 
      * @return the class loader factory implementation; never null
      */
-    ClassLoaderFactory getClassLoaderFactory() {
+    protected ClassLoaderFactory getClassLoaderFactory() {
         return classLoaderFactory;
     }
 
