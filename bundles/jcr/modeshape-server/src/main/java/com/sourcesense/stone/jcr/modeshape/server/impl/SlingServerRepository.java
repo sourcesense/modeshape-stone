@@ -1,6 +1,7 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import java.net.URL;
+import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import org.apache.sling.jcr.api.SlingRepository;
@@ -10,8 +11,11 @@ import org.modeshape.common.component.ClassLoaderFactory;
 import org.modeshape.graph.ExecutionContext;
 import org.modeshape.jcr.JcrConfiguration;
 import org.modeshape.jcr.JcrEngine;
+import org.modeshape.jcr.api.SecurityContext;
+import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
 /**
  * The <code>SlingServerRepository</code> TODO add policy="require"
@@ -59,20 +63,20 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     private Repository findSuitableRepository() throws Exception {
 
         String configFilePath = (String)getComponentContext().getProperties().get("config");
-        
+
         log.info("Reading configuration from {}", configFilePath);
-        
+
         URL configURL = new URL(configFilePath);
-        
+
         ExecutionContext executionContext = new ExecutionContext() {
             @Override
             public ClassLoaderFactory getClassLoaderFactory() {
                 return new BundleClassLoaderFactory(getComponentContext());
             }
         };
-        
+
         JcrConfiguration configuration = new JcrConfiguration(executionContext);
-        
+
         try {
             configuration.loadFrom(configURL);
             if (!configuration.getProblems().isEmpty()) {
@@ -83,7 +87,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return NO_REPOSITORY;
     }
 
@@ -104,5 +108,12 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         super.disposeRepository(repository);
 
         engine.shutdown();
+    }
+    
+    @Override
+    protected Credentials getAdministrativeCredentials( String adminUser ) {
+        // TODO Auto-generated method stub
+        SecurityContext securityContext = new CustomSecurityContext();
+        return new SecurityContextCredentials(securityContext);
     }
 }
