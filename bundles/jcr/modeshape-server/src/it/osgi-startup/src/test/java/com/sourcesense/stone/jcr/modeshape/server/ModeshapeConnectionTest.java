@@ -29,7 +29,6 @@ public class ModeshapeConnectionTest extends AbstractTestCase {
     }
 
     @Test
-    @Ignore
     public void shouldGetValidSlingRepository() throws Exception {
 
         ServiceReference slingRepositoryServiceReference = bundleContext.getServiceReference(SlingRepository.class.getName());
