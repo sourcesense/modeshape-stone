@@ -43,11 +43,15 @@ public class ActivatorHelper {
     }
 
     private void createNewConfigurationIfDoesNotExist( ConfigurationAdmin configurationAdmin ) throws Exception {
-        Configuration[] cfgs = configurationAdmin.listConfigurations("(" + ConfigurationAdmin.SERVICE_FACTORYPID + "="
+        Configuration[] cfgs = configurationAdmin.listConfigurations("("+ ConfigurationAdmin.SERVICE_FACTORYPID + "="
                                                                      + SERVER_REPOSITORY_FACTORY_PID + ")");
         if (cfgs != null && cfgs.length > 0) {
-            log.info("verifyConfiguration: {} Configurations available for {}, nothing to do", new Object[] {
-                new Integer(cfgs.length), SERVER_REPOSITORY_FACTORY_PID});
+            if (log.isInfoEnabled()) {
+                log.info("verifyConfiguration: {} Configurations available for {}, nothing to do", new Object[] {
+                        Integer.valueOf(cfgs.length),
+                        SERVER_REPOSITORY_FACTORY_PID
+                });
+            }
         } else {
             createNewConfiguration(configurationAdmin);
         }
@@ -59,8 +63,12 @@ public class ActivatorHelper {
         final String overrideUrl = bundleContext.getProperty(RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY);
         if (overrideUrl != null && overrideUrl.length() > 0) {
             defaultConfig.put(RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY, overrideUrl);
-            log.info(RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY + "=" + overrideUrl
-                     + ", using it to create the default configuration");
+
+            if (log.isInfoEnabled()) {
+                log.info("{}={}, using it to create the default configuration",
+                        RepositoryAccessor.REPOSITORY_URL_OVERRIDE_PROPERTY,
+                        overrideUrl);
+            }
 
         } else {
             defaultConfig = initDefaultConfig();
@@ -69,7 +77,9 @@ public class ActivatorHelper {
         Configuration config = configurationAdmin.createFactoryConfiguration(SERVER_REPOSITORY_FACTORY_PID);
         config.update(defaultConfig);
 
-        log.info("verifyConfiguration: Created configuration {} for {}", config.getPid(), config.getFactoryPid());
+        if (log.isInfoEnabled()) {
+            log.info("verifyConfiguration: Created configuration {} for {}", config.getPid(), config.getFactoryPid());
+        }
     }
 
     private Hashtable<String, String> initDefaultConfig() throws Exception {
