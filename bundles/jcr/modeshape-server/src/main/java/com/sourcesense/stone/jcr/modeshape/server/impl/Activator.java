@@ -11,13 +11,16 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class Activator implements BundleActivator, ServiceListener {
 
     private static final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
+
     private AccessManagerFactoryTracker accessManagerFactoryTracker;
+
     private ActivatorHelper activatorHelper;
+
     private BundleContext bundleContext;
 
     @Override
     public void serviceChanged( ServiceEvent event ) {
-        if (event.getType() == ServiceEvent.REGISTERED) {
+        if (ServiceEvent.REGISTERED == event.getType()) {
 
             getActivatorHelper().verifyConfiguration(event.getServiceReference());
             bundleContext.removeServiceListener(this);
