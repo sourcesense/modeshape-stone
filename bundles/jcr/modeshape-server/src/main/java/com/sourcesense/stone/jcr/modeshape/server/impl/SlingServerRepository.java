@@ -64,7 +64,9 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
         String configFilePath = (String)getComponentContext().getProperties().get("config");
 
-        log.info("Reading configuration from {}", configFilePath);
+        if (log.isInfoEnabled()) {
+            log.info("Reading configuration from {}", configFilePath);
+        }
 
         URL configURL = new URL(configFilePath);
 
@@ -85,7 +87,11 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
                 return startModeShapeRepository(configuration);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (log.isWarnEnabled()) {
+                log.warn("Impossible to open configuration from URL '{}': {}\nNo javax.jcr.Repository implementation found",
+                        configURL,
+                        e.getMessage());
+            }
         }
 
         return NO_REPOSITORY;
@@ -106,13 +112,13 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     @Override
     public void disposeRepository( Repository repository ) {
         super.disposeRepository(repository);
-
         engine.shutdown();
     }
-    
+
     @Override
     protected Credentials getAdministrativeCredentials( String adminUser ) {
         SecurityContext securityContext = new CustomSecurityContext();
         return new SecurityContextCredentials(securityContext);
     }
+
 }
