@@ -29,13 +29,13 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
                     try {
                         @SuppressWarnings( "rawtypes" )
                         Class loadedClass = bundle.loadClass(name);
-                        if (log.isInfoEnabled()) {
-                            log.info("Class {} found in bundle {}", name, bundle.getSymbolicName());
+                        if (log.isDebugEnabled()) {
+                            log.debug("Class {} found in bundle {}", name, bundle.getSymbolicName());
                         }
                         return loadedClass;
                     } catch (ClassNotFoundException e) {
-                        if (log.isInfoEnabled()) {
-                            log.info("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
+                        if (log.isDebugEnabled()) {
+                            log.debug("Bundle {} does not contain class {}", bundle.getSymbolicName(), name);
                         }
                     }
                 }
@@ -54,12 +54,12 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
                     try {
                         URL resource = bundle.getResource(name);
                         if (null == resource) {
-                            if (log.isInfoEnabled()) {
-                                log.info("Bundle {} does not contain resource {}", bundle.getSymbolicName(), name);
+                            if (log.isDebugEnabled()) {
+                                log.debug("Bundle {} does not contain resource {}", bundle.getSymbolicName(), name);
                             }
                         } else {
-                            if (log.isInfoEnabled()) {
-                                log.info("Resource {} found in bundle {}", name, bundle.getSymbolicName());
+                            if (log.isDebugEnabled()) {
+                                log.debug("Resource {} found in bundle {}", name, bundle.getSymbolicName());
                             }
                             return resource.openStream();
                         }

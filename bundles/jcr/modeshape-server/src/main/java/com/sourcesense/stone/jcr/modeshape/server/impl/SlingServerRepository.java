@@ -112,7 +112,6 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
     
     @Override
     protected Credentials getAdministrativeCredentials( String adminUser ) {
-        // TODO Auto-generated method stub
         SecurityContext securityContext = new CustomSecurityContext();
         return new SecurityContextCredentials(securityContext);
     }

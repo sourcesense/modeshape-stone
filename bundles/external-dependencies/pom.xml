@@ -88,6 +88,7 @@
                             net.jcip.annotations.*;version=1.0,
                             org.joda.time.*;version=1.6,
                             org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
+                            org.tartarus.snowball.*;version=2.4.1,
                         </Export-Package>
                         <Private-Package>
                         </Private-Package>
