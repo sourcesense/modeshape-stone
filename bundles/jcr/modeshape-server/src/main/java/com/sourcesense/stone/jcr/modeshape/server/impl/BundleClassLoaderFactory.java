@@ -43,8 +43,8 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
             }
 
             @Override
-            public Class<?> loadClass( String arg0 ) throws ClassNotFoundException {
-                return findClass(arg0);
+            public Class<?> loadClass( String name ) throws ClassNotFoundException {
+                return findClass(name);
             }
 
             @Override
