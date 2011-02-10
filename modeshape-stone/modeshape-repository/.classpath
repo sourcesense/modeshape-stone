@@ -1,30 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
-	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry kind="var" path="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar" sourcepath="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/collections/google-collections/1.0-rc3/google-collections-1.0-rc3.jar"/>
-	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.2/hsqldb-1.8.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.6/joda-time-1.6.jar"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.4/junit-4.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers/3.0.2/lucene-analyzers-3.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.0.2/lucene-core-3.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-misc/3.0.2/lucene-misc-3.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-regex/3.0.2/lucene-regex-3.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-snowball/3.0.2/lucene-snowball-3.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.8.4/mockito-all-1.8.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/modeshape/modeshape-common/2.4.0.Final-stone-SNAPSHOT/modeshape-common-2.4.0.Final-stone-SNAPSHOT.jar" sourcepath="M2_REPO/org/modeshape/modeshape-common/2.4.0.Final-stone-SNAPSHOT/modeshape-common-2.4.0.Final-stone-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/modeshape/modeshape-common/2.4.0.Final-stone-SNAPSHOT/modeshape-common-2.4.0.Final-stone-SNAPSHOT-tests.jar" sourcepath="M2_REPO/org/modeshape/modeshape-common/2.4.0.Final-stone-SNAPSHOT/modeshape-common-2.4.0.Final-stone-SNAPSHOT-test-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/modeshape/modeshape-graph/2.4.0.Final-stone-SNAPSHOT/modeshape-graph-2.4.0.Final-stone-SNAPSHOT-tests.jar" sourcepath="M2_REPO/org/modeshape/modeshape-graph/2.4.0.Final-stone-SNAPSHOT/modeshape-graph-2.4.0.Final-stone-SNAPSHOT-test-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/modeshape/modeshape-search-lucene/2.4.0.Final-stone-SNAPSHOT/modeshape-search-lucene-2.4.0.Final-stone-SNAPSHOT.jar" sourcepath="M2_REPO/org/modeshape/modeshape-search-lucene/2.4.0.Final-stone-SNAPSHOT/modeshape-search-lucene-2.4.0.Final-stone-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/modeshape-graph"/>
-	<classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
+  <classpathentry kind="src" path="src/test/resources" output="target/test-classes" excluding="**/*.java"/>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar" sourcepath="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/Users/simonetripodi/.m2/repository/javax/jcr/jcr/2.0/jcr-2.0-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/google/collections/google-collections/1.0-rc3/google-collections-1.0-rc3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.2/hsqldb-1.8.0.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar" sourcepath="M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.6/joda-time-1.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.4/junit-4.4.jar" sourcepath="M2_REPO/junit/junit/4.4/junit-4.4-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar" sourcepath="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/Users/simonetripodi/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers/3.0.2/lucene-analyzers-3.0.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.0.2/lucene-core-3.0.2.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/3.0.2/lucene-core-3.0.2-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-misc/3.0.2/lucene-misc-3.0.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-regex/3.0.2/lucene-regex-3.0.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-snowball/3.0.2/lucene-snowball-3.0.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.8.4/mockito-all-1.8.4.jar"/>
+  <classpathentry kind="src" path="/modeshape-common"/>
+  <classpathentry kind="src" path="/modeshape-graph"/>
+  <classpathentry kind="src" path="/modeshape-search-lucene"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar" sourcepath="M2_REPO/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11-sources.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 </classpath>
