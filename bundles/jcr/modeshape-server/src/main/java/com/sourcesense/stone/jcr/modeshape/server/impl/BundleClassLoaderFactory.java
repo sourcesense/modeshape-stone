@@ -5,17 +5,22 @@ import java.io.InputStream;
 import java.net.URL;
 import org.modeshape.common.component.ClassLoaderFactory;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BundleClassLoaderFactory implements ClassLoaderFactory {
 
-    private final ComponentContext componentContext;
+    private final BundleContext bundleContext;
     private static final Logger log = LoggerFactory.getLogger(BundleClassLoaderFactory.class);
 
     public BundleClassLoaderFactory( ComponentContext componentContext ) {
-        this.componentContext = componentContext;
+        this.bundleContext = componentContext.getBundleContext();
+    }
+
+    public BundleClassLoaderFactory( BundleContext bundleContext ) {
+        this.bundleContext = bundleContext;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
             @Override
             protected Class<?> findClass( String name ) throws ClassNotFoundException {
 
-                Bundle[] bundles = componentContext.getBundleContext().getBundles();
+                Bundle[] bundles = bundleContext.getBundles();
                 for (Bundle bundle : bundles) {
                     try {
                         @SuppressWarnings( "rawtypes" )
@@ -49,26 +54,33 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
 
             @Override
             public InputStream getResourceAsStream( String name ) {
-                Bundle[] bundles = componentContext.getBundleContext().getBundles();
-                for (Bundle bundle : bundles) {
-                    try {
-                        URL resource = bundle.getResource(name);
-                        if (null == resource) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Bundle {} does not contain resource {}", bundle.getSymbolicName(), name);
-                            }
-                        } else {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Resource {} found in bundle {}", name, bundle.getSymbolicName());
-                            }
-                            return resource.openStream();
-                        }
+                URL resource = getResource(name);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                try {
+                    return null != resource ? resource.openStream() : super.getResourceAsStream(name);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public URL getResource( String name ) {
+                Bundle[] bundles = bundleContext.getBundles();
+                for (Bundle bundle : bundles) {
+                    URL resource = bundle.getResource(name);
+                    if (null == resource) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Bundle {} does not contain resource {}", bundle.getSymbolicName(), name);
+                        }
+                    } else {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Resource {} found in bundle {}", name, bundle.getSymbolicName());
+                        }
+                        return resource;
                     }
                 }
-                return super.getResourceAsStream(name);
+                return null;
             }
         };
     };
