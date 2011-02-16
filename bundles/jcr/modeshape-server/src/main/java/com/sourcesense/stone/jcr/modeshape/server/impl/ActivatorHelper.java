@@ -2,6 +2,7 @@ package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import java.io.File;
 import java.util.Hashtable;
+
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.apache.sling.jcr.base.util.RepositoryAccessor;
 import org.osgi.framework.BundleContext;
@@ -17,7 +18,7 @@ public class ActivatorHelper {
     public static final String SLING_CONTEXT_DEFAULT = "sling.context.default";
     public static final String SERVER_REPOSITORY_FACTORY_PID = "com.sourcesense.stone.jcr.modeshape.server.SlingServerRepository";
 
-    private static final Logger log = LoggerFactory.getLogger(ActivatorHelper.class);
+    private final Logger log = LoggerFactory.getLogger(ActivatorHelper.class);
 
     private ConfigurationUtils configurationUtils;
     private BundleContext bundleContext;
