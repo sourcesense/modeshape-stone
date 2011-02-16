@@ -23,13 +23,13 @@
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../../</relativePath>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>com.sourcesense.stone.bundle.test</artifactId>
     <groupId>com.sourcesense.stone</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>Stone Test Bundle</name>
+    <name>Stone :: Test Bundle</name>
     <description>Bundle providing testing for Stone</description>
 
     <scm>
@@ -148,19 +148,19 @@
             <version>4.1.0</version>
         </dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.5.0</version>
-		</dependency>
-		
-		<dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.sourcesense.stone</groupId>
             <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
-	</dependencies>
+    </dependencies>
 
 </project>
