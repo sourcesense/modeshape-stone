@@ -11,5 +11,9 @@ public class AccessManagerFactoryTracker extends ServiceTracker {
         super(bundleContext, AccessManagerPluginFactory.class.getName(), null);
         this.bundleContext = bundleContext;
     }
-    
+
+    public BundleContext getAssociatedBundleContext() {
+        return this.bundleContext;
+    }
+
 }
