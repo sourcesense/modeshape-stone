@@ -3,6 +3,7 @@ package com.sourcesense.stone.jcr.modeshape.server;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.sling.jcr.api.SlingRepository;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -68,5 +69,11 @@ public class IntegrationTestUtil {
         for (Configuration modeShapeConfiguration : modeShapeRepositoryConfigurations) {
             modeShapeConfiguration.delete();
         }
+    }
+
+    static SlingRepository getSlingRepositoryFromServiceList( BundleContext bundleContext ) {
+        ServiceReference slingRepositoryServiceReference = bundleContext.getServiceReference(SlingRepository.class.getName());
+        SlingRepository slingRepository = (SlingRepository)bundleContext.getService(slingRepositoryServiceReference);
+        return slingRepository;
     }
 }
