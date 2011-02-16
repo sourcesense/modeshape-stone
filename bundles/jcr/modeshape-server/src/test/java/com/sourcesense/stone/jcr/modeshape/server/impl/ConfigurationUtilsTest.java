@@ -14,11 +14,11 @@ public class ConfigurationUtilsTest {
         BundleContext bundleContext = mock(BundleContext.class);
         when(bundleContext.getProperty(ConfigurationUtils.SLING_REPOSITORY_HOME)).thenReturn("aPath");
         when(bundleContext.getProperty(ConfigurationUtils.SLING_HOME)).thenReturn(null);
-        
+
         ConfigurationUtils configurationUtil = new ConfigurationUtils(bundleContext);
 
         File homeDir = configurationUtil.getHomeDir();
-        
+
         assertEquals("aPath/modeshape",homeDir.getPath());
     }
 
@@ -27,11 +27,11 @@ public class ConfigurationUtilsTest {
         BundleContext bundleContext = mock(BundleContext.class);
         when(bundleContext.getProperty(ConfigurationUtils.SLING_REPOSITORY_HOME)).thenReturn(null);
         when(bundleContext.getProperty(ConfigurationUtils.SLING_HOME)).thenReturn("aPath");
-        
+
         ConfigurationUtils configurationUtil = new ConfigurationUtils(bundleContext);
-        
+
         File homeDir = configurationUtil.getHomeDir();
-        
+
         assertEquals("aPath/modeshape",homeDir.getPath());
     }
 
@@ -40,12 +40,12 @@ public class ConfigurationUtilsTest {
         BundleContext bundleContext = mock(BundleContext.class);
         when(bundleContext.getProperty(ConfigurationUtils.SLING_REPOSITORY_HOME)).thenReturn(null);
         when(bundleContext.getProperty(ConfigurationUtils.SLING_HOME)).thenReturn(null);
-        
+
         ConfigurationUtils configurationUtil = new ConfigurationUtils(bundleContext);
-        
+
         File homeDir = configurationUtil.getHomeDir();
-        
+
         assertEquals("modeshape",homeDir.getPath());
     }
-    
+
 }

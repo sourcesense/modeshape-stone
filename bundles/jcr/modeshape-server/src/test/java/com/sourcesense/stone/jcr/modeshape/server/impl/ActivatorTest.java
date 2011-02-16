@@ -138,26 +138,26 @@ public class ActivatorTest {
                 return activatorHelper;
             }
         };
-        
+
         BundleContext bundleContext = mock(BundleContext.class);
         injectBundleContextInto(activator, bundleContext);
-        
+
         ServiceEvent serviceEvent = mock(ServiceEvent.class);
         when(serviceEvent.getType()).thenReturn(ServiceEvent.REGISTERED);
-        
+
         ServiceReference aServiceReference = null; // It does not matter here
         when(serviceEvent.getServiceReference()).thenReturn(aServiceReference );
-        
-        
+
+
         activator.serviceChanged(serviceEvent);
 
         verify(activatorHelper).verifyConfiguration(aServiceReference);
         verify(bundleContext).removeServiceListener(activator);
     }
-    
+
     @Test
     public void shouldNotVerifyConfigurationAndRemoveServiceListenerWhenServiceEventRegisteredIsNotNotified() throws Exception {
-        
+
         final ActivatorHelper activatorHelper = mock(ActivatorHelper.class);
         Activator activator = new Activator() {
             @Override
@@ -165,15 +165,15 @@ public class ActivatorTest {
                 return activatorHelper;
             }
         };
-        
+
         BundleContext bundleContext = mock(BundleContext.class);
         injectBundleContextInto(activator, bundleContext);
-        
+
         ServiceEvent serviceEvent = mock(ServiceEvent.class);
         when(serviceEvent.getType()).thenReturn(ServiceEvent.MODIFIED);
-        
+
         activator.serviceChanged(serviceEvent);
-        
+
         verify(activatorHelper, never()).verifyConfiguration((ServiceReference)anyObject());
         verify(bundleContext, never()).removeServiceListener((ServiceListener)anyObject());
     }
