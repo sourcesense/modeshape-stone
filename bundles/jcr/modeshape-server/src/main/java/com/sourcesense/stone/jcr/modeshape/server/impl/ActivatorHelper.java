@@ -43,8 +43,8 @@ public class ActivatorHelper {
     }
 
     private void createNewConfigurationIfDoesNotExist( ConfigurationAdmin configurationAdmin ) throws Exception {
-        Configuration[] cfgs = configurationAdmin.listConfigurations("("+ ConfigurationAdmin.SERVICE_FACTORYPID + "="
-                                                                     + SERVER_REPOSITORY_FACTORY_PID + ")");
+        Configuration[] cfgs = configurationAdmin.listConfigurations(
+                String.format("(%s=%s)", ConfigurationAdmin.SERVICE_FACTORYPID, SERVER_REPOSITORY_FACTORY_PID));
         if (cfgs != null && cfgs.length > 0) {
             if (log.isInfoEnabled()) {
                 log.info("verifyConfiguration: {} Configurations available for {}, nothing to do", new Object[] {
