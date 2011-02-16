@@ -14,61 +14,40 @@
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
 -->
-
 <configuration xmlns:mode="http://www.modeshape.org/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
 
-
-  <mode:repositories>
-
-      <!--
-
-      Define a JCR repository that accesses the 'Test' source directly described below.
-
-      -->
-
-      <mode:repository jcr:name="test" mode:source="test">
-
-          <mode:options jcr:primaryType="mode:options">
-			<!-- modeshape-jcr is the default value -->
-              <mode:option jcr:name="jaasLoginConfigName" mode:value="modeshape-jcr"/>
-
+    <mode:repositories>
+        <!--
+         | Define a JCR repository that accesses the 'Test' source directly described below.
+        -->
+        <mode:repository jcr:name="test" mode:source="test">
+            <mode:options jcr:primaryType="mode:options">
+                <!--
+                 | modeshape-jcr is the default value
+                -->
+                <mode:option jcr:name="jaasLoginConfigName" mode:value="modeshape-jcr"/>
           </mode:options>
-
       </mode:repository>
+    </mode:repositories>
 
-  </mode:repositories>
+    <!--
+     | Define the sources for the content. These sources are directly accessible using the
+     | ModeShape-specific Graph API.
+    -->
+    <mode:sources jcr:primaryType="nt:unstructured">
+        <mode:source jcr:name="test"
+                mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
+                mode:retryLimit="3" mode:defaultWorkspaceName="workspace1">
+            <mode:predefinedWorkspaceNames>workspace2</mode:predefinedWorkspaceNames>
+            <mode:predefinedWorkspaceNames>workspace3</mode:predefinedWorkspaceNames>
+        </mode:source>
+    </mode:sources>
 
-   <!--
-
-   Define the sources for the content. These sources are directly accessible using the
-
-   ModeShape-specific Graph API.
-
-   -->
-
-   <mode:sources jcr:primaryType="nt:unstructured">
-
-       <mode:source jcr:name="test"
-
-              mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
-
-              mode:retryLimit="3" mode:defaultWorkspaceName="workspace1">
-
-               <mode:predefinedWorkspaceNames>workspace2</mode:predefinedWorkspaceNames>
-
-               <mode:predefinedWorkspaceNames>workspace3</mode:predefinedWorkspaceNames>
-
-       </mode:source>
-
-   </mode:sources>
-
-
-   <mode:mimeTypeDetectors>
-<!--
-       <mode:mimeTypeDetector jcr:name="Detector"
-
-                             mode:description="Standard extension-based MIME type detector"/>
--->
-   </mode:mimeTypeDetectors>
+    <mode:mimeTypeDetectors>
+        <!--
+        <mode:mimeTypeDetector jcr:name="Detector"
+            mode:description="Standard extension-based MIME type detector"/>
+        -->
+    </mode:mimeTypeDetectors>
 
 </configuration>
