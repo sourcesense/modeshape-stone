@@ -1,5 +1,6 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO fill me
+ * Utility methods collection for {@link BundleContext}.
  *
  * @version $Id$
  */
@@ -33,43 +34,35 @@ public class ConfigurationUtils {
     private final BundleContext bundleContext;
 
     /**
-     * 
+     * Copy a stream from the give source to the destination file.
      *
      * @param source
      * @param destFile
      * @throws Exception
      */
-    static void copyStream( InputStream source,
-                            File destFile ) throws Exception {
+    static void copyStream(InputStream source, File destFile ) throws Exception {
         OutputStream dest = null;
 
         try {
             dest = writeFile(source, destFile);
-
         } finally {
-            close(source, dest);
+            closeQuietly(source);
+            closeQuietly(dest);
         }
-
     }
 
     /**
-     * 
+     * Close the give {@link Closeable} swallowing any exception, if occurs.
      *
-     * @param source
-     * @param dest
+     * @param closeable
      */
-    private static void close( InputStream source,
-                                         OutputStream dest ) {
-        if (dest != null) {
+    private static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
             try {
-                dest.close();
-            } catch (IOException ignore) {
+                closeable.close();
+            } catch (IOException e) {
+                // do nothing, close quietly
             }
-        }
-
-        try {
-            source.close();
-        } catch (IOException ignore) {
         }
     }
 
