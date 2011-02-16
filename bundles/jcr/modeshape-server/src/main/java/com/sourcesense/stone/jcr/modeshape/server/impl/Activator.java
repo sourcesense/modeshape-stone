@@ -40,7 +40,7 @@ public class Activator implements BundleActivator, ServiceListener {
         if (null != configurationAdminServiceReference) {
             activatorHelper.verifyConfiguration(configurationAdminServiceReference);
         } else {
-            bundleContext.addServiceListener(this, "(" + Constants.OBJECTCLASS + "=" + CONFIG_ADMIN_NAME + ")");
+            bundleContext.addServiceListener(this, String.format("(%s=%s)", Constants.OBJECTCLASS, CONFIG_ADMIN_NAME));
         }
 
         AccessManagerFactoryTracker accessManagerFactoryTracker = getAccessManagerFactoryTracker();
