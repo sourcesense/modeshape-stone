@@ -12,6 +12,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * TODO fill me
+ *
+ * @version $Id$
+ */
 public class ActivatorHelper {
 
     public static final String SLING_CONTEXT = "sling.context";
@@ -27,6 +32,11 @@ public class ActivatorHelper {
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * 
+     *
+     * @param configurationAdminServiceReference
+     */
     void verifyConfiguration( ServiceReference configurationAdminServiceReference ) {
         ConfigurationAdmin ca = (ConfigurationAdmin)bundleContext.getService(configurationAdminServiceReference);
         if (ca == null) {
@@ -43,6 +53,12 @@ public class ActivatorHelper {
         }
     }
 
+    /**
+     * 
+     *
+     * @param configurationAdmin
+     * @throws Exception
+     */
     private void createNewConfigurationIfDoesNotExist( ConfigurationAdmin configurationAdmin ) throws Exception {
         Configuration[] cfgs = configurationAdmin.listConfigurations(
                 String.format("(%s=%s)", ConfigurationAdmin.SERVICE_FACTORYPID, SERVER_REPOSITORY_FACTORY_PID));
@@ -58,6 +74,12 @@ public class ActivatorHelper {
         }
     }
 
+    /**
+     * 
+     *
+     * @param configurationAdmin
+     * @throws Exception
+     */
     private void createNewConfiguration( ConfigurationAdmin configurationAdmin ) throws Exception {
         Hashtable<String, String> defaultConfig = new Hashtable<String, String>();
 
@@ -83,6 +105,12 @@ public class ActivatorHelper {
         }
     }
 
+    /**
+     * 
+     *
+     * @return
+     * @throws Exception
+     */
     private Hashtable<String, String> initDefaultConfig() throws Exception {
         Hashtable<String, String> defaultConfig = new Hashtable<String, String>();
 
@@ -106,10 +134,20 @@ public class ActivatorHelper {
         return defaultConfig;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     protected ConfigurationUtils getConfigurationUtils() {
         return this.configurationUtils == null ? new ConfigurationUtils(bundleContext) : this.configurationUtils;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     AccessManagerFactoryTracker createAccessManagerFactoryTracker() {
         return new AccessManagerFactoryTracker(bundleContext);
     }

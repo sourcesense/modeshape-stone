@@ -8,6 +8,11 @@ import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+/**
+ * TODO fill me
+ *
+ * @version $Id$
+ */
 public class Activator implements BundleActivator, ServiceListener {
 
     private static final String CONFIG_ADMIN_NAME = ConfigurationAdmin.class.getName();
@@ -18,6 +23,9 @@ public class Activator implements BundleActivator, ServiceListener {
 
     private BundleContext bundleContext;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serviceChanged( ServiceEvent event ) {
         if (ServiceEvent.REGISTERED == event.getType()) {
@@ -27,6 +35,9 @@ public class Activator implements BundleActivator, ServiceListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start( BundleContext bundleContext ) throws Exception {
         this.bundleContext = bundleContext;
@@ -50,6 +61,9 @@ public class Activator implements BundleActivator, ServiceListener {
         accessManagerFactoryTracker.open();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stop( BundleContext bundleContext ) throws Exception {
         AccessManagerFactoryTracker managerFactoryTracker = getAccessManagerFactoryTracker();
@@ -59,10 +73,20 @@ public class Activator implements BundleActivator, ServiceListener {
         }
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     protected ActivatorHelper getActivatorHelper() {
         return activatorHelper == null ? new ActivatorHelper(bundleContext) : activatorHelper;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     protected AccessManagerFactoryTracker getAccessManagerFactoryTracker() {
         return this.accessManagerFactoryTracker;
     }

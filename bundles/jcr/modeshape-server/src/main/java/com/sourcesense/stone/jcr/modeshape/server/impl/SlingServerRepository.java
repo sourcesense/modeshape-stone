@@ -49,6 +49,9 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private final Logger log = LoggerFactory.getLogger(SlingServerRepository.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Repository acquireRepository() {
         Repository repository = super.acquireRepository();
@@ -60,9 +63,15 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         return NO_REPOSITORY;
     }
 
+    /**
+     * TODO fill me
+     *
+     * @return
+     * @throws Exception
+     */
     private Repository findSuitableRepository() throws Exception {
 
-        String configFilePath = (String)getComponentContext().getProperties().get("config");
+        String configFilePath = (String) getComponentContext().getProperties().get("config");
 
         if (log.isInfoEnabled()) {
             log.info("Reading configuration from {}", configFilePath);
@@ -97,24 +106,42 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
         return NO_REPOSITORY;
     }
 
+    /**
+     * TODO fill me
+     *
+     * @param configuration
+     * @return
+     * @throws RepositoryException
+     */
     private Repository startModeShapeRepository( JcrConfiguration configuration ) throws RepositoryException {
         engine = configuration.build();
         engine.start();
         return engine.getRepository("test");
     }
 
+    /**
+     * Log the error messages in the given configuration.
+     *
+     * @param configuration
+     */
     private void logProblems( JcrConfiguration configuration ) {
         for (Problem problem : configuration.getProblems()) {
             log.error(problem.getMessageString());
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void disposeRepository( Repository repository ) {
         super.disposeRepository(repository);
         engine.shutdown();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Credentials getAdministrativeCredentials( String adminUser ) {
         SecurityContext securityContext = new CustomSecurityContext();

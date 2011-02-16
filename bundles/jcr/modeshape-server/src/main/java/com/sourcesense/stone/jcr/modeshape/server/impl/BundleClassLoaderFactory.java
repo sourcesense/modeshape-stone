@@ -10,6 +10,11 @@ import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * TODO fill me
+ *
+ * @version $Id$
+ */
 public class BundleClassLoaderFactory implements ClassLoaderFactory {
 
     private final BundleContext bundleContext;
@@ -24,6 +29,9 @@ public class BundleClassLoaderFactory implements ClassLoaderFactory {
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ClassLoader getClassLoader( String... classpath ) {
         return new ClassLoader() {

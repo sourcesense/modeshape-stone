@@ -13,16 +13,32 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * TODO fill me
+ *
+ * @version $Id$
+ */
 public class ConfigurationUtils {
 
     static final String SLING_HOME = "sling.home";
+
     static final String SLING_REPOSITORY_HOME = "sling.repository.home";
+
     private static final String SLING_REPOSITORY_NAME = "sling.repository.name";
+
     private static final String MODESHAPE_REPOSITORY_XML = "modeshape-repository.xml";
 
     private static final Logger log = LoggerFactory.getLogger(ConfigurationUtils.class);
+
     private final BundleContext bundleContext;
 
+    /**
+     * 
+     *
+     * @param source
+     * @param destFile
+     * @throws Exception
+     */
     static void copyStream( InputStream source,
                             File destFile ) throws Exception {
         OutputStream dest = null;
@@ -36,6 +52,12 @@ public class ConfigurationUtils {
 
     }
 
+    /**
+     * 
+     *
+     * @param source
+     * @param dest
+     */
     private static void close( InputStream source,
                                          OutputStream dest ) {
         if (dest != null) {
@@ -51,6 +73,15 @@ public class ConfigurationUtils {
         }
     }
 
+    /**
+     * 
+     *
+     * @param source
+     * @param destFile
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     private static OutputStream writeFile( InputStream source,
                                            File destFile ) throws FileNotFoundException, IOException {
         OutputStream dest;
@@ -65,6 +96,14 @@ public class ConfigurationUtils {
         return dest;
     }
 
+    /**
+     * 
+     *
+     * @param bundle
+     * @param entryPath
+     * @param destFile
+     * @throws Exception
+     */
     static void copyFile( Bundle bundle,
                           String entryPath,
                           File destFile ) throws Exception {
@@ -81,10 +120,20 @@ public class ConfigurationUtils {
         copyStream(source, destFile);
     }
 
+    /**
+     * 
+     *
+     * @param bundleContext
+     */
     ConfigurationUtils( BundleContext bundleContext ) {
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     File getHomeDir() {
         File homeDir;
 
@@ -112,6 +161,11 @@ public class ConfigurationUtils {
         return homeDir;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     String getRepositoryName() {
         String repoName = bundleContext.getProperty(SLING_REPOSITORY_NAME);
         if (repoName != null) {
@@ -120,6 +174,13 @@ public class ConfigurationUtils {
         return "modeshape";
     }
 
+    /**
+     * 
+     *
+     * @param homeDir
+     * @return
+     * @throws Exception
+     */
     String getConfigFileUrl( File homeDir ) throws Exception {
 
         String repoConfigFileUrl = bundleContext.getProperty("sling.repository.config.file.url");
