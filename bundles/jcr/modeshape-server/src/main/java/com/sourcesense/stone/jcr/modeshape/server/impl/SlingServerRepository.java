@@ -47,7 +47,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
     private JcrEngine engine;
 
-    private static final Logger log = LoggerFactory.getLogger(SlingServerRepository.class);
+    private final Logger log = LoggerFactory.getLogger(SlingServerRepository.class);
 
     @Override
     public Repository acquireRepository() {
