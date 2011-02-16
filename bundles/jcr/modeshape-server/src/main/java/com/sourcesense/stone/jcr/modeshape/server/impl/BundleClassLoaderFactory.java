@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 public class BundleClassLoaderFactory implements ClassLoaderFactory {
 
     private final BundleContext bundleContext;
-    private static final Logger log = LoggerFactory.getLogger(BundleClassLoaderFactory.class);
+
+    private final Logger log = LoggerFactory.getLogger(BundleClassLoaderFactory.class);
 
     public BundleClassLoaderFactory( ComponentContext componentContext ) {
         this.bundleContext = componentContext.getBundleContext();
