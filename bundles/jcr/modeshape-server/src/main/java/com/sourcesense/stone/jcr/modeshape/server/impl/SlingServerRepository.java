@@ -1,9 +1,12 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
 import java.net.URL;
+import java.util.Formatter;
+
 import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
+
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.modeshape.common.collection.Problem;
@@ -15,6 +18,7 @@ import org.modeshape.jcr.api.SecurityContext;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
 /**
@@ -125,8 +129,18 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
      * @param configuration
      */
     private void logProblems( JcrConfiguration configuration ) {
-        for (Problem problem : configuration.getProblems()) {
-            log.error(problem.getMessageString());
+        if (!configuration.getProblems().isEmpty()) {
+            Formatter fmt = new Formatter()
+                .format("%s error occurred while looking for a suitable repository using configuration: %s",
+                    (configuration.getProblems().size() > 1 ? "Some" : "One"),
+                    configuration.getConfigurationDefinition().getPath());
+
+            int index = 1;
+            for (Problem problem : configuration.getProblems()) {
+                fmt.format("%s) %s%n%n", index++, problem.getMessageString());
+            }
+
+            log.error(fmt.toString());
         }
     }
 
