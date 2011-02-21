@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- | Copyright 2011 Sourcesense
- |
- | Licensed under the Apache License, Version 2.0 (the "License");
- | you may not use this file except in compliance with the License.
- | You may obtain a copy of the License at
- |
- | http://www.apache.org/licenses/LICENSE-2.0
- |
- | Unless required by applicable law or agreed to in writing, software
- | distributed under the License is distributed on an "AS IS" BASIS,
- | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- | See the License for the specific language governing permissions and
- | limitations under the License.
--->
+<!-- | Copyright 2011 Sourcesense | | Licensed under the Apache License, 
+    Version 2.0 (the "License"); | you may not use this file except in compliance 
+    with the License. | You may obtain a copy of the License at | | http://www.apache.org/licenses/LICENSE-2.0 
+    | | Unless required by applicable law or agreed to in writing, software | 
+    distributed under the License is distributed on an "AS IS" BASIS, | WITHOUT 
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. | See the 
+    License for the specific language governing permissions and | limitations 
+    under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
@@ -40,19 +33,14 @@
 
     <build>
         <plugins>
-            <!--
-             | generate the SCR descriptors
-            -->
+            <!-- | generate the SCR descriptors -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-scr-plugin</artifactId>
             </plugin>
 
-            <!--
-             | copy the SCR descriptors into the correct location
-             | because the maven-scr-plugin cannot be configured
-             | to write the descriptors elsewhere
-            -->
+            <!-- | copy the SCR descriptors into the correct location | because 
+                the maven-scr-plugin cannot be configured | to write the descriptors elsewhere -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -89,6 +77,22 @@
                             org.joda.time.*;version=1.6,
                             org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                             org.tartarus.snowball.*;version=2.4.1,
+                            org.hibernate.*; version=3.3.2,
+                            org.hibernate.dialect.*; version=3.3.2,
+                            org.hibernate.ejb.*;
+                            org.hibernate.engine.*;
+                            org.hibernate.annotations.*; version=3.4.0,
+                            org.hibernate.connection.*;
+                            org.h2.*;
+                            antlr.*;
+                            javassist.*;
+                            com.mchange.*;
+                            com.mchange.v2.c3p0.*;
+                            com.mchange.lang*;
+                            com.mchange.util.*;
+                            javax.persistence.*;
+                            javax.transaction.*;
+                            org.dom4j.*;
                             org.modeshape.*;version=${modeshape.version},
                             org.modeshape.common.*;version=${modeshape.version},
                             org.modeshape.common.annotation.*;version=${modeshape.version},
@@ -286,6 +290,23 @@
         </dependency>
 
         <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-connector-store-jpa</artifactId>
+            <version>${modeshape.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.5.0</version>
@@ -322,30 +343,87 @@
             <artifactId>lucene-core</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-snowball</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-regex</artifactId>
             <version>3.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-misc</artifactId>
             <version>3.0.2</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.2-Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.5.2-Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.4.0.GA</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>3.5.2-Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.2.147</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.7</version>
+        </dependency>
+    </dependencies>
 </project>

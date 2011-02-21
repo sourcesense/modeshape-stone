@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- |  Copyright 2011 Sourcesense
- |
- |  Licensed under the Apache License, Version 2.0 (the "License");
- |  you may not use this file except in compliance with the License.
- |  You may obtain a copy of the License at
- |
- |      http://www.apache.org/licenses/LICENSE-2.0
- |
- |  Unless required by applicable law or agreed to in writing, software
- |  distributed under the License is distributed on an "AS IS" BASIS,
- |  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- |  See the License for the specific language governing permissions and
- |  limitations under the License.
--->
-<configuration xmlns:mode="http://www.modeshape.org/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
+<!-- | Copyright 2011 Sourcesense | | Licensed under the Apache License, 
+    Version 2.0 (the "License"); | you may not use this file except in compliance 
+    with the License. | You may obtain a copy of the License at | | http://www.apache.org/licenses/LICENSE-2.0 
+    | | Unless required by applicable law or agreed to in writing, software | 
+    distributed under the License is distributed on an "AS IS" BASIS, | WITHOUT 
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. | See the 
+    License for the specific language governing permissions and | limitations 
+    under the License. -->
+
+<configuration xmlns:mode="http://www.modeshape.org/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0">
+
 
     <mode:repositories>
-        <!--
-         | Define a JCR repository that accesses the 'Test' source directly described below.
-        -->
+
+        <!-- Define a JCR repository that accesses the 'Test' source directly 
+            described below. -->
+
         <mode:repository jcr:name="test" mode:source="test">
+
             <mode:options jcr:primaryType="mode:options">
-                <!--
-                 | modeshape-jcr is the default value
-                -->
-                <mode:option jcr:name="jaasLoginConfigName" mode:value="modeshape-jcr"/>
-          </mode:options>
-      </mode:repository>
+                <!-- modeshape-jcr is the default value -->
+                <mode:option jcr:name="jaasLoginConfigName"
+                    mode:value="modeshape-jcr" />
+
+            </mode:options>
+
+        </mode:repository>
+
     </mode:repositories>
 
-    <!--
-     | Define the sources for the content. These sources are directly accessible using the
-     | ModeShape-specific Graph API.
-    -->
+    <!-- Define the sources for the content. These sources are directly accessible 
+        using the ModeShape-specific Graph API. -->
+
     <mode:sources jcr:primaryType="nt:unstructured">
+
         <mode:source jcr:name="test"
-                mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
-                mode:retryLimit="3" mode:defaultWorkspaceName="workspace1">
-            <mode:predefinedWorkspaceNames>workspace2</mode:predefinedWorkspaceNames>
-            <mode:predefinedWorkspaceNames>workspace3</mode:predefinedWorkspaceNames>
-        </mode:source>
+
+            mode:classname="org.modeshape.connector.store.jpa.JpaSource"
+
+            mode:description="The database store for our content"
+
+            mode:driverClassName="org.h2.Driver"
+
+            mode:password="sa"
+
+            mode:url="jdbc:h2:~/test"
+
+            mode:username="sa"
+
+            mode:defaultWorkspaceName="test"
+
+            mode:autoGenerateSchema="create" />
+
     </mode:sources>
 
+
     <mode:mimeTypeDetectors>
-        <!--
-        <mode:mimeTypeDetector jcr:name="Detector"
-            mode:description="Standard extension-based MIME type detector"/>
-        -->
+        <!-- <mode:mimeTypeDetector jcr:name="Detector" mode:description="Standard 
+            extension-based MIME type detector"/> -->
     </mode:mimeTypeDetectors>
 
 </configuration>
