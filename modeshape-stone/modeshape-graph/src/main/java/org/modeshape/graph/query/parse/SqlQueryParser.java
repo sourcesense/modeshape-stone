@@ -24,11 +24,13 @@
 package org.modeshape.graph.query.parse;
 
 import static org.modeshape.common.text.TokenStream.ANY_VALUE;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.modeshape.common.CommonI18n;
 import org.modeshape.common.text.ParsingException;
 import org.modeshape.common.text.Position;
@@ -54,6 +56,7 @@ import org.modeshape.graph.query.model.DescendantNodeJoinCondition;
 import org.modeshape.graph.query.model.DynamicOperand;
 import org.modeshape.graph.query.model.EquiJoinCondition;
 import org.modeshape.graph.query.model.FullTextSearch;
+import org.modeshape.graph.query.model.FullTextSearch.Term;
 import org.modeshape.graph.query.model.FullTextSearchScore;
 import org.modeshape.graph.query.model.Join;
 import org.modeshape.graph.query.model.JoinCondition;
@@ -83,14 +86,13 @@ import org.modeshape.graph.query.model.Selector;
 import org.modeshape.graph.query.model.SelectorName;
 import org.modeshape.graph.query.model.SetCriteria;
 import org.modeshape.graph.query.model.SetQuery;
+import org.modeshape.graph.query.model.SetQuery.Operation;
 import org.modeshape.graph.query.model.Source;
 import org.modeshape.graph.query.model.StaticOperand;
 import org.modeshape.graph.query.model.Subquery;
 import org.modeshape.graph.query.model.TypeSystem;
-import org.modeshape.graph.query.model.UpperCase;
-import org.modeshape.graph.query.model.FullTextSearch.Term;
-import org.modeshape.graph.query.model.SetQuery.Operation;
 import org.modeshape.graph.query.model.TypeSystem.TypeFactory;
+import org.modeshape.graph.query.model.UpperCase;
 
 /**
  * A {@link QueryParser} implementation that parses a subset of SQL select and set queries.
@@ -537,9 +539,9 @@ public class SqlQueryParser implements QueryParser {
         Source source = parseFrom(tokens, typeSystem);
         Constraint constraint = parseWhere(tokens, typeSystem, source);
         // Parse the order by and limit (can be in any order) ...
-        List<? extends Ordering> orderings = parseOrderBy(tokens, typeSystem, source);
+        List<? extends Ordering> orderings = parseOrderBy(tokens, typeSystem, source, columnExpressions);
         Limit limit = parseLimit(tokens);
-        if (orderings == null) parseOrderBy(tokens, typeSystem, source);
+        if (orderings == null) parseOrderBy(tokens, typeSystem, source,columnExpressions);
 
         // Convert the column expressions to columns ...
         List<Column> columns = new ArrayList<Column>(columnExpressions.size());
@@ -857,10 +859,17 @@ public class SqlQueryParser implements QueryParser {
         String msg = GraphI18n.expectingComparisonOperator.text(tokens.consume(), pos.getLine(), pos.getColumn());
         throw new ParsingException(pos, msg);
     }
+    protected List<Ordering> parseOrderBy( TokenStream tokens,
+            TypeSystem typeSystem,
+            Source source, 
+            List<ColumnExpression> columnExpressions ) {
+        columnExpressions.addAll(parseOrderingColumn(tokens, new AtomicBoolean(false), typeSystem));
+        return parseOrderBy(tokens, typeSystem, source);
+    }
 
     protected List<Ordering> parseOrderBy( TokenStream tokens,
                                            TypeSystem typeSystem,
-                                           Source source ) {
+                                           Source source) {
         if (tokens.canConsume("ORDER", "BY")) {
             List<Ordering> orderings = new ArrayList<Ordering>();
             do {
@@ -869,6 +878,29 @@ public class SqlQueryParser implements QueryParser {
             return orderings;
         }
         return null;
+    }
+
+    private Collection<? extends ColumnExpression> parseOrderingColumn(
+            TokenStream tokens, AtomicBoolean atomicBoolean,
+            TypeSystem typeSystem) {
+        List<ColumnExpression> columns = new ArrayList<ColumnExpression>();
+        tokens.saveState();
+        if (tokens.canConsume("ORDER", "BY")) {
+            do {
+                Position position = tokens.nextPosition();
+                String propertyName = parseName(tokens, typeSystem);
+                SelectorName selectorName = null;
+                if (tokens.canConsume('.')) {
+                    // We actually read the selector name, so now read the property name ...
+                    selectorName = new SelectorName(propertyName);
+                    propertyName = parseName(tokens, typeSystem);
+                }
+                String alias = propertyName;
+                columns.add(new ColumnExpression(selectorName, propertyName, alias, position));
+            } while (tokens.canConsume(','));
+            tokens.regenerate();
+        }
+        return columns;
     }
 
     protected Ordering parseOrdering( TokenStream tokens,

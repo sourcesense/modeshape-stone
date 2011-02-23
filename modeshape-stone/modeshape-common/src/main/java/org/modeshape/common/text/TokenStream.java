@@ -1249,6 +1249,24 @@ public class TokenStream {
         return sb.toString();
     }
 
+    private Token save;
+
+    public void saveState() {
+        this.save = currentToken;
+    }
+
+    public void regenerate() {
+        if (completed) {
+            completed = false;
+        }
+        while (!this.save.equals(this.currentToken)) {
+            currentToken = tokenIterator.previous();
+        }
+        //WORKAROUND BECAUS PREVIUS METHOD NOT WORK PROPERTY
+        currentToken = tokenIterator.next();
+        this.save = null;
+    }
+
     private void moveToNextToken() {
         // And move the currentToken to the next token ...
         if (!tokenIterator.hasNext()) {

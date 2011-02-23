@@ -76,7 +76,25 @@ public final class Position {
     public String toString() {
         return "" + indexInContent + ':' + line + ':' + column;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Position other = (Position) obj;
+        if (column != other.column)
+            return false;
+        if (indexInContent != other.indexInContent)
+            return false;
+        if (line != other.line)
+            return false;
+        return true;
+    }
+
     /**
      * Return a new position that is the addition of this position and that supplied.
      * 

@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.modeshape.common.FixFor;
 import org.modeshape.common.collection.Problems;
@@ -698,6 +699,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryUsingTableWithAliasAndOrderByClauseUsingAliasedColumn() {
         node = optimize("SELECT X.c11 AS c1 FROM t1 AS X WHERE X.c11 = 'x' AND X.c12 = 'y' ORDER BY X.c1, X.c12 DESC");
 
@@ -723,6 +725,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryUsingViewAndOrderByClause() {
         node = optimize("SELECT v2.c11 AS c1 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY v2.c11, v2.c12 DESC");
 
@@ -764,6 +767,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryUsingViewWithAliasAndOrderByClause() {
         node = optimize("SELECT Q.c11 AS c1 FROM v2 AS Q WHERE Q.c11 = 'x' AND Q.c12 = 'y' ORDER BY Q.c11, Q.c12 DESC");
 
@@ -805,6 +809,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseThatUsesScoreFunction() {
         node = optimize("SELECT v2.c11 AS c1 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY SCORE(v2) ASC");
 
@@ -846,6 +851,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseUsingColumsNotInSelectButUsedInCriteria() {
         node = optimize("SELECT v2.c11 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY v2.c11, v2.c12");
 
@@ -887,6 +893,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
+    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseUsingColumsNotInSelectOrCriteria() {
         node = optimize("SELECT v2.c11 FROM v2 WHERE v2.c11 = 'x' ORDER BY v2.c11, v2.c12");
 
