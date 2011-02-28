@@ -397,14 +397,14 @@ public class SelectComponent extends DelegatingComponent {
             Comparison comparison = (Comparison)constraint;
 
             // Create the correct dynamic operation ...
-            DynamicOperation dynamicOperation = createDynamicOperation(types, schemata, columns, comparison.operand1());
+            DynamicOperation dynamicOperation = createDynamicOperation(types, schemata, columns,null, comparison.operand1());
             Operator operator = comparison.operator();
             StaticOperand staticOperand = comparison.operand2();
             return createChecker(types, schemata, columns, dynamicOperation, operator, staticOperand);
         }
         if (constraint instanceof SetCriteria) {
             SetCriteria setCriteria = (SetCriteria)constraint;
-            DynamicOperation dynamicOperation = createDynamicOperation(types, schemata, columns, setCriteria.leftOperand());
+            DynamicOperation dynamicOperation = createDynamicOperation(types, schemata, columns,null, setCriteria.leftOperand());
             Operator operator = Operator.EQUAL_TO;
             final List<ConstraintChecker> checkers = new LinkedList<ConstraintChecker>();
             for (StaticOperand setValue : setCriteria.rightOperands()) {

@@ -143,6 +143,10 @@ public final class PlanNode implements Iterable<PlanNode>, Readable, Cloneable, 
 
         /** For SELECT nodes, the criteria object that is to be applied. Value is a {@link Constraint} object. */
         SELECT_CRITERIA,
+        
+        ORDERING_COLUMNS,
+        
+        ORDERING_COLUMNS_TYPE,
 
         /** For SET_OPERATION nodes, the type of set operation to be performed. Value is a {@link Operation} object. */
         SET_OPERATION,

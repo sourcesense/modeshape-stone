@@ -142,12 +142,14 @@ public abstract class ProcessingComponent {
      * @param typeSystem the type system; may not be null
      * @param schemata the schemata; may not be null
      * @param columns the definition of the result columns and the tuples; may not be null
+     * @param orderingColumns 
      * @param operand the dynamic operand that is to be evaluated by the returned object; may not be null
      * @return the dynamic operand operation; never null
      */
     protected DynamicOperation createDynamicOperation( final TypeSystem typeSystem,
                                                        Schemata schemata,
                                                        Columns columns,
+                                                       Columns orderingColumns,
                                                        DynamicOperand operand ) {
         assert operand != null;
         assert columns != null;
@@ -155,9 +157,10 @@ public abstract class ProcessingComponent {
             PropertyValue propValue = (PropertyValue)operand;
             String propertyName = propValue.propertyName();
             String selectorName = propValue.selectorName().name();
-            final int index = columns.getColumnIndexForProperty(selectorName, propertyName);
+            final int index = getIndex(orderingColumns,columns, propertyName,
+                    selectorName);
             // Find the expected property type of the value ...
-            final String expectedType = columns.getColumnTypes().get(index);
+            final String expectedType = getExpectedType(orderingColumns, columns, index);
             final TypeFactory<?> typeFactory = typeSystem.getTypeFactory(expectedType);
             return new DynamicOperation() {
                 public String getExpectedType() {
@@ -173,9 +176,9 @@ public abstract class ProcessingComponent {
             ReferenceValue refValue = (ReferenceValue)operand;
             String propertyName = refValue.propertyName();
             String selectorName = refValue.selectorName().name();
-            final int index = columns.getColumnIndexForProperty(selectorName, propertyName);
-            // Find the expected property type of the value ...
-            final String expectedType = columns.getColumnTypes().get(index);
+            final int index = getIndex(orderingColumns,columns, propertyName,
+                    selectorName);
+            final String expectedType = getExpectedType(orderingColumns, columns, index);
             final TypeFactory<?> typeFactory = typeSystem.getTypeFactory(expectedType);
             return new DynamicOperation() {
                 public String getExpectedType() {
@@ -193,9 +196,9 @@ public abstract class ProcessingComponent {
             PropertyValue value = length.propertyValue();
             String propertyName = value.propertyName();
             String selectorName = value.selectorName().name();
-            final int index = columns.getColumnIndexForProperty(selectorName, propertyName);
-            // Find the expected property type of the value ...
-            final String expectedType = columns.getColumnTypes().get(index);
+            final int index = getIndex(orderingColumns,columns, propertyName,
+                    selectorName);
+            final String expectedType = getExpectedType(orderingColumns,columns, index);
             final TypeFactory<?> typeFactory = typeSystem.getTypeFactory(expectedType);
             final TypeFactory<Long> longFactory = typeSystem.getLongFactory();
             return new DynamicOperation() {
@@ -211,7 +214,7 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof LowerCase) {
             LowerCase lowerCase = (LowerCase)operand;
-            final DynamicOperation delegate = createDynamicOperation(typeSystem, schemata, columns, lowerCase.operand());
+            final DynamicOperation delegate = createDynamicOperation(typeSystem, schemata, columns,orderingColumns, lowerCase.operand());
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return stringFactory.getTypeName();
@@ -225,7 +228,7 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof UpperCase) {
             UpperCase upperCase = (UpperCase)operand;
-            final DynamicOperation delegate = createDynamicOperation(typeSystem, schemata, columns, upperCase.operand());
+            final DynamicOperation delegate = createDynamicOperation(typeSystem, schemata, columns,orderingColumns, upperCase.operand());
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return stringFactory.getTypeName();
@@ -239,7 +242,8 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof NodeDepth) {
             NodeDepth nodeDepth = (NodeDepth)operand;
-            final int locationIndex = columns.getLocationIndex(nodeDepth.selectorName().name());
+            final int locationIndex = getIndexByNodeDepth(orderingColumns,columns,
+                    nodeDepth);
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return typeSystem.getLongFactory().getTypeName(); // depth is always LONG
@@ -256,7 +260,8 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof NodePath) {
             NodePath nodePath = (NodePath)operand;
-            final int locationIndex = columns.getLocationIndex(nodePath.selectorName().name());
+            final int locationIndex = getIndextByNodePath(orderingColumns,columns,
+                    nodePath);
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return stringFactory.getTypeName();
@@ -272,7 +277,8 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof NodeName) {
             NodeName nodeName = (NodeName)operand;
-            final int locationIndex = columns.getLocationIndex(nodeName.selectorName().name());
+            final int locationIndex = getIndexByNodeName(orderingColumns,columns,
+                    nodeName);
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return stringFactory.getTypeName();
@@ -289,7 +295,8 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof NodeLocalName) {
             NodeLocalName nodeName = (NodeLocalName)operand;
-            final int locationIndex = columns.getLocationIndex(nodeName.selectorName().name());
+            final int locationIndex = getIndexByNodeLocalName(orderingColumns,columns,
+                    nodeName);
             return new DynamicOperation() {
                 public String getExpectedType() {
                     return stringFactory.getTypeName();
@@ -307,7 +314,8 @@ public abstract class ProcessingComponent {
         if (operand instanceof FullTextSearchScore) {
             FullTextSearchScore score = (FullTextSearchScore)operand;
             String selectorName = score.selectorName().name();
-            final int index = columns.getFullTextSearchScoreIndexFor(selectorName);
+            final int index = getIndexByFullTextSearchScore(orderingColumns,columns,
+                    selectorName);
             final TypeFactory<Double> doubleFactory = typeSystem.getDoubleFactory();
             if (index < 0) {
                 // No full-text search score for this selector, so return 0.0d;
@@ -333,8 +341,8 @@ public abstract class ProcessingComponent {
         }
         if (operand instanceof ArithmeticOperand) {
             ArithmeticOperand arith = (ArithmeticOperand)operand;
-            final DynamicOperation leftOp = createDynamicOperation(typeSystem, schemata, columns, arith.left());
-            final DynamicOperation rightOp = createDynamicOperation(typeSystem, schemata, columns, arith.right());
+            final DynamicOperation leftOp = createDynamicOperation(typeSystem, schemata, columns,orderingColumns, arith.left());
+            final DynamicOperation rightOp = createDynamicOperation(typeSystem, schemata, columns,orderingColumns, arith.right());
             // compute the expected (common) type ...
             String leftType = leftOp.getExpectedType();
             String rightType = rightOp.getExpectedType();
@@ -459,6 +467,80 @@ public abstract class ProcessingComponent {
         }
         assert false;
         return null;
+    }
+
+    private int getIndexByFullTextSearchScore(Columns orderingColumns, Columns columns,
+            String selectorName) {
+        int index = -1;
+        try {
+            index = columns.getFullTextSearchScoreIndexFor(selectorName);
+        } catch (Exception e){
+            index = orderingColumns.getFullTextSearchScoreIndexFor(selectorName);
+        }
+        return index;
+    }
+
+    private int getIndexByNodeLocalName(Columns orderingColumns, Columns columns,
+            NodeLocalName nodeName) {
+        int locationIndex = -1;
+        try {
+            locationIndex = columns.getLocationIndex(nodeName.selectorName().name());
+        } catch (Exception e){
+            locationIndex = orderingColumns.getLocationIndex(nodeName.selectorName().name());
+        }
+        return locationIndex;
+    }
+
+    private int getIndexByNodeName(Columns orderingColumns,Columns columns, NodeName nodeName) {
+        int locationIndex = -1;
+        try {
+            locationIndex = columns.getLocationIndex(nodeName.selectorName().name());
+        } catch (Exception e){
+            locationIndex = orderingColumns.getLocationIndex(nodeName.selectorName().name());
+        }
+        return locationIndex;
+    }
+
+    private int getIndextByNodePath(Columns orderingColumns, Columns columns, NodePath nodePath) {
+        int locationIndex = -1;
+        try {
+            locationIndex = columns.getLocationIndex(nodePath.selectorName().name());;
+        } catch (Exception e){
+            locationIndex = orderingColumns.getLocationIndex(nodePath.selectorName().name());;
+        }
+        return locationIndex;
+    }
+
+    private int getIndexByNodeDepth(Columns orderingColumns, Columns columns, NodeDepth nodeDepth) {
+        int locationIndex = -1;
+        try {
+            locationIndex = columns.getLocationIndex(nodeDepth.selectorName().name());
+        } catch (Exception e){
+            locationIndex = orderingColumns.getLocationIndex(nodeDepth.selectorName().name());
+        }
+        return locationIndex;
+    }
+
+    private String getExpectedType(Columns orderingColumns, Columns columns, final int index) {
+
+        String expectedType = null;
+        try {
+            expectedType = columns.getColumnTypes().get(index);
+        } catch (Exception e){
+            expectedType = orderingColumns.getColumnTypes().get(index);
+        }
+        return expectedType;
+    }
+
+    private int getIndex(Columns orderingColumns, Columns columns, String propertyName,
+            String selectorName) {
+        int index = -1;
+        try {
+            index = columns.getColumnIndexForProperty(selectorName, propertyName);
+        } catch (Exception e){
+            index = orderingColumns.getColumnIndexForProperty(selectorName, propertyName);
+        }
+        return index;
     }
 
     protected Comparator<Object[]> createSortComparator( QueryContext context,

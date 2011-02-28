@@ -659,6 +659,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         PlanNode leftAccess = new PlanNode(Type.ACCESS, sort, selector("t1"));
         PlanNode leftProject = new PlanNode(Type.PROJECT, leftAccess, selector("t1"));
         leftProject.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11", "c1"), column("t1", "c12")));
+        leftProject.setProperty(Property.ORDERING_COLUMNS,columns(column("t1", "c11") , column("t1", "c12")));
         PlanNode leftSelect1 = new PlanNode(Type.SELECT, leftProject, selector("t1"));
         leftSelect1.setProperty(Property.SELECT_CRITERIA, new Comparison(new PropertyValue(selector("t1"), "c11"),
                                                                          Operator.EQUAL_TO, new Literal("x")));
@@ -683,6 +684,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         PlanNode leftAccess = new PlanNode(Type.ACCESS, sort, selector("X"));
         PlanNode leftProject = new PlanNode(Type.PROJECT, leftAccess, selector("X"));
         leftProject.setProperty(Property.PROJECT_COLUMNS, columns(column("X", "c11", "c1"), column("X", "c12")));
+        leftProject.setProperty(Property.ORDERING_COLUMNS, columns(column("X", "c11"), column("X", "c12")));
         PlanNode leftSelect1 = new PlanNode(Type.SELECT, leftProject, selector("X"));
         leftSelect1.setProperty(Property.SELECT_CRITERIA, new Comparison(new PropertyValue(selector("X"), "c11"),
                                                                          Operator.EQUAL_TO, new Literal("x")));
@@ -699,7 +701,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryUsingTableWithAliasAndOrderByClauseUsingAliasedColumn() {
         node = optimize("SELECT X.c11 AS c1 FROM t1 AS X WHERE X.c11 = 'x' AND X.c12 = 'y' ORDER BY X.c1, X.c12 DESC");
 
@@ -709,6 +710,7 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         PlanNode leftAccess = new PlanNode(Type.ACCESS, sort, selector("X"));
         PlanNode leftProject = new PlanNode(Type.PROJECT, leftAccess, selector("X"));
         leftProject.setProperty(Property.PROJECT_COLUMNS, columns(column("X", "c11", "c1"), column("X", "c12")));
+        leftProject.setProperty(Property.ORDERING_COLUMNS, columns(column("X", "c1"), column("X", "c12")));
         PlanNode leftSelect1 = new PlanNode(Type.SELECT, leftProject, selector("X"));
         leftSelect1.setProperty(Property.SELECT_CRITERIA, new Comparison(new PropertyValue(selector("X"), "c11"),
                                                                          Operator.EQUAL_TO, new Literal("x")));
@@ -725,7 +727,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryUsingViewAndOrderByClause() {
         node = optimize("SELECT v2.c11 AS c1 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY v2.c11, v2.c12 DESC");
 
@@ -734,6 +735,8 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         sort.setProperty(Property.SORT_ORDER_BY, orderings(ascending("t1", "c11"), descending("t1", "c12")));
         PlanNode project = new PlanNode(Type.PROJECT, sort, selector("t1"));
         project.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11", "c1")));
+        //TODO optimizer must replace table name with view
+        project.setProperty(Property.ORDERING_COLUMNS, columns(column("v2", "c11"), column("v2", "c12")));
         PlanNode join = new PlanNode(Type.JOIN, project, selector("t2"), selector("t1"));
         join.setProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.NESTED_LOOP);
         join.setProperty(Property.JOIN_TYPE, JoinType.INNER);
@@ -767,7 +770,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryUsingViewWithAliasAndOrderByClause() {
         node = optimize("SELECT Q.c11 AS c1 FROM v2 AS Q WHERE Q.c11 = 'x' AND Q.c12 = 'y' ORDER BY Q.c11, Q.c12 DESC");
 
@@ -776,6 +778,8 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         sort.setProperty(Property.SORT_ORDER_BY, orderings(ascending("t1", "c11"), descending("t1", "c12")));
         PlanNode project = new PlanNode(Type.PROJECT, sort, selector("t1"));
         project.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11", "c1")));
+        //TODO optimizer must replace table name with view
+        project.setProperty(Property.ORDERING_COLUMNS, columns(column("Q", "c11"), column("Q", "c12")));
         PlanNode join = new PlanNode(Type.JOIN, project, selector("t2"), selector("t1"));
         join.setProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.NESTED_LOOP);
         join.setProperty(Property.JOIN_TYPE, JoinType.INNER);
@@ -809,7 +813,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseThatUsesScoreFunction() {
         node = optimize("SELECT v2.c11 AS c1 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY SCORE(v2) ASC");
 
@@ -818,6 +821,8 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         sort.setProperty(Property.SORT_ORDER_BY, orderings(ascendingScore("t1", "t2")));
         PlanNode project = new PlanNode(Type.PROJECT, sort, selector("t1"));
         project.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11", "c1")));
+        //TODO optimizer must replace table name with view
+        project.setProperty(Property.ORDERING_COLUMNS, columns(column("v2","SCORE")));
         PlanNode join = new PlanNode(Type.JOIN, project, selector("t2"), selector("t1"));
         join.setProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.NESTED_LOOP);
         join.setProperty(Property.JOIN_TYPE, JoinType.INNER);
@@ -851,7 +856,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseUsingColumsNotInSelectButUsedInCriteria() {
         node = optimize("SELECT v2.c11 FROM v2 WHERE v2.c11 = 'x' AND v2.c12 = 'y' ORDER BY v2.c11, v2.c12");
 
@@ -860,6 +864,8 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         sort.setProperty(Property.SORT_ORDER_BY, orderings(ascending("t1", "c11"), ascending("t1", "c12")));
         PlanNode project = new PlanNode(Type.PROJECT, sort, selector("t1"));
         project.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11")));
+        //TODO optimizer must replace table name with view
+        project.setProperty(Property.ORDERING_COLUMNS, columns(column("v2", "c11"), column("v2", "c12")));
         PlanNode join = new PlanNode(Type.JOIN, project, selector("t2"), selector("t1"));
         join.setProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.NESTED_LOOP);
         join.setProperty(Property.JOIN_TYPE, JoinType.INNER);
@@ -893,7 +899,6 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
     }
 
     @Test
-    @Ignore
     public void shouldOptimizePlanForQueryWithOrderByClauseUsingColumsNotInSelectOrCriteria() {
         node = optimize("SELECT v2.c11 FROM v2 WHERE v2.c11 = 'x' ORDER BY v2.c11, v2.c12");
 
@@ -902,6 +907,8 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
         sort.setProperty(Property.SORT_ORDER_BY, orderings(ascending("t1", "c11"), ascending("t1", "c12")));
         PlanNode project = new PlanNode(Type.PROJECT, sort, selector("t1"));
         project.setProperty(Property.PROJECT_COLUMNS, columns(column("t1", "c11")));
+        //TODO optimizer must replace table name with view
+        project.setProperty(Property.ORDERING_COLUMNS, columns(column("v2", "c11"), column("v2", "c12")));
         PlanNode join = new PlanNode(Type.JOIN, project, selector("t2"), selector("t1"));
         join.setProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.NESTED_LOOP);
         join.setProperty(Property.JOIN_TYPE, JoinType.INNER);
@@ -1015,6 +1022,12 @@ public class RuleBasedOptimizerTest extends AbstractQueryTest {
             List<String> types = PlanUtil.findRequiredColumnTypes(context, columns, project);
             assertThat(columns.size(), is(types.size()));
             project.setProperty(Property.PROJECT_COLUMN_TYPES, types);
+            List<Column> orderingColumns = project.getPropertyAsList(Property.ORDERING_COLUMNS, Column.class);
+            if (orderingColumns != null) {
+                List<String> orderingTypes = PlanUtil.findRequiredColumnTypes(context, orderingColumns, project);
+                assertThat(orderingColumns.size(), is(orderingTypes.size()));
+                project.setProperty(Property.ORDERING_COLUMNS_TYPE, orderingTypes);
+            }
         }
     }
 }

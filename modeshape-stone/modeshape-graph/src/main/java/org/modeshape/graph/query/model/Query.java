@@ -46,6 +46,7 @@ public class Query implements QueryCommand {
     private final Source source;
     private final Constraint constraint;
     private final List<? extends Column> columns;
+    private final List<? extends Column> orderingColumns;
     private final boolean distinct;
     private final int hc;
 
@@ -63,6 +64,7 @@ public class Query implements QueryCommand {
         this.source = source;
         this.constraint = null;
         this.columns = Collections.<Column>emptyList();
+        this.orderingColumns = Collections.<Column>emptyList();
         this.distinct = IS_DISTINCT_DEFAULT;
         this.hc = HashCode.compute(this.source, this.constraint, this.columns, this.distinct);
     }
@@ -84,17 +86,36 @@ public class Query implements QueryCommand {
                   Constraint constraint,
                   List<? extends Ordering> orderings,
                   List<? extends Column> columns,
+                  List<? extends Column> orderingColumns,
                   Limit limit,
                   boolean isDistinct ) {
         CheckArg.isNotNull(source, "source");
         this.source = source;
         this.constraint = constraint;
         this.columns = columns != null ? columns : Collections.<Column>emptyList();
+        this.orderingColumns = orderingColumns != null ? orderingColumns : Collections.<Column>emptyList();
         this.distinct = isDistinct;
         this.orderings = orderings != null ? orderings : Collections.<Ordering>emptyList();
         this.limits = limit != null ? limit : Limit.NONE;
         this.hc = HashCode.compute(this.source, this.constraint, this.columns, this.distinct);
     }
+    
+    public Query( Source source,
+            Constraint constraint,
+            List<? extends Ordering> orderings,
+            List<? extends Column> columns,
+            Limit limit,
+            boolean isDistinct ) {
+  CheckArg.isNotNull(source, "source");
+  this.source = source;
+  this.constraint = constraint;
+  this.columns = columns != null ? columns : Collections.<Column>emptyList();
+  this.orderingColumns = Collections.<Column>emptyList();
+  this.distinct = isDistinct;
+  this.orderings = orderings != null ? orderings : Collections.<Ordering>emptyList();
+  this.limits = limit != null ? limit : Limit.NONE;
+  this.hc = HashCode.compute(this.source, this.constraint, this.columns, this.distinct);
+}
 
     /**
      * {@inheritDoc}
@@ -140,6 +161,10 @@ public class Query implements QueryCommand {
     public List<? extends Column> columns() {
         return columns;
     }
+    
+    public List<? extends Column> orderingColumns() {
+        return orderingColumns;
+    }
 
     /**
      * Determine whether this query is to return only distinct values.
@@ -156,7 +181,7 @@ public class Query implements QueryCommand {
      * @return the copy of the query with no duplicate result rows; never null
      */
     public Query distinct() {
-        return new Query(source, constraint, orderings(), columns, limits(), true);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits(), true);
     }
 
     /**
@@ -165,7 +190,7 @@ public class Query implements QueryCommand {
      * @return the copy of the query with potentially duplicate result rows; never null
      */
     public Query noDistinct() {
-        return new Query(source, constraint, orderings(), columns, limits(), false);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits(), false);
     }
 
     /**
@@ -175,7 +200,7 @@ public class Query implements QueryCommand {
      * @return the copy of the query that uses the supplied constraint; never null
      */
     public Query constrainedBy( Constraint constraint ) {
-        return new Query(source, constraint, orderings(), columns, limits(), distinct);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits(), distinct);
     }
 
     /**
@@ -185,7 +210,7 @@ public class Query implements QueryCommand {
      * @return the copy of the query that uses the supplied ordering; never null
      */
     public Query orderedBy( List<Ordering> orderings ) {
-        return new Query(source, constraint, orderings, columns, limits(), distinct);
+        return new Query(source, constraint, orderings, columns, orderingColumns, limits(), distinct);
     }
 
     /**
@@ -195,7 +220,7 @@ public class Query implements QueryCommand {
      */
     public Query withLimit( int rowLimit ) {
         if (limits().rowLimit() == rowLimit) return this; // nothing to change
-        return new Query(source, constraint, orderings(), columns, limits().withRowLimit(rowLimit), distinct);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits().withRowLimit(rowLimit), distinct);
     }
 
     /**
@@ -205,7 +230,7 @@ public class Query implements QueryCommand {
      */
     public Query withOffset( int offset ) {
         if (limits().offset() == offset) return this; // nothing to change
-        return new Query(source, constraint, orderings(), columns, limits().withOffset(offset), distinct);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits().withOffset(offset), distinct);
     }
 
     /**
@@ -215,7 +240,7 @@ public class Query implements QueryCommand {
      * @return the copy of the query returning the supplied result columns; never null
      */
     public Query returning( List<Column> columns ) {
-        return new Query(source, constraint, orderings(), columns, limits(), distinct);
+        return new Query(source, constraint, orderings(), columns, orderingColumns, limits(), distinct);
     }
 
     /**
@@ -235,7 +260,7 @@ public class Query implements QueryCommand {
         } else {
             newOrderings = Arrays.asList(orderings);
         }
-        return new Query(source, constraint, newOrderings, columns, limits(), distinct);
+        return new Query(source, constraint, newOrderings, columns, orderingColumns, limits(), distinct);
     }
 
     /**
@@ -255,7 +280,7 @@ public class Query implements QueryCommand {
         } else {
             newColumns = Arrays.asList(columns);
         }
-        return new Query(source, constraint, orderings(), newColumns, limits(), distinct);
+        return new Query(source, constraint, orderings(), newColumns, orderingColumns, limits(), distinct);
     }
 
     /**

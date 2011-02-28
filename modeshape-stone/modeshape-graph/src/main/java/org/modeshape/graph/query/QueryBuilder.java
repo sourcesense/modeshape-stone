@@ -725,7 +725,7 @@ public class QueryBuilder {
      * @see #clear()
      */
     public QueryCommand query() {
-        QueryCommand result = new Query(source, constraint, orderings, columns, limit, distinct);
+        QueryCommand result = new Query(source, constraint, orderings, columns, null, limit, distinct);
         if (this.firstQuery != null) {
             // EXCEPT has a higher precedence than INTERSECT or UNION, so if the first query is
             // an INTERSECT or UNION SetQuery, the result should be applied to the RHS of the previous set ...

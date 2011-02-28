@@ -539,12 +539,22 @@ public class SqlQueryParser implements QueryParser {
         Source source = parseFrom(tokens, typeSystem);
         Constraint constraint = parseWhere(tokens, typeSystem, source);
         // Parse the order by and limit (can be in any order) ...
-        List<? extends Ordering> orderings = parseOrderBy(tokens, typeSystem, source, columnExpressions);
+        List<ColumnExpression> orderingColumnExpression = new ArrayList<ColumnExpression>();
+        List<? extends Ordering> orderings = parseOrderBy(tokens, typeSystem, source, orderingColumnExpression);
         Limit limit = parseLimit(tokens);
         if (orderings == null) parseOrderBy(tokens, typeSystem, source,columnExpressions);
 
         // Convert the column expressions to columns ...
         List<Column> columns = new ArrayList<Column>(columnExpressions.size());
+        fillColumns(columnExpressions, source, columns);
+        List<Column> orderingColumns = new ArrayList<Column>(orderingColumnExpression.size());
+        fillColumns(orderingColumnExpression, source, orderingColumns);
+        // Now create the query ...
+        return query(source, constraint, orderings, columns, orderingColumns, limit, isDistinct.get());
+    }
+
+    private void fillColumns(List<ColumnExpression> columnExpressions,
+            Source source, List<Column> columns) {
         for (ColumnExpression expression : columnExpressions) {
             SelectorName selectorName = expression.getSelectorName();
             String propertyName = expression.getPropertyName();
@@ -559,8 +569,6 @@ public class SqlQueryParser implements QueryParser {
             }
             columns.add(column(selectorName, propertyName, expression.getColumnName()));
         }
-        // Now create the query ...
-        return query(source, constraint, orderings, columns, limit, isDistinct.get());
     }
 
     protected SetQuery parseSetQuery( TokenStream tokens,
@@ -1382,9 +1390,10 @@ public class SqlQueryParser implements QueryParser {
                            Constraint constraint,
                            List<? extends Ordering> orderings,
                            List<? extends Column> columns,
+                           List<? extends Column> orderingColumns,
                            Limit limit,
                            boolean distinct ) {
-        return new Query(source, constraint, orderings, columns, limit, distinct);
+        return new Query(source, constraint, orderings, columns, orderingColumns, limit, distinct);
     }
 
     protected SetQuery setQuery( QueryCommand leftQuery,

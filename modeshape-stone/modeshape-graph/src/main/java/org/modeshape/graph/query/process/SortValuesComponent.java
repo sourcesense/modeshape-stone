@@ -48,9 +48,10 @@ public class SortValuesComponent extends DelegatingComponent {
 
     public SortValuesComponent( ProcessingComponent delegate,
                                 List<Ordering> orderings,
+                                Columns orderingColumns,
                                 Map<SelectorName, SelectorName> sourceNamesByAlias ) {
         super(delegate);
-        this.sortingComparator = createSortComparator(delegate.getContext(), delegate.getColumns(), orderings, sourceNamesByAlias);
+        this.sortingComparator = createSortComparator(delegate.getContext(), delegate.getColumns(), orderings, orderingColumns, sourceNamesByAlias);
     }
 
     /**
@@ -78,6 +79,7 @@ public class SortValuesComponent extends DelegatingComponent {
     protected Comparator<Object[]> createSortComparator( QueryContext context,
                                                          Columns columns,
                                                          List<Ordering> orderings,
+                                                         Columns orderingColumns,
                                                          Map<SelectorName, SelectorName> sourceNamesByAlias ) {
         assert context != null;
         assert orderings != null;
@@ -85,12 +87,12 @@ public class SortValuesComponent extends DelegatingComponent {
             return null;
         }
         if (orderings.size() == 1) {
-            return createSortComparator(context, columns, orderings.get(0), sourceNamesByAlias);
+            return createSortComparator(context, columns, orderings.get(0),orderingColumns, sourceNamesByAlias);
         }
         // Create a comparator that uses an ordered list of comparators ...
         final List<Comparator<Object[]>> comparators = new ArrayList<Comparator<Object[]>>(orderings.size());
         for (Ordering ordering : orderings) {
-            comparators.add(createSortComparator(context, columns, ordering, sourceNamesByAlias));
+            comparators.add(createSortComparator(context, columns, ordering, orderingColumns, sourceNamesByAlias));
         }
         return new Comparator<Object[]>() {
             public int compare( Object[] tuple1,
@@ -108,6 +110,7 @@ public class SortValuesComponent extends DelegatingComponent {
     protected Comparator<Object[]> createSortComparator( QueryContext context,
                                                          Columns columns,
                                                          Ordering ordering,
+                                                         Columns orderingColumns,
                                                          final Map<SelectorName, SelectorName> sourceNamesByAlias ) {
         assert context != null;
         assert ordering != null;
@@ -130,6 +133,7 @@ public class SortValuesComponent extends DelegatingComponent {
         final DynamicOperation operation = createDynamicOperation(context.getTypeSystem(),
                                                                   schemataWithAliases,
                                                                   columns,
+                                                                  orderingColumns,
                                                                   ordering.operand());
         final TypeSystem typeSystem = context.getTypeSystem();
         final TypeFactory<?> typeFactory = typeSystem.getTypeFactory(operation.getExpectedType());

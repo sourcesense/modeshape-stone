@@ -136,7 +136,7 @@ public class CanonicalPlanner implements Planner {
         // plan = attachGrouping(context,plan,query.getGroupBy());
 
         // Attach the project ...
-        plan = attachProject(context, plan, query.columns(), usedSources);
+        plan = attachProject(context, plan, query, usedSources);
 
         // Attach duplicate removal ...
         if (query.isDistinct()) {
@@ -420,12 +420,13 @@ public class CanonicalPlanner implements Planner {
      */
     protected PlanNode attachProject( QueryContext context,
                                       PlanNode plan,
-                                      List<? extends Column> columns,
+                                      Query query,
                                       Map<SelectorName, Table> selectors ) {
         PlanNode projectNode = new PlanNode(Type.PROJECT);
-
+        List<Column> columns = (List<Column>) query.columns();
         List<Column> newColumns = new LinkedList<Column>();
         List<String> newTypes = new ArrayList<String>();
+        List<String> orderingTypes = new ArrayList<String>();
         if (columns == null || columns.isEmpty()) {
             // SELECT *, so find all of the columns that are available from all the sources ...
             for (Map.Entry<SelectorName, Table> entry : selectors.entrySet()) {
@@ -465,6 +466,15 @@ public class CanonicalPlanner implements Planner {
                             }
                         }
                     }
+                    for (Column col : query.orderingColumns()) {
+                        String colName = col.propertyName();
+                        org.modeshape.graph.query.validate.Schemata.Column schemaColumn = table.getColumn(colName);
+                        if (schemaColumn != null) {
+                            orderingTypes.add(schemaColumn.getPropertyType());
+                        } else {
+                            orderingTypes.add(context.getTypeSystem().getStringFactory().getTypeName());
+                        }
+                    }
                     boolean validateColumnExistance = context.getHints().validateColumnExistance && !table.hasExtraColumns();
                     if (table.getColumn(columnName) == null && validateColumnExistance && !"*".equals(columnName)) {
                         context.getProblems().addError(GraphI18n.columnDoesNotExistOnTable, columnName, tableName);
@@ -474,6 +484,10 @@ public class CanonicalPlanner implements Planner {
         }
         projectNode.setProperty(Property.PROJECT_COLUMNS, newColumns);
         projectNode.setProperty(Property.PROJECT_COLUMN_TYPES, newTypes);
+        if (!query.orderingColumns().isEmpty()) {
+            projectNode.setProperty(Property.ORDERING_COLUMNS, query.orderingColumns());
+            projectNode.setProperty(Property.ORDERING_COLUMNS_TYPE, orderingTypes);
+        }
         projectNode.addLastChild(plan);
         return projectNode;
     }

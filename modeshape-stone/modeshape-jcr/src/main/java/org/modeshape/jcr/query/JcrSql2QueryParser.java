@@ -143,6 +143,7 @@ public class JcrSql2QueryParser extends SqlQueryParser {
                                     Constraint constraint,
                                     List<? extends Ordering> orderings,
                                     List<? extends Column> columns,
+                                    List<? extends Column> orderingColumns,
                                     Limit limit,
                                     boolean distinct ) {
         return new JcrSelectQuery((JcrSource)source, (JcrConstraint)constraint, orderings(orderings), columns(columns),

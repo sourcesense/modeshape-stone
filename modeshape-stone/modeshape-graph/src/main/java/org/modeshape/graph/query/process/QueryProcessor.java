@@ -72,6 +72,7 @@ public abstract class QueryProcessor implements Processor {
                                  PlanNode plan ) {
         long nanos = System.nanoTime();
         Columns columns = null;
+        Columns orderingColumns = null;
         List<Object[]> tuples = null;
         try {
             // Find the topmost PROJECT node and build the Columns ...
@@ -83,11 +84,17 @@ public abstract class QueryProcessor implements Processor {
             List<String> columnTypes = project.getPropertyAsList(Property.PROJECT_COLUMN_TYPES, String.class);
             assert columnTypes != null;
             assert columnTypes.size() == projectedColumns.size();
+            List<Column> orderingColumnsList = project.getPropertyAsList(Property.ORDERING_COLUMNS, Column.class);
+            List<String> orderingColumnTypes = project.getPropertyAsList(Property.ORDERING_COLUMNS_TYPE, String.class);
             columns = new QueryResultColumns(projectedColumns, columnTypes, context.getHints().hasFullTextSearch);
-
+            if(orderingColumnsList != null && orderingColumnTypes != null) {
+                orderingColumns = new QueryResultColumns(orderingColumnsList, orderingColumnTypes, false);
+            }
             // Go through the plan and create the corresponding ProcessingComponents ...
             Analyzer analyzer = createAnalyzer(context);
-            ProcessingComponent component = createComponent(command, context, plan, columns, analyzer);
+            ProcessingComponent component = createComponent(command, context, plan, columns, orderingColumns, analyzer);
+            project.removeProperty(Property.ORDERING_COLUMNS);
+            project.removeProperty(Property.ORDERING_COLUMNS_TYPE);
             long nanos2 = System.nanoTime();
             statistics = statistics.withResultsFormulationTime(nanos2 - nanos);
             nanos = nanos2;
@@ -181,6 +188,7 @@ public abstract class QueryProcessor implements Processor {
      * @param context the context in which query is being evaluated
      * @param node the plan node for which the ProcessingComponent is to be created
      * @param columns the definition of the result columns for this portion of the query
+     * @param orderingColumns 
      * @param analyzer the analyzer (returned from {@link #createAnalyzer(QueryContext)}) that should be used on the components
      *        that evaluate criteria; may be null if a best-effort should be made for the evaluation
      * @return the processing component for this plan node; or null if there was an error recorded in the
@@ -190,6 +198,7 @@ public abstract class QueryProcessor implements Processor {
                                                    QueryContext context,
                                                    PlanNode node,
                                                    Columns columns,
+                                                   Columns orderingColumns, 
                                                    Analyzer analyzer ) {
         ProcessingComponent component = null;
         switch (node.getType()) {
@@ -212,6 +221,7 @@ public abstract class QueryProcessor implements Processor {
                                                                        context,
                                                                        node.getFirstChild(),
                                                                        columns,
+                                                                       orderingColumns,
                                                                        analyzer);
                 component = new DistinctComponent(distinctDelegate);
                 break;
@@ -227,8 +237,8 @@ public abstract class QueryProcessor implements Processor {
                 Columns leftColumns = createColumnsFor(leftPlan, columns);
                 Columns rightColumns = createColumnsFor(rightPlan, columns);
 
-                ProcessingComponent left = createComponent(originalQuery, context, leftPlan, leftColumns, analyzer);
-                ProcessingComponent right = createComponent(originalQuery, context, rightPlan, rightColumns, analyzer);
+                ProcessingComponent left = createComponent(originalQuery, context, leftPlan, leftColumns,orderingColumns, analyzer);
+                ProcessingComponent right = createComponent(originalQuery, context, rightPlan, rightColumns,orderingColumns, analyzer);
                 // Create the join component ...
                 JoinAlgorithm algorithm = node.getProperty(Property.JOIN_ALGORITHM, JoinAlgorithm.class);
                 JoinType joinType = node.getProperty(Property.JOIN_TYPE, JoinType.class);
@@ -268,6 +278,7 @@ public abstract class QueryProcessor implements Processor {
                                                                     context,
                                                                     node.getFirstChild(),
                                                                     columns,
+                                                                    orderingColumns,
                                                                     analyzer);
                 // Then create the limit component ...
                 Integer rowLimit = node.getProperty(Property.LIMIT_COUNT, Integer.class);
@@ -287,6 +298,7 @@ public abstract class QueryProcessor implements Processor {
                                                                       context,
                                                                       node.getFirstChild(),
                                                                       columns,
+                                                                      orderingColumns,
                                                                       analyzer);
                 // Then create the project component ...
                 List<Column> projectedColumns = node.getPropertyAsList(Property.PROJECT_COLUMNS, Column.class);
@@ -299,6 +311,7 @@ public abstract class QueryProcessor implements Processor {
                                                                      context,
                                                                      node.getFirstChild(),
                                                                      columns,
+                                                                     orderingColumns,
                                                                      analyzer);
                 // Then create the select component ...
                 Constraint constraint = node.getProperty(Property.SELECT_CRITERIA, Constraint.class);
@@ -308,7 +321,7 @@ public abstract class QueryProcessor implements Processor {
                 // Create the components under the SET_OPERATION ...
                 List<ProcessingComponent> setDelegates = new LinkedList<ProcessingComponent>();
                 for (PlanNode child : node) {
-                    setDelegates.add(createComponent(originalQuery, context, child, columns, analyzer));
+                    setDelegates.add(createComponent(originalQuery, context, child, columns,orderingColumns, analyzer));
                 }
                 // Then create the select component ...
                 Operation operation = node.getProperty(Property.SET_OPERATION, Operation.class);
@@ -333,6 +346,7 @@ public abstract class QueryProcessor implements Processor {
                                                                    context,
                                                                    node.getFirstChild(),
                                                                    columns,
+                                                                   orderingColumns,
                                                                    analyzer);
                 // Then create the sort component ...
                 List<Object> orderBys = node.getPropertyAsList(Property.SORT_ORDER_BY, Object.class);
@@ -352,7 +366,7 @@ public abstract class QueryProcessor implements Processor {
                             if (alias != null) sourceNamesByAlias.put(alias, name);
                         }
                         // Now create the sorting component ...
-                        component = new SortValuesComponent(sortDelegate, orderings, sourceNamesByAlias);
+                        component = new SortValuesComponent(sortDelegate, orderings, orderingColumns, sourceNamesByAlias);
                     } else {
                         // Order by the location(s) because it's before a merge-join ...
                         component = new SortLocationsComponent(sortDelegate);
@@ -369,8 +383,8 @@ public abstract class QueryProcessor implements Processor {
                 leftColumns = createColumnsFor(leftPlan, columns);
                 rightColumns = createColumnsFor(rightPlan, columns);
 
-                left = createComponent(originalQuery, context, leftPlan, leftColumns, analyzer);
-                right = createComponent(originalQuery, context, rightPlan, rightColumns, analyzer);
+                left = createComponent(originalQuery, context, leftPlan, leftColumns,orderingColumns, analyzer);
+                right = createComponent(originalQuery, context, rightPlan, rightColumns, orderingColumns, analyzer);
 
                 // Look for a variable name on the left and right plans ...
                 String leftVariableName = leftPlan.getProperty(Property.VARIABLE_NAME, String.class);
