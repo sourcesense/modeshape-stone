@@ -38,6 +38,7 @@
     	<module>bundle-test</module>
         <module>external-dependencies</module>
         <module>jcr/modeshape-server</module>
+        <module>extensions/webconsole-security-provider</module>
     </modules>
 
     <build>

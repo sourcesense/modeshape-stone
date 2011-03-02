@@ -6,34 +6,31 @@ import static org.junit.Assert.assertTrue;
 import javax.jcr.Node;
 import javax.jcr.Session;
 import org.apache.sling.jcr.api.SlingRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Ignore;
 import org.modeshape.jcr.api.SecurityContextCredentials;
+import org.ops4j.pax.exam.Inject;
+import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.junit.Configuration;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.BundleContext;
 import com.sourcesense.stone.jcr.modeshape.server.impl.SlingServerRepository;
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
-import com.sourcesense.stone.test.services.CallingComponentService;
-import com.sourcesense.stone.test.services.SimpleService;
 
 @RunWith( JUnit4TestRunner.class )
-public class ModeshapeConnectionTest extends AbstractTestCase {
+public class ModeshapeConnectionTest {
 
+    @Inject
+    BundleContext bundleContext;
+
+    @Configuration
+    public static Option[] configuration() {
+        return PaxConfigurations.modeShapeConfiguration();
+    }
+    
     @Test
     @Ignore
-    public void shouldTakeTheDefaultWorkspace() throws Exception {
-        ServiceReference[] serviceReference = bundleContext.getAllServiceReferences(SimpleService.class.getName(),
-                                                                                    "(component.name=com.sourcesense.stone.test.services.CallingComponentService)");
-        assertNotNull(serviceReference);
-
-        CallingComponentService ssr = (CallingComponentService)bundleContext.getService(serviceReference[0]);
-        SlingRepository slingRepository = ssr.getComponent();
-        assertNotNull(slingRepository);
-        assertNotNull(slingRepository.getDefaultWorkspace());
-    }
-
-    @Test
     public void shouldGetValidSlingRepository() throws Exception {
 
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
@@ -43,6 +40,7 @@ public class ModeshapeConnectionTest extends AbstractTestCase {
     }
     
     @Test
+    @Ignore
     public void shouldSuccessfullyLoginToModeShapeRepository() throws Exception {
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
 
@@ -52,6 +50,7 @@ public class ModeshapeConnectionTest extends AbstractTestCase {
     }
     
     @Test
+    @Ignore
     public void shouldWriteEtcMapNodesIfNotFound() throws Exception {
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
         

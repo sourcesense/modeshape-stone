@@ -52,6 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
             </plugin>
         </plugins>
     </reporting>
@@ -75,13 +76,14 @@
             <scope>provided</scope>
         </dependency>
 
+<!--
         <dependency>
             <groupId>com.sourcesense.stone</groupId>
             <artifactId>com.sourcesense.stone.bundle.test</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.commons.log</artifactId>
@@ -92,6 +94,7 @@
         <!--
             ModeShape bundles
         -->
+<!--
         <dependency>
             <groupId>org.modeshape</groupId>
             <artifactId>modeshape-common</artifactId>
@@ -147,6 +150,7 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
+-->
         <!--
             Extra bundle
         -->
@@ -513,13 +517,14 @@
             <scope>provided</scope>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.extensions.webconsolebranding</artifactId>
             <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-bundle</artifactId>
@@ -604,8 +609,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.derby</groupId> 
-            <artifactId>derby</artifactId> 
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
             <version>10.5.3.0_1</version>
             <scope>provided</scope>
         </dependency>
