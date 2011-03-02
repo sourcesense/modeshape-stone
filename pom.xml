@@ -74,6 +74,20 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>jboss-dev-repository-group</id>
+            <name>JBoss Dev Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/developer/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
 
     <prerequisites>

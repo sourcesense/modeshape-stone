@@ -14,15 +14,6 @@
 		ModeShape Sequencer that processes java sources
 	</description>
 	<url>http://www.modeshape.org</url>
-
-    <repositories>
-        <repository>
-            <id>eclipse-maven-repo</id>
-            <name>Eclipse Maven Repo</name>
-            <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
-        </repository>
-    </repositories>
-
 	<!--
 		Define the dependencies.  Note that all version and scopes default to those 
 		defined in the dependencyManagement section of the parent pom.
