@@ -90,8 +90,9 @@
                             java.util.*,
 
                             <!-- Sling and OSGi -->
-                            org.apache.sling.*,
-                            org.osgi.*,
+                            org.apache.sling.jcr.*,
+                            org.osgi.framework.*,
+                            org.osgi.service.*,
 
                             <!-- JCR and Jackrabbit API -->
                             javax.jcr.*,
@@ -99,7 +100,9 @@
                             <!-- Logging -->
                             org.slf4j,
 
-                            org.modeshape.*;version=${modeshape.version},
+                            org.modeshape.common.*;version=${modeshape.version},
+                            org.modeshape.graph.*;version=${modeshape.version},
+                            org.modeshape.jcr.*;version=${modeshape.version},
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
 
