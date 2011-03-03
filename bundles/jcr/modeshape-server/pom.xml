@@ -147,7 +147,37 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <filters>
+            <filter>${basedir}/src/main/filters/${db.type}.properties</filter>
+        </filters>
     </build>
+
+    <profiles>
+        <profile>
+            <id>h2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.type>h2</db.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>postgres</id>
+            <properties>
+                <db.type>postgres</db.type>
+            </properties>
+        </profile>
+    </profiles>
 
     <reporting>
         <plugins>

@@ -34,10 +34,10 @@
         <mode:source jcr:name="test"
             mode:classname="org.modeshape.connector.store.jpa.JpaSource"
             mode:description="The database store for our content"
-            mode:driverClassName="org.h2.Driver"
-            mode:password="sa"
-            mode:url="jdbc:h2:~/test"
-            mode:username="sa"
+            mode:driverClassName="${JDBC.driverClassName}"
+            mode:url="${JDBC.url}"
+            mode:password="${JDBC.username}"
+            mode:username="${JDBC.password}"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
     </mode:sources>
