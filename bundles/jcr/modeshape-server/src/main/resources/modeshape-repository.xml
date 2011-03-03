@@ -34,10 +34,10 @@
         <mode:source jcr:name="test"
             mode:classname="org.modeshape.connector.store.jpa.JpaSource"
             mode:description="The database store for our content"
-            mode:driverClassName="org.postgresql.Driver"
-            mode:url="jdbc:postgresql://localhost:5432/stone"
-            mode:username="postgres"
-            mode:password="UltimateFighter79"
+            mode:driverClassName="org.h2.Driver"
+            mode:password="sa"
+            mode:url="jdbc:h2:~/test"
+            mode:username="sa"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
     </mode:sources>
