@@ -137,7 +137,7 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
 
             int index = 1;
             for (Problem problem : configuration.getProblems()) {
-                fmt.format("    %s) %s%n%n", index++, problem.getMessageString());
+                fmt.format("    %s) %s%n", index++, problem.getMessageString());
             }
 
             log.error(fmt.toString());
