@@ -3,12 +3,13 @@ package com.sourcesense.stone.jcr.modeshape.server;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.ops4j.pax.exam.CoreOptions.options;
 import javax.jcr.Node;
 import javax.jcr.Session;
 import org.apache.sling.jcr.api.SlingRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.Ignore;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
@@ -26,7 +27,7 @@ public class ModeshapeConnectionTest {
 
     @Configuration
     public static Option[] configuration() {
-        return PaxConfigurations.modeShapeConfiguration();
+        return options(PaxConfigurations.slingBasicConfiguration());
     }
     
     @Test

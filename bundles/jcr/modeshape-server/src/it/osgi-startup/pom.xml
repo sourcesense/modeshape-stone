@@ -83,14 +83,14 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
--->
+
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.commons.log</artifactId>
             <version>2.1.2</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <!--
             ModeShape bundles
         -->
@@ -154,12 +154,14 @@
         <!--
             Extra bundle
         -->
+<!--
         <dependency>
             <groupId>com.sourcesense.stone</groupId>
             <artifactId>com.sourcesense.stone.external.dependencies</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+-->
 
         <!--
          | Bundles we depend on
@@ -194,7 +196,7 @@
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
-
+<!--
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.configadmin</artifactId>
@@ -517,14 +519,13 @@
             <scope>provided</scope>
         </dependency>
 
-<!--
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.extensions.webconsolebranding</artifactId>
             <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
--->
+
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-bundle</artifactId>
@@ -614,10 +615,11 @@
             <version>10.5.3.0_1</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <!--
          | Jackrabbit dependencies
         -->
+<!--
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-api</artifactId>
@@ -638,8 +640,9 @@
             <version>${jackrabbit.version}</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <!-- | Logging APIs required by Jackrabbit -->
+<!--
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -653,7 +656,7 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <!--
          | The ever-present test library
         -->
@@ -667,12 +670,13 @@
         <!--
          | Pax Exam API:
         -->
+<!--
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam</artifactId>
             <version>${paxexam.version}</version>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-default</artifactId>

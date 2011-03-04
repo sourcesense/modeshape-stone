@@ -2,18 +2,34 @@ package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.getBundle;
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.symbolicNamesListFor;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.ops4j.pax.exam.CoreOptions.options;
 import java.util.Dictionary;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.ops4j.pax.exam.Inject;
+import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.junit.Configuration;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 @RunWith( JUnit4TestRunner.class )
-public class ModeShapeServerBundleTest extends AbstractTestCase {
+public class ModeShapeServerBundleTest {
 
+    @Inject
+    BundleContext bundleContext;
+
+    @Configuration
+    public Option[] configuration() {
+        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
+    }
+    
     @Test
     public void shouldHaveNotNullBundleContext() throws Exception {
         assertNotNull(bundleContext);

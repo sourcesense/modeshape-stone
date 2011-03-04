@@ -1,16 +1,31 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
 import static org.junit.Assert.assertNotNull;
+import static org.ops4j.pax.exam.CoreOptions.options;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.ops4j.pax.exam.Inject;
+import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.junit.Configuration;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 @RunWith( JUnit4TestRunner.class )
-public class ModeShapeServerConfigurationTest extends AbstractTestCase {
+public class ModeShapeServerConfigurationTest {
 
+    @Inject
+    BundleContext bundleContext;
+
+    @Configuration
+    public Option[] configuration() {
+        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
+    }
+    
     @Test
     public void shouldHaveConfigAdminServiceReference() throws Exception {
         ServiceReference sr = getConfigurationAdminServiceReferenceFrom(bundleContext);
