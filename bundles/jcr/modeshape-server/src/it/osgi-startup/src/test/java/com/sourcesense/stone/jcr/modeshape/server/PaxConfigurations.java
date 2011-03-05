@@ -44,23 +44,24 @@ public class PaxConfigurations {
         /*if[DEBUG]
         vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
         end[DEBUG]*/
-        mavenBundle(JCR_GROUP, "jcr", JCR_VERSION),
-
-        jackrabbit(), sling(), configurationAdmin(), osgi(), slf4j(),
-
-        systemProperty("sling.home").value("/tmp/sling"));
+        jcr(), jackrabbit(), sling(), configurationAdmin(), osgi(), slf4j(), systemProperty("sling.home").value("/tmp/sling"));
     }
 
     public static Option stoneConfiguration() {
-        return composite(stone(), modeshape(), jcip(), joda(), lucene());
+        return composite(joda(), jcip(), lucene(), googleCommons(), modeshape(), stone());
+    }
+
+    static Option jcr() {
+        return mavenBundle(JCR_GROUP, "jcr", JCR_VERSION);
     }
 
     static Option lucene() {
-        return composite(wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-analyzers", LUCENE_VERSION)),
+        return composite(
+                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-core", LUCENE_VERSION)),
+                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-analyzers", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-misc", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-regex", LUCENE_VERSION)),
-                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-snowball", LUCENE_VERSION)),
-                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-core", LUCENE_VERSION)));
+                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-snowball", LUCENE_VERSION)));
     }
 
     static Option joda() {

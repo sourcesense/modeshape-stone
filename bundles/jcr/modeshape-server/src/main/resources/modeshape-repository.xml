@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
  |  Copyright 2011 Sourcesense
  |
@@ -17,20 +18,16 @@
 <configuration xmlns:mode="http://www.modeshape.org/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
 
     <mode:repositories>
-        <!-- Define a JCR repository that accesses the 'Test' source directly 
-            described below. -->
         <mode:repository jcr:name="test" mode:source="test">
             <mode:options jcr:primaryType="mode:options">
-                <!-- modeshape-jcr is the default value -->
                 <mode:option jcr:name="jaasLoginConfigName"
                     mode:value="modeshape-jcr" />
             </mode:options>
         </mode:repository>
     </mode:repositories>
 
-    <!-- Define the sources for the content. These sources are directly accessible 
-        using the ModeShape-specific Graph API. -->
     <mode:sources jcr:primaryType="nt:unstructured">
+    <!-- 
         <mode:source jcr:name="test"
             mode:classname="org.modeshape.connector.store.jpa.JpaSource"
             mode:description="The database store for our content"
@@ -40,11 +37,14 @@
             mode:username="${JDBC.password}"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
+             -->
+		<mode:source
+			jcr:name="test"
+			mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
+			mode:retryLimit="3"
+			mode:defaultWorkspaceName="test"/>
     </mode:sources>
 
     <mode:mimeTypeDetectors>
-        <!-- <mode:mimeTypeDetector jcr:name="Detector" mode:description="Standard 
-            extension-based MIME type detector"/> -->
     </mode:mimeTypeDetectors>
-
 </configuration>

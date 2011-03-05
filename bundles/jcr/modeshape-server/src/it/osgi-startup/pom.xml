@@ -173,6 +173,7 @@
             <scope>provided</scope>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.jcr.api</artifactId>
@@ -186,7 +187,7 @@
             <version>${sling.version}</version>
             <scope>provided</scope>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
@@ -681,12 +682,14 @@
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-default</artifactId>
             <version>${paxexam.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-junit</artifactId>
             <version>${paxexam.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

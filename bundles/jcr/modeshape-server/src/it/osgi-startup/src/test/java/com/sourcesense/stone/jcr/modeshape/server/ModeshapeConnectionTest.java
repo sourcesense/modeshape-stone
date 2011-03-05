@@ -1,5 +1,8 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -26,12 +29,11 @@ public class ModeshapeConnectionTest {
     BundleContext bundleContext;
 
     @Configuration
-    public static Option[] configuration() {
-        return options(PaxConfigurations.slingBasicConfiguration());
+    public Option[] configuration() {
+        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
     }
     
     @Test
-    @Ignore
     public void shouldGetValidSlingRepository() throws Exception {
 
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);

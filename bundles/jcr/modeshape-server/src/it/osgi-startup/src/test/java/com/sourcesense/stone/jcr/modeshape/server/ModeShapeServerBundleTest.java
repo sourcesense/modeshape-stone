@@ -2,7 +2,6 @@ package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.getBundle;
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.symbolicNamesListFor;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
 import static org.junit.Assert.assertEquals;
@@ -27,7 +26,7 @@ public class ModeShapeServerBundleTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
+        return options(slingBasicConfiguration(), stoneConfiguration());
     }
     
     @Test

@@ -63,12 +63,15 @@ public class IntegrationTestUtil {
     }
 
     static void removeModeShapeRepositoryConfigurations( BundleContext bundleContext ) throws IOException, InvalidSyntaxException {
-        Configuration[] modeShapeRepositoryConfigurations = getConfigurationsFor(bundleContext,
-                                                                                 ActivatorHelper.SERVER_REPOSITORY_FACTORY_PID);
+        Configuration[] modeShapeRepositoryConfigurations = getModeShapeConfigurations(bundleContext);
 
         for (Configuration modeShapeConfiguration : modeShapeRepositoryConfigurations) {
             modeShapeConfiguration.delete();
         }
+    }
+
+    static Configuration[] getModeShapeConfigurations( BundleContext bundleContext ) throws IOException, InvalidSyntaxException {
+        return getConfigurationsFor(bundleContext, ActivatorHelper.SERVER_REPOSITORY_FACTORY_PID);
     }
 
     static SlingRepository getSlingRepositoryFromServiceList( BundleContext bundleContext ) {
