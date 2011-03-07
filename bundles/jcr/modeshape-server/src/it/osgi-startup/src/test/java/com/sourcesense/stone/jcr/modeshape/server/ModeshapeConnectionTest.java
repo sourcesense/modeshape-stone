@@ -32,40 +32,40 @@ public class ModeshapeConnectionTest {
     public Option[] configuration() {
         return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
     }
-    
+
     @Test
     public void shouldGetValidSlingRepository() throws Exception {
 
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
 
         assertNotNull(slingRepository);
-        assertTrue(slingRepository instanceof SlingServerRepository);        
+        assertTrue(slingRepository instanceof SlingServerRepository);
     }
-    
+
     @Test
     @Ignore
     public void shouldSuccessfullyLoginToModeShapeRepository() throws Exception {
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
 
         Session session = slingRepository.login(new SecurityContextCredentials(new CustomSecurityContext()));
-        
+
         assertNotNull(session);
     }
-    
+
     @Test
     @Ignore
     public void shouldWriteEtcMapNodesIfNotFound() throws Exception {
         SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
-        
+
         Session session = slingRepository.login(new SecurityContextCredentials(new CustomSecurityContext()));
         assertFalse(session.nodeExists("/etc/map"));
-        
+
         Node root = session.getNode("/");
         Node etc = root.addNode("etc");
         etc.addNode("map");
-        
+
         session.save();
-        
+
         assertTrue(session.nodeExists("/etc/map"));
         session.logout();
     }
