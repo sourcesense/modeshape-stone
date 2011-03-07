@@ -1,10 +1,6 @@
 package com.sourcesense.stone.jcr.modeshape.server.performances;
 
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.getSlingRepositoryFromServiceList;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
-import static org.ops4j.pax.exam.CoreOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,18 +14,15 @@ import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.ops4j.pax.exam.Inject;
-import org.ops4j.pax.exam.Option;
-import org.ops4j.pax.exam.junit.Configuration;
-import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.BundleContext;
 
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
-@RunWith(JUnit4TestRunner.class)
-public class PerformanceTest {
+abstract class AbstractPerformanceTest {
+
+    private final String name;
 
     private final int warmup = 10;
 
@@ -37,18 +30,16 @@ public class PerformanceTest {
 
     private final Credentials credentials = new SecurityContextCredentials(new CustomSecurityContext());
 
+    public AbstractPerformanceTest(String name) {
+        this.name = name;
+    }
+
     @Inject
     private BundleContext bundleContext;
-
-    @Configuration
-    public static Option[] configuration() {
-        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
-    }
 
     @Test
     @Ignore
     public void testPerformance() throws Exception {
-        String name = "just-a-test";
         runTest(new ReadPropertyTest(), name);
         runTest(new SetPropertyTest(), name);
         runTest(new SmallFileReadTest(), name);
