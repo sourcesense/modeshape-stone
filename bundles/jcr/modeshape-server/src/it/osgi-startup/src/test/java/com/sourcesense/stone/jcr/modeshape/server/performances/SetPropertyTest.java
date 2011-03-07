@@ -8,7 +8,7 @@ import javax.jcr.Session;
  * Test for measuring the performance of setting a single property and
  * saving the change.
  */
-public class SetPropertyTest extends AbstractTest {
+class SetPropertyTest extends AbstractTest {
 
     private Session session;
 

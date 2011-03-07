@@ -7,7 +7,7 @@ import javax.jcr.query.QueryManager;
 /**
  * SQL-2 version of the sub-tree performance test.
  */
-public class SQL2DescendantSearchTest extends DescendantSearchTest {
+class SQL2DescendantSearchTest extends DescendantSearchTest {
 
     protected Query createQuery(QueryManager manager, int i)
             throws RepositoryException {

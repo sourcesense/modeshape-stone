@@ -8,7 +8,7 @@ import javax.jcr.Session;
  * three properties: one with a jcr prefix, one with the empty prefix and a
  * third one, which does not exist.
  */
-public class ReadPropertyTest extends AbstractTest {
+class ReadPropertyTest extends AbstractTest {
 
     private Session session;
 

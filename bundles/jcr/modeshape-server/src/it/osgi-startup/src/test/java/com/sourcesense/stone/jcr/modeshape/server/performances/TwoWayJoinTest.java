@@ -14,7 +14,7 @@ import javax.jcr.query.RowIterator;
  * a set of 90k nodes. The query is constructed in a way that should
  * allow a smart implementation to perform the join quite efficiently.
  */
-public class TwoWayJoinTest extends AbstractTest {
+class TwoWayJoinTest extends AbstractTest {
 
     private static final int NODE_COUNT = 300;
 

@@ -10,7 +10,7 @@ import javax.jcr.Session;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
 
-public class SmallFileReadTest extends AbstractTest {
+class SmallFileReadTest extends AbstractTest {
 
     private static final int FILE_COUNT = 1000;
 

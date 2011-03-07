@@ -10,7 +10,7 @@ import javax.jcr.Session;
  * Test case that traverses 10k unstructured nodes (100x100) while
  * 50 concurrent readers randomly access nodes from within this tree.
  */
-public class ConcurrentReadTest extends AbstractTest {
+class ConcurrentReadTest extends AbstractTest {
 
     protected static final int NODE_COUNT = 100;
 

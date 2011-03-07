@@ -8,7 +8,7 @@ import javax.jcr.Session;
  * Test for measuring the performance of adding one extra child node to 
  * node with {@value #CHILD_COUNT} existing child nodes.
  */
-public class UpdateManyChildNodesTest extends AbstractTest {
+class UpdateManyChildNodesTest extends AbstractTest {
 
     private static final int CHILD_COUNT = 10 * 1000;
 

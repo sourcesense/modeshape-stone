@@ -3,7 +3,7 @@ package com.sourcesense.stone.jcr.modeshape.server.performances;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-public class RefreshTest extends AbstractTest {
+class RefreshTest extends AbstractTest {
 
     private Session session;
 

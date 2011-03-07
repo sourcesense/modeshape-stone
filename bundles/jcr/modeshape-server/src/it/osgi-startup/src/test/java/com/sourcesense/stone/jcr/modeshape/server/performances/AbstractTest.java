@@ -11,7 +11,7 @@ import javax.jcr.Session;
 /**
  * Abstract base class for individual performance benchmarks.
  */
-public abstract class AbstractTest {
+abstract class AbstractTest {
 
     private Repository repository;
 

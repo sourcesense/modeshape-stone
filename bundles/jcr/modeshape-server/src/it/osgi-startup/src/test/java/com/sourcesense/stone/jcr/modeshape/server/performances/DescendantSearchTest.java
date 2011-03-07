@@ -10,7 +10,7 @@ import javax.jcr.query.QueryManager;
 /**
  * Performance test to check performance of queries on sub-trees.
  */
-public class DescendantSearchTest extends AbstractTest {
+class DescendantSearchTest extends AbstractTest {
 
     private static final int NODE_COUNT = 100;
 

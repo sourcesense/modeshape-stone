@@ -6,7 +6,7 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-public class SmallFileWriteTest extends AbstractTest {
+class SmallFileWriteTest extends AbstractTest {
 
     private static final int FILE_COUNT = 100;
 

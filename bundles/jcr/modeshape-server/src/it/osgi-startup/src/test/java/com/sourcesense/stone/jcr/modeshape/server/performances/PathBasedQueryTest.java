@@ -10,7 +10,7 @@ import javax.jcr.query.QueryManager;
  * query that has a path constraint with low selectivity, whereas the predicate
  * is very selective.
  */
-public class PathBasedQueryTest extends AbstractTest {
+class PathBasedQueryTest extends AbstractTest {
 
     private Session session;
 

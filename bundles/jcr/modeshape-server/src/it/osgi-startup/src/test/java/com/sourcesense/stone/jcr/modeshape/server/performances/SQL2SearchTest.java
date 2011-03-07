@@ -4,7 +4,7 @@ import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 
-public class SQL2SearchTest extends SimpleSearchTest {
+class SQL2SearchTest extends SimpleSearchTest {
 
     protected Query createQuery(QueryManager manager, int i)
             throws RepositoryException {

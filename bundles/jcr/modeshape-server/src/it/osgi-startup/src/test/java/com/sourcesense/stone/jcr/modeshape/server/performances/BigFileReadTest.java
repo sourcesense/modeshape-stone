@@ -10,7 +10,7 @@ import javax.jcr.Session;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
 
-public class BigFileReadTest extends AbstractTest {
+class BigFileReadTest extends AbstractTest {
 
     private static final int FILE_COUNT = 10;
 
