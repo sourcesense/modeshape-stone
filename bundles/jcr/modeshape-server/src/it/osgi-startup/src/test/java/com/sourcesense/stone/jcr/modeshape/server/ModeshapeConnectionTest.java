@@ -7,8 +7,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.ops4j.pax.exam.CoreOptions.options;
+
 import javax.jcr.Node;
 import javax.jcr.Session;
+
 import org.apache.sling.jcr.api.SlingRepository;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,55 +21,79 @@ import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
 import com.sourcesense.stone.jcr.modeshape.server.impl.SlingServerRepository;
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
-@RunWith( JUnit4TestRunner.class )
+import com.sourcesense.stone.test.services.CallingComponentService;
+import com.sourcesense.stone.test.services.SimpleService;
+
+@RunWith(JUnit4TestRunner.class)
 public class ModeshapeConnectionTest {
 
     @Inject
     BundleContext bundleContext;
-
+    
     @Configuration
     public Option[] configuration() {
         return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
     }
+    
+	@Test
+	@Ignore
+	public void shouldTakeTheDefaultWorkspace() throws Exception {
+		ServiceReference[] serviceReference = bundleContext
+				.getAllServiceReferences(SimpleService.class.getName(),
+						"(component.name=com.sourcesense.stone.test.services.CallingComponentService)");
+		assertNotNull(serviceReference);
 
-    @Test
-    public void shouldGetValidSlingRepository() throws Exception {
+		CallingComponentService ssr = (CallingComponentService) bundleContext
+				.getService(serviceReference[0]);
+		SlingRepository slingRepository = ssr.getComponent();
+		assertNotNull(slingRepository);
+		assertNotNull(slingRepository.getDefaultWorkspace());
+	}
 
-        SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
+	@Test
+	public void shouldGetValidSlingRepository() throws Exception {
 
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
+		assertNotNull(slingRepository);
+		assertTrue(slingRepository instanceof SlingServerRepository);
+	}
+    
+	@Test
+	public void shouldSuccessfullyLoginToModeShapeRepository() throws Exception {
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
+
+		Session session = slingRepository.login(new SecurityContextCredentials(
+				new CustomSecurityContext()));
+		assertNotNull(session);
         assertNotNull(slingRepository);
-        assertTrue(slingRepository instanceof SlingServerRepository);
+        assertTrue(slingRepository instanceof SlingServerRepository);        
     }
+	
+	@Test
+	public void shouldWriteEtcMapNodesIfNotFound() throws Exception {
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
 
-    @Test
-    @Ignore
-    public void shouldSuccessfullyLoginToModeShapeRepository() throws Exception {
-        SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
-
-        Session session = slingRepository.login(new SecurityContextCredentials(new CustomSecurityContext()));
-
+		Session session = slingRepository.login(new SecurityContextCredentials(
+				new CustomSecurityContext()));
         assertNotNull(session);
-    }
+		assertFalse(session.nodeExists("/etc/map"));
 
-    @Test
-    @Ignore
-    public void shouldWriteEtcMapNodesIfNotFound() throws Exception {
-        SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
+		Node root = session.getNode("/");
+		Node etc = root.addNode("etc");
+		etc.addNode("map");
 
-        Session session = slingRepository.login(new SecurityContextCredentials(new CustomSecurityContext()));
-        assertFalse(session.nodeExists("/etc/map"));
+		session.save();
 
-        Node root = session.getNode("/");
-        Node etc = root.addNode("etc");
-        etc.addNode("map");
-
-        session.save();
-
-        assertTrue(session.nodeExists("/etc/map"));
-        session.logout();
-    }
+		assertTrue(session.nodeExists("/etc/map"));
+		session.logout();
+	}
 
 }
