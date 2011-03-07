@@ -20,12 +20,9 @@ public class PaxConfigurations {
         // do nothing
     }
 
-    private static final String LUCENE_GROUP = "org.apache.lucene";
     private static final String LUCENE_VERSION = "3.0.2";
     private static final String JCIP_VERSION = "1.0";
-    private static final String JCIP_GROUP = "net.jcip";
     private static final String JODA_TIME_VERSION = "1.6";
-    private static final String JODA_TIME_GROUP = "joda-time";
     static final String GOOGLE_COLLECTIONS_VERSION = "1.0-rc3";
     static final String STONE_VERSION = "1.0.0-SNAPSHOT";
     static final String CONFIGURATION_ADMIN_VERSION = "1.2.8";
@@ -35,9 +32,12 @@ public class PaxConfigurations {
     static final String SLING_VERSION = "2.1.0";
     static final String JACKRABBIT_VERSION = "2.0.0";
 
+    private static final String LUCENE_GROUP = "org.apache.lucene";
     static final String JCR_GROUP = "javax.jcr";
     static final String GOOGLE_COLLECTIONS_GROUP = "com.google.collections";
+    private static final String JCIP_GROUP = "net.jcip";
     static final String STONE_GROUP = "com.sourcesense.stone";
+    private static final String JODA_TIME_GROUP = "joda-time";
     static final String FELIX_GROUP = "org.apache.felix";
     static final String JACKRABBIT_GROUP = "org.apache.jackrabbit";
     static final String SLING_GROUP = "org.apache.sling";
@@ -54,8 +54,20 @@ public class PaxConfigurations {
         jcr(), jackrabbit(), sling(), configurationAdmin(), osgi(), slf4j(), systemProperty("sling.home").value("/tmp/sling"));
     }
 
+    public static Option slingFullConfiguration() {
+        return composite(slingBasicConfiguration(), slingCommonsLog(), fullFelix());
+    }
+
+    static Option fullFelix() {
+        return composite(mavenBundle("org.apache.felix", "org.apache.felix.scr", "1.6.0"));
+    }
+
+    static Option slingCommonsLog() {
+        return mavenBundle(SLING_GROUP, "org.apache.sling.commons.log", SLING_VERSION);
+    }
+
     public static Option stoneConfiguration() {
-        return composite(joda(), jcip(), lucene(), googleCommons(), modeshape(), stone());
+        return composite(joda(), jcip(), googleCommons(), lucene(), modeshape(), stone());
     }
 
     public static Option jcr() {
@@ -63,8 +75,7 @@ public class PaxConfigurations {
     }
 
     public static Option lucene() {
-        return composite(
-                         wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-core", LUCENE_VERSION)),
+        return composite(wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-core", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-analyzers", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-misc", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-regex", LUCENE_VERSION)),
