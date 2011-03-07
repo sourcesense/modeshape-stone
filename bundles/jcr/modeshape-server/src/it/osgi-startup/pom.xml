@@ -76,14 +76,15 @@
             <scope>provided</scope>
         </dependency>
 
-<!--
+
         <dependency>
             <groupId>com.sourcesense.stone</groupId>
             <artifactId>com.sourcesense.stone.bundle.test</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-
+        
+<!--
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.commons.log</artifactId>
