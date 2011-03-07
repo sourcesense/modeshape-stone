@@ -3,8 +3,9 @@ package com.sourcesense.stone.jcr.modeshape.server.impl;
 import java.io.File;
 import java.util.Hashtable;
 
-import org.apache.sling.jcr.base.AbstractSlingRepository;
-import org.apache.sling.jcr.base.util.RepositoryAccessor;
+import com.sourcesense.stone.jcr.base.AbstractSlingRepository;
+import com.sourcesense.stone.jcr.base.util.RepositoryAccessor;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;

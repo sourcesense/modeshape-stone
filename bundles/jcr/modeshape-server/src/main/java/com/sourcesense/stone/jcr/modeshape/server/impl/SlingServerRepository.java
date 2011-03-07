@@ -8,7 +8,6 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 
 import org.apache.sling.jcr.api.SlingRepository;
-import org.apache.sling.jcr.base.AbstractSlingRepository;
 import org.modeshape.common.collection.Problem;
 import org.modeshape.common.component.ClassLoaderFactory;
 import org.modeshape.graph.ExecutionContext;
@@ -19,6 +18,7 @@ import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sourcesense.stone.jcr.base.AbstractSlingRepository;
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
 /**
