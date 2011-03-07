@@ -40,27 +40,27 @@ abstract class AbstractPerformanceTest {
     @Test
     @Ignore
     public void testPerformance() throws Exception {
-        runTest(new ReadPropertyTest(), name);
-        runTest(new SetPropertyTest(), name);
-        runTest(new SmallFileReadTest(), name);
-        runTest(new SmallFileWriteTest(), name);
-        runTest(new BigFileReadTest(), name);
-        runTest(new BigFileWriteTest(), name);
-        runTest(new ConcurrentReadTest(), name);
-        runTest(new ConcurrentReadWriteTest(), name);
-        runTest(new SimpleSearchTest(), name);
-        runTest(new SQL2SearchTest(), name);
-        runTest(new DescendantSearchTest(), name);
-        runTest(new SQL2DescendantSearchTest(), name);
-        runTest(new TwoWayJoinTest(), name);
-        runTest(new ThreeWayJoinTest(), name);
-        runTest(new CreateManyChildNodesTest(), name);
-        runTest(new UpdateManyChildNodesTest(), name);
-        runTest(new TransientManyChildNodesTest(), name);
-        runTest(new PathBasedQueryTest(), name);
+        runTest(new ReadPropertyTest());
+        runTest(new SetPropertyTest());
+        runTest(new SmallFileReadTest());
+        runTest(new SmallFileWriteTest());
+        runTest(new BigFileReadTest());
+        runTest(new BigFileWriteTest());
+        runTest(new ConcurrentReadTest());
+        runTest(new ConcurrentReadWriteTest());
+        runTest(new SimpleSearchTest());
+        runTest(new SQL2SearchTest());
+        runTest(new DescendantSearchTest());
+        runTest(new SQL2DescendantSearchTest());
+        runTest(new TwoWayJoinTest());
+        runTest(new ThreeWayJoinTest());
+        runTest(new CreateManyChildNodesTest());
+        runTest(new UpdateManyChildNodesTest());
+        runTest(new TransientManyChildNodesTest());
+        runTest(new PathBasedQueryTest());
     }
 
-    private void runTest(AbstractTest test, String name) {
+    private void runTest(AbstractTest test) {
         // Create the repository directory
         File dir = new File(new File("target", "repository"), name + "-" + test);
         dir.mkdirs();
