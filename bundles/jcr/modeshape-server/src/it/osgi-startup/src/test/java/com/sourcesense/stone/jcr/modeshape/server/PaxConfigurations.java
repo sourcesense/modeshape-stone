@@ -13,6 +13,13 @@ end[DEBUG]*/
 
 public class PaxConfigurations {
 
+    /**
+     * this class cannot be instantiated
+     */
+    private PaxConfigurations() {
+        // do nothing
+    }
+
     private static final String LUCENE_GROUP = "org.apache.lucene";
     private static final String LUCENE_VERSION = "3.0.2";
     private static final String JCIP_VERSION = "1.0";
@@ -51,11 +58,11 @@ public class PaxConfigurations {
         return composite(joda(), jcip(), lucene(), googleCommons(), modeshape(), stone());
     }
 
-    static Option jcr() {
+    public static Option jcr() {
         return mavenBundle(JCR_GROUP, "jcr", JCR_VERSION);
     }
 
-    static Option lucene() {
+    public static Option lucene() {
         return composite(
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-core", LUCENE_VERSION)),
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-analyzers", LUCENE_VERSION)),
@@ -64,15 +71,15 @@ public class PaxConfigurations {
                          wrappedBundle(mavenBundle(LUCENE_GROUP, "lucene-snowball", LUCENE_VERSION)));
     }
 
-    static Option joda() {
+    public static Option joda() {
         return composite(mavenBundle(JODA_TIME_GROUP, "joda-time", JODA_TIME_VERSION));
     }
 
-    static Option jcip() {
+    public static Option jcip() {
         return composite(wrappedBundle(mavenBundle(JCIP_GROUP, "jcip-annotations", JCIP_VERSION)));
     }
 
-    static Option modeshape() {
+    public static Option modeshape() {
         return composite(mavenBundle(MODESHAPE_GROUP, "modeshape-common", MODESHAPE_VERSION),
                          mavenBundle(MODESHAPE_GROUP, "modeshape-graph", MODESHAPE_VERSION),
                          mavenBundle(MODESHAPE_GROUP, "modeshape-cnd", MODESHAPE_VERSION),
@@ -82,36 +89,36 @@ public class PaxConfigurations {
                          mavenBundle(MODESHAPE_GROUP, "modeshape-jcr", MODESHAPE_VERSION));
     }
 
-    static Option configurationAdmin() {
+    public static Option configurationAdmin() {
         return composite(mavenBundle(FELIX_GROUP, "org.apache.felix.configadmin", CONFIGURATION_ADMIN_VERSION));
     }
 
-    static Option stone() {
+    public static Option stone() {
         return composite(mavenBundle(STONE_GROUP, "com.sourcesense.stone.jcr.modeshape.server", STONE_VERSION));
     }
 
-    static Option osgi() {
+    public static Option osgi() {
         return composite(mavenBundle(OSGI_GROUP, "org.osgi.core", OSGI_VERSION),
                          mavenBundle(OSGI_GROUP, "org.osgi.compendium", OSGI_VERSION));
     }
 
-    static Option jackrabbit() {
+    public static Option jackrabbit() {
         return composite(mavenBundle(JACKRABBIT_GROUP, "jackrabbit-api", JACKRABBIT_VERSION),
                          mavenBundle(JACKRABBIT_GROUP, "jackrabbit-jcr-commons", JACKRABBIT_VERSION),
                          mavenBundle(JACKRABBIT_GROUP, "jackrabbit-jcr-rmi", JACKRABBIT_VERSION));
     }
 
-    static Option slf4j() {
+    public static Option slf4j() {
         return composite(mavenBundle(SLF4J_GROUP, "slf4j-api", SLF4J_VERSION),
                          mavenBundle(SLF4J_GROUP, "slf4j-simple", SLF4J_VERSION).noStart());
     }
 
-    static Option sling() {
+    public static Option sling() {
         return composite(mavenBundle(SLING_GROUP, "org.apache.sling.jcr.api", SLING_VERSION),
                          mavenBundle(SLING_GROUP, "org.apache.sling.jcr.base", SLING_VERSION));
     }
 
-    static Option googleCommons() {
+    public static Option googleCommons() {
         return wrappedBundle(mavenBundle(GOOGLE_COLLECTIONS_GROUP, "google-collections", GOOGLE_COLLECTIONS_VERSION));
     }
 
