@@ -21,7 +21,7 @@
         <groupId>com.sourcesense.stone</groupId>
         <artifactId>stone-bundles</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../../</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -130,9 +130,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.sling</groupId>
-            <artifactId>org.apache.sling.jcr.base</artifactId>
-            <version>${sling.version}</version>
+            <groupId>com.sourcesense.stone</groupId>
+            <artifactId>com.sourcesense.stone.jcr.base</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
