@@ -1,12 +1,16 @@
 #!/bin/bash
 
 function install_bundle {
-    echo "Installing bundle $1..."
-    curl -u $SLING_USER:$SLING_PASSWORD \
-        -F "bundlefile=@$1;type=application/java-archive" \
-        -F "action=install" \
-        -F "bundlestartlevel=20" \
-        $SLING_URL
+    if [ -e $1 ]; then
+        echo "Installing bundle $1..."
+        curl -u $SLING_USER:$SLING_PASSWORD \
+            -F "bundlefile=@$1;type=application/java-archive" \
+            -F "action=install" \
+            -F "bundlestartlevel=20" \
+            $SLING_URL
+    else
+        echo "WARNING! File $1 does not exist"
+    fi
 }
 
 SLING_URL="http://localhost:8080/system/console/bundles"
