@@ -27,9 +27,9 @@
     </mode:repositories>
 
     <mode:sources jcr:primaryType="nt:unstructured">
-    <!-- 
         <mode:source jcr:name="test"
-            mode:classname="org.modeshape.connector.store.jpa.JpaSource"
+            mode:classname="${classname}"
+            mode:retryLimit="${retryLimit}"
             mode:description="The database store for our content"
             mode:driverClassName="${JDBC.driverClassName}"
             mode:url="${JDBC.url}"
@@ -37,12 +37,6 @@
             mode:username="${JDBC.password}"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
-             -->
-		<mode:source
-			jcr:name="test"
-			mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
-			mode:retryLimit="3"
-			mode:defaultWorkspaceName="test"/>
     </mode:sources>
 
     <mode:mimeTypeDetectors>
