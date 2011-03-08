@@ -6,6 +6,7 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 
 /*if[DEBUG]
 import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.vmOption;
@@ -20,24 +21,24 @@ public class PaxConfigurations {
         // do nothing
     }
 
-    private static final String LUCENE_VERSION = "3.0.2";
-    private static final String JCIP_VERSION = "1.0";
-    private static final String JODA_TIME_VERSION = "1.6";
+    static final String LUCENE_VERSION = "3.0.2";
+    static final String JCIP_VERSION = "1.0";
+    static final String JODA_TIME_VERSION = "1.6";
     static final String GOOGLE_COLLECTIONS_VERSION = "1.0-rc3";
     static final String STONE_VERSION = "1.0.0-SNAPSHOT";
     static final String CONFIGURATION_ADMIN_VERSION = "1.2.8";
     static final String JCR_VERSION = "2.0";
-    static final String OSGI_VERSION = "4.1.0";
+    static final String OSGI_VERSION = "4.2.0";
     static final String SLF4J_VERSION = "1.5.11";
     static final String SLING_VERSION = "2.1.0";
     static final String JACKRABBIT_VERSION = "2.0.0";
 
-    private static final String LUCENE_GROUP = "org.apache.lucene";
+    static final String LUCENE_GROUP = "org.apache.lucene";
     static final String JCR_GROUP = "javax.jcr";
     static final String GOOGLE_COLLECTIONS_GROUP = "com.google.collections";
-    private static final String JCIP_GROUP = "net.jcip";
+    static final String JCIP_GROUP = "net.jcip";
     static final String STONE_GROUP = "com.sourcesense.stone";
-    private static final String JODA_TIME_GROUP = "joda-time";
+    static final String JODA_TIME_GROUP = "joda-time";
     static final String FELIX_GROUP = "org.apache.felix";
     static final String JACKRABBIT_GROUP = "org.apache.jackrabbit";
     static final String SLING_GROUP = "org.apache.sling";
@@ -66,8 +67,20 @@ public class PaxConfigurations {
         return mavenBundle(SLING_GROUP, "org.apache.sling.commons.log", SLING_VERSION);
     }
 
-    public static Option stoneConfiguration() {
-        return composite(joda(), jcip(), googleCommons(), lucene(), modeshape(), stone());
+    public static Option stoneInMemoryConfiguration() {
+        return composite(stoneDependencies(), stone_in_memory());
+    }
+
+    static Option stoneDependencies() {
+        return composite(joda(), jcip(), googleCommons(), lucene(), modeshape());
+    }
+
+    public static Option stoneH2Configuration() {
+        return composite(stoneDependencies(), stone_h2());
+    }
+
+    public static Option stonePostgresConfiguration() {
+        return composite(stoneDependencies(), stone_postgres());
     }
 
     public static Option jcr() {
@@ -104,8 +117,30 @@ public class PaxConfigurations {
         return composite(mavenBundle(FELIX_GROUP, "org.apache.felix.configadmin", CONFIGURATION_ADMIN_VERSION));
     }
 
-    public static Option stone() {
-        return composite(mavenBundle(STONE_GROUP, "com.sourcesense.stone.jcr.modeshape.server", STONE_VERSION));
+    public static Option stone( String classifier ) {
+        MavenArtifactUrlReference mavenArtifactUrlReference = createStoneServerArtifactReference(classifier);
+        return composite(mavenBundle(mavenArtifactUrlReference));
+    }
+
+    private static MavenArtifactUrlReference createStoneServerArtifactReference( String classifier ) {
+        MavenArtifactUrlReference mavenArtifactUrlReference = new MavenArtifactUrlReference();
+        mavenArtifactUrlReference.groupId(STONE_GROUP);
+        mavenArtifactUrlReference.artifactId("com.sourcesense.stone.jcr.modeshape.server");
+        mavenArtifactUrlReference.version(STONE_VERSION);
+        mavenArtifactUrlReference.classifier(classifier);
+        return mavenArtifactUrlReference;
+    }
+
+    public static Option stone_in_memory() {
+        return stone("in-memory");
+    }
+
+    public static Option stone_h2() {
+        return stone("h2");
+    }
+
+    public static Option stone_postgres() {
+        return stone("postgres");
     }
 
     public static Option osgi() {
@@ -125,8 +160,8 @@ public class PaxConfigurations {
     }
 
     public static Option sling() {
-        return composite(mavenBundle(SLING_GROUP, "org.apache.sling.jcr.api", SLING_VERSION),
-                         mavenBundle(SLING_GROUP, "org.apache.sling.jcr.base", SLING_VERSION));
+        return composite(mavenBundle(STONE_GROUP, "com.sourcesense.stone.jcr.base", STONE_VERSION),
+                         mavenBundle(SLING_GROUP, "org.apache.sling.jcr.api", SLING_VERSION));
     }
 
     public static Option googleCommons() {

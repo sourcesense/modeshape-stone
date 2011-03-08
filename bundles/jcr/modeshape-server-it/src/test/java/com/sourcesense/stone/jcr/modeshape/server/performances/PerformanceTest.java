@@ -1,6 +1,10 @@
 package com.sourcesense.stone.jcr.modeshape.server.performances;
 
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.getSlingRepositoryFromServiceList;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
+import static org.ops4j.pax.exam.CoreOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +18,18 @@ import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.ops4j.pax.exam.Inject;
+import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.junit.Configuration;
+import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.BundleContext;
 
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
-abstract class AbstractPerformanceTest {
-
-    private final String name;
+@RunWith(JUnit4TestRunner.class)
+public class PerformanceTest {
 
     private final int warmup = 10;
 
@@ -30,37 +37,39 @@ abstract class AbstractPerformanceTest {
 
     private final Credentials credentials = new SecurityContextCredentials(new CustomSecurityContext());
 
-    public AbstractPerformanceTest(String name) {
-        this.name = name;
-    }
-
     @Inject
     private BundleContext bundleContext;
+
+    @Configuration
+    public static Option[] configuration() {
+        return options(slingBasicConfiguration(), googleCommons(), stoneInMemoryConfiguration());
+    }
 
     @Test
     @Ignore
     public void testPerformance() throws Exception {
-        runTest(new ReadPropertyTest());
-        runTest(new SetPropertyTest());
-        runTest(new SmallFileReadTest());
-        runTest(new SmallFileWriteTest());
-        runTest(new BigFileReadTest());
-        runTest(new BigFileWriteTest());
-        runTest(new ConcurrentReadTest());
-        runTest(new ConcurrentReadWriteTest());
-        runTest(new SimpleSearchTest());
-        runTest(new SQL2SearchTest());
-        runTest(new DescendantSearchTest());
-        runTest(new SQL2DescendantSearchTest());
-        runTest(new TwoWayJoinTest());
-        runTest(new ThreeWayJoinTest());
-        runTest(new CreateManyChildNodesTest());
-        runTest(new UpdateManyChildNodesTest());
-        runTest(new TransientManyChildNodesTest());
-        runTest(new PathBasedQueryTest());
+        String name = "just-a-test";
+        runTest(new ReadPropertyTest(), name);
+        runTest(new SetPropertyTest(), name);
+        runTest(new SmallFileReadTest(), name);
+        runTest(new SmallFileWriteTest(), name);
+        runTest(new BigFileReadTest(), name);
+        runTest(new BigFileWriteTest(), name);
+        runTest(new ConcurrentReadTest(), name);
+        runTest(new ConcurrentReadWriteTest(), name);
+        runTest(new SimpleSearchTest(), name);
+        runTest(new SQL2SearchTest(), name);
+        runTest(new DescendantSearchTest(), name);
+        runTest(new SQL2DescendantSearchTest(), name);
+        runTest(new TwoWayJoinTest(), name);
+        runTest(new ThreeWayJoinTest(), name);
+        runTest(new CreateManyChildNodesTest(), name);
+        runTest(new UpdateManyChildNodesTest(), name);
+        runTest(new TransientManyChildNodesTest(), name);
+        runTest(new PathBasedQueryTest(), name);
     }
 
-    private void runTest(AbstractTest test) {
+    private void runTest(AbstractTest test, String name) {
         // Create the repository directory
         File dir = new File(new File("target", "repository"), name + "-" + test);
         dir.mkdirs();

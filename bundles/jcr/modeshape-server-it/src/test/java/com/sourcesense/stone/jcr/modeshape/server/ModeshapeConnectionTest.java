@@ -1,7 +1,7 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -37,7 +37,7 @@ public class ModeshapeConnectionTest {
     
     @Configuration
     public Option[] configuration() {
-        return options(slingFullConfiguration(), stoneConfiguration());
+        return options(slingFullConfiguration(), stoneInMemoryConfiguration());
     }
     
     @Test

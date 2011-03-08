@@ -3,8 +3,7 @@ package com.sourcesense.stone.jcr.modeshape.server;
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.countModeShapeRepositoryConfigurations;
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.removeModeShapeRepositoryConfigurations;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
 import static org.junit.Assert.assertEquals;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class ModeShapeActivatorTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingBasicConfiguration(), googleCommons(), stoneConfiguration());
+        return options(slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     
     @Test

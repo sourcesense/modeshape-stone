@@ -26,7 +26,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>com.sourcesense.stone.jcr.modeshape.server</artifactId>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
     <name>Stone :: Apache Sling - JBoss ModeShape embedded repository</name>
     <description>Bundle providing support to embed Modeshape Repository instances and publish via RMI and/or JNDI</description>
 
@@ -179,6 +179,8 @@
                                     org.modeshape.common.*;version=${modeshape.version},
                                     org.modeshape.graph.*;version=${modeshape.version},
                                     org.modeshape.jcr.*;version=${modeshape.version},
+                                    
+                                    com.sourcesense.stone.jcr.base
                                 </Import-Package>
                                 <DynamicImport-Package>*</DynamicImport-Package>
 
@@ -238,32 +240,6 @@
                         <configuration>
                             <classifier>postgres</classifier>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-invoker-plugin</artifactId>
-                <version>1.5</version>
-                <configuration>
-                    <debug>true</debug>
-                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                    <streamLogs>true</streamLogs>
-                    <ignoreFailures>false</ignoreFailures>
-                    <postBuildHookScript>verify.bsh</postBuildHookScript>
-                    <pomIncludes>
-                        <pomInclude>**/pom.xml</pomInclude>
-                    </pomIncludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>install</goal>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
