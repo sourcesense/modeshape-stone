@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
-class AbstractPerformanceTest {
+abstract class AbstractPerformanceTest {
 
     private final int warmup = 10;
 
