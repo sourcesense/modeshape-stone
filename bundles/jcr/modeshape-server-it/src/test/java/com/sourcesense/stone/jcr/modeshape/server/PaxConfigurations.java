@@ -157,7 +157,7 @@ public class PaxConfigurations {
         return wrappedBundle(mavenBundle(GOOGLE_COLLECTIONS_GROUP, "google-collections", GOOGLE_COLLECTIONS_VERSION));
     }
 
-    static Option debug() {
+    public static Option debug() {
         boolean debugIsEnabled = Boolean.getBoolean("debug");
         return composite(when(debugIsEnabled).useOptions(vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005")));
     }
