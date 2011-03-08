@@ -26,7 +26,7 @@ public class ModeShapeActivatorTest {
     public Option[] configuration() {
         return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
-    
+
     @Test
     public void shouldNotCreateANewConfigurationBecauseOneIsAlreadyStored() throws Exception {
         int previousNumberOfModeShapeRepositoryConfigurations = countModeShapeRepositoryConfigurations(bundleContext);
@@ -40,7 +40,6 @@ public class ModeShapeActivatorTest {
 
     @Test
     public void shouldCreateANewConfigurationWhenNoConfigurationIsFound() throws Exception {
-
         removeModeShapeRepositoryConfigurations(bundleContext);
         assertEquals(0, countModeShapeRepositoryConfigurations(bundleContext));
 
@@ -50,4 +49,5 @@ public class ModeShapeActivatorTest {
         int currentNumberOfModeShapeRepositoryConfigurations = countModeShapeRepositoryConfigurations(bundleContext);
         assertEquals(1, currentNumberOfModeShapeRepositoryConfigurations);
     }
+
 }
