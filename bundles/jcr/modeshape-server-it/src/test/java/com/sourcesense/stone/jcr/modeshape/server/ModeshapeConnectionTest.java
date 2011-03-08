@@ -2,11 +2,12 @@ package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.options;
 import javax.jcr.Node;
 import javax.jcr.Session;
 import org.apache.sling.jcr.api.SlingRepository;
@@ -32,7 +33,8 @@ public class ModeshapeConnectionTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingFullConfiguration(),
+        return options(debug(),
+                       slingFullConfiguration(),
                        stoneInMemoryConfiguration(),
                        mavenBundle(PaxConfigurations.STONE_GROUP,
                                    "com.sourcesense.stone.bundle.test",

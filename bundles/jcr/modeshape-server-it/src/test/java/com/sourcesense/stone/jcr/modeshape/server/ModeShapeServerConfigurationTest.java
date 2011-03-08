@@ -1,6 +1,6 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.googleCommons;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +23,7 @@ public class ModeShapeServerConfigurationTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingBasicConfiguration(), googleCommons(), stoneInMemoryConfiguration());
+        return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     
     @Test

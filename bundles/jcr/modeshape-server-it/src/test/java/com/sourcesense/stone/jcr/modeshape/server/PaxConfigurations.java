@@ -5,12 +5,10 @@ import static org.ops4j.pax.exam.CoreOptions.felix;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
+import static org.ops4j.pax.exam.CoreOptions.when;
+import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.*;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
-
-/*if[DEBUG]
-import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.vmOption;
-end[DEBUG]*/
 
 public class PaxConfigurations {
 
@@ -50,9 +48,6 @@ public class PaxConfigurations {
     public static Option slingBasicConfiguration() {
         return composite(felix(),
                          mavenBundle(FELIX_GROUP, "org.apache.felix.scr", "1.6.0"),
-                         /*if[DEBUG]
-                         vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
-                         end[DEBUG]*/
                          slingCommonsLog(),
                          jcr(),
                          jackrabbit(),
@@ -122,17 +117,7 @@ public class PaxConfigurations {
     }
 
     public static Option stone( String classifier ) {
-        MavenArtifactUrlReference mavenArtifactUrlReference = createStoneServerArtifactReference(classifier);
-        return composite(mavenBundle(mavenArtifactUrlReference));
-    }
-
-    private static MavenArtifactUrlReference createStoneServerArtifactReference( String classifier ) {
-        MavenArtifactUrlReference mavenArtifactUrlReference = new MavenArtifactUrlReference();
-        mavenArtifactUrlReference.groupId(STONE_GROUP);
-        mavenArtifactUrlReference.artifactId("com.sourcesense.stone.jcr.modeshape.server");
-        mavenArtifactUrlReference.version(STONE_VERSION);
-        mavenArtifactUrlReference.classifier(classifier);
-        return mavenArtifactUrlReference;
+        return composite(mavenBundle(createStoneServerArtifactReference(classifier)));
     }
 
     public static Option stone_in_memory() {
@@ -170,6 +155,20 @@ public class PaxConfigurations {
 
     public static Option googleCommons() {
         return wrappedBundle(mavenBundle(GOOGLE_COLLECTIONS_GROUP, "google-collections", GOOGLE_COLLECTIONS_VERSION));
+    }
+
+    static Option debug() {
+        boolean debugIsEnabled = Boolean.getBoolean("debug");
+        return composite(when(debugIsEnabled).useOptions(vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005")));
+    }
+
+    private static MavenArtifactUrlReference createStoneServerArtifactReference( String classifier ) {
+        MavenArtifactUrlReference mavenArtifactUrlReference = new MavenArtifactUrlReference();
+        mavenArtifactUrlReference.groupId(STONE_GROUP);
+        mavenArtifactUrlReference.artifactId("com.sourcesense.stone.jcr.modeshape.server");
+        mavenArtifactUrlReference.version(STONE_VERSION);
+        mavenArtifactUrlReference.classifier(classifier);
+        return mavenArtifactUrlReference;
     }
 
 }

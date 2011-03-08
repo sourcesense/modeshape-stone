@@ -4,6 +4,7 @@ import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.get
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.symbolicNamesListFor;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class ModeShapeServerBundleTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingBasicConfiguration(), stoneInMemoryConfiguration());
+        return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     
     @Test

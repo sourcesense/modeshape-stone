@@ -4,6 +4,7 @@ import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.cou
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.removeModeShapeRepositoryConfigurations;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static org.junit.Assert.assertEquals;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class ModeShapeActivatorTest {
 
     @Configuration
     public Option[] configuration() {
-        return options(slingBasicConfiguration(), stoneInMemoryConfiguration());
+        return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     
     @Test

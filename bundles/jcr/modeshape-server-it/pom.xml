@@ -711,31 +711,4 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>debug</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>munge-maven-plugin</artifactId>
-                        <version>1.0</version>
-                        <executions>
-                            <execution>
-                                <phase>generate-test-sources</phase>
-                                <goals>
-                                    <goal>munge</goal>
-                                </goals>
-                                <configuration>
-                                    <mungedDirectory>${project.build.directory}</mungedDirectory>
-                                    <symbols>DEBUG</symbols>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 </project>
