@@ -22,7 +22,7 @@ public class PaxConfigurations {
     }
 
     static final String LUCENE_VERSION = "3.0.2";
-    static final String JCIP_VERSION = "1.0";
+    static final String JCIP_VERSION = "1.0.0";
     static final String JODA_TIME_VERSION = "1.6";
     static final String GOOGLE_COLLECTIONS_VERSION = "1.0-rc3";
     static final String STONE_VERSION = "1.0.0-SNAPSHOT";
@@ -49,18 +49,22 @@ public class PaxConfigurations {
 
     public static Option slingBasicConfiguration() {
         return composite(felix(),
-        /*if[DEBUG]
-        vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
-        end[DEBUG]*/
-        jcr(), jackrabbit(), sling(), configurationAdmin(), osgi(), slf4j(), systemProperty("sling.home").value("/tmp/sling"));
+                         mavenBundle(FELIX_GROUP, "org.apache.felix.scr", "1.6.0"),
+                         /*if[DEBUG]
+                         vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
+                         end[DEBUG]*/
+                         slingCommonsLog(),
+                         jcr(),
+                         jackrabbit(),
+                         sling(),
+                         configurationAdmin(),
+                         osgi(),
+                         slf4j(),
+                         systemProperty("sling.home").value("/tmp/sling"));
     }
 
     public static Option slingFullConfiguration() {
-        return composite(slingBasicConfiguration(), slingCommonsLog(), fullFelix());
-    }
-
-    static Option fullFelix() {
-        return composite(mavenBundle("org.apache.felix", "org.apache.felix.scr", "1.6.0"));
+        return composite(slingBasicConfiguration());
     }
 
     static Option slingCommonsLog() {
@@ -100,7 +104,7 @@ public class PaxConfigurations {
     }
 
     public static Option jcip() {
-        return composite(wrappedBundle(mavenBundle(JCIP_GROUP, "jcip-annotations", JCIP_VERSION)));
+        return composite(mavenBundle(JCIP_GROUP, "com.springsource.net.jcip.annotations", JCIP_VERSION));
     }
 
     public static Option modeshape() {
