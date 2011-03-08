@@ -35,7 +35,7 @@
 
     <!-- List modules to be included in the build here ! -->
     <modules>
-    	<module>bundle-test</module>
+        <module>bundle-test</module>
         <module>external-dependencies</module>
         <module>jcr/com.sourcesense.stone.jcr.base</module>
         <module>jcr/modeshape-server</module>
@@ -179,6 +179,12 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
             </plugin>
         </plugins>
     </build>
