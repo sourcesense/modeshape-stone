@@ -5,6 +5,9 @@ import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stone
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.vmOption;
+
+import java.io.File;
+
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
@@ -15,6 +18,7 @@ public final class H2PerformanceTest extends AbstractPerformanceTest {
 
     @Configuration
     public static Option[] configuration() {
+        new File("/tmp/sling").delete();
         return options(debug(), slingBasicConfiguration(),
                 stoneH2Configuration(),vmOption("-Duser.language=en -Duser.country=US"));
     }

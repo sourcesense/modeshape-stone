@@ -9,8 +9,6 @@ import javax.jcr.Repository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.ops4j.pax.exam.Inject;
@@ -34,36 +32,31 @@ abstract class AbstractPerformanceTest {
         this.name = name;
     }
 
-    @Before
-    public void setUp() {
-        new File(System.getProperty("sling.home")).delete();
-    }
-
     @Test
     public void testPerformance() throws Exception {
         runTest(new ReadPropertyTest());
-//        runTest(new SetPropertyTest());
-//        runTest(new SmallFileReadTest());
-//        runTest(new SmallFileWriteTest());
-//        runTest(new BigFileReadTest());
-//        runTest(new BigFileWriteTest());
-//        runTest(new ConcurrentReadTest());
-//        runTest(new ConcurrentReadWriteTest());
-//        runTest(new SimpleSearchTest());
-//        runTest(new SQL2SearchTest());
-//        runTest(new DescendantSearchTest());
-//        runTest(new SQL2DescendantSearchTest());
-//        runTest(new TwoWayJoinTest());
-//        runTest(new ThreeWayJoinTest());
-//        runTest(new CreateManyChildNodesTest());
-//        runTest(new UpdateManyChildNodesTest());
-//        runTest(new TransientManyChildNodesTest());
-//        runTest(new PathBasedQueryTest());
+        runTest(new SetPropertyTest());
+        runTest(new SmallFileReadTest());
+        runTest(new SmallFileWriteTest());
+        runTest(new BigFileReadTest());
+        runTest(new BigFileWriteTest());
+        runTest(new ConcurrentReadTest());
+        runTest(new ConcurrentReadWriteTest());
+        runTest(new SimpleSearchTest());
+        runTest(new SQL2SearchTest());
+        runTest(new DescendantSearchTest());
+        runTest(new SQL2DescendantSearchTest());
+        runTest(new TwoWayJoinTest());
+        runTest(new ThreeWayJoinTest());
+        runTest(new CreateManyChildNodesTest());
+        runTest(new UpdateManyChildNodesTest());
+        runTest(new TransientManyChildNodesTest());
+        runTest(new PathBasedQueryTest());
     }
 
     private void runTest(AbstractTest test) {
         // Create the repository directory
-        File dir = new File(new File("target", "repository"), name + "-" + test);
+        File dir = new File(new File("/tmp/target", "repository"), name + "-" + test);
         dir.mkdirs();
 
         try {
@@ -108,7 +101,7 @@ abstract class AbstractPerformanceTest {
     private void writeReport(
             String test, String name, DescriptiveStatistics statistics)
             throws IOException {
-        File report = new File("target", test + ".txt");
+        File report = new File("/tmp/target", test + ".txt");
 
         boolean needsPrefix = !report.exists();
         PrintWriter writer = new PrintWriter(

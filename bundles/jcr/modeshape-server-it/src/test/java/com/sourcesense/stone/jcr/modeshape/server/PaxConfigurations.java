@@ -68,8 +68,8 @@ public class PaxConfigurations {
     }
 
     public static Option stoneInMemoryConfiguration() {
-        return composite(stoneDependencies(), stone_in_memory());
-//        return composite(externalDependencies(), stone_in_memory());
+//         return composite(stoneDependencies(), stone_in_memory());
+        return composite(externalDependencies(), stone_in_memory());
     }
 
     static Option stoneDependencies() {
