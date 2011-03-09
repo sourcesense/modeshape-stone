@@ -161,7 +161,7 @@ public class PaxConfigurations {
     }
 
     public static Option stone_postgres() {
-        return stone("postgres");
+        return composite(commonsIO(), commonsMath(), modeshapeJPA(), externalDependencies(), stone("postgres"));
     }
 
     public static Option osgi() {
