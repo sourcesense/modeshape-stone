@@ -1,5 +1,7 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Formatter;
 
@@ -100,10 +102,12 @@ public class SlingServerRepository extends AbstractSlingRepository implements Re
                 return startModeShapeRepository(configuration);
             }
         } catch (Exception e) {
+            StringWriter writer = new StringWriter();
+            e.printStackTrace(new PrintWriter(writer));
             if (log.isWarnEnabled()) {
                 log.warn("Impossible to open configuration from URL '{}': {}\nNo javax.jcr.Repository implementation found",
                         configURL,
-                        e.getMessage());
+                        writer.getBuffer());
             }
         }
 
