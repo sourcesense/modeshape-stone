@@ -129,7 +129,7 @@ public class PaxConfigurations {
     }
 
     public static Option stone_h2() {
-        return composite(commonsIO(), commonsMath(), modeshapeJPA(), externalDependencies(), stone("h2"));
+        return composite(commonsIO(), commonsMath(), commonsCollections(), stone("h2"));
     }
 
     static Option externalDependencies() {
@@ -161,7 +161,7 @@ public class PaxConfigurations {
     }
 
     public static Option stone_postgres() {
-        return composite(commonsIO(), commonsMath(), modeshapeJPA(), externalDependencies(), stone("postgres"));
+        return composite(commonsIO(), commonsMath(), commonsCollections(), stone("postgres"));
     }
 
     public static Option osgi() {
@@ -187,6 +187,10 @@ public class PaxConfigurations {
 
     public static Option googleCommons() {
         return wrappedBundle(mavenBundle(GOOGLE_COLLECTIONS_GROUP, "google-collections", GOOGLE_COLLECTIONS_VERSION));
+    }
+
+    public static Option commonsCollections() {
+        return wrappedBundle(mavenBundle("commons-collections", "commons-collections", "3.2.1"));
     }
 
     public static Option debug() {

@@ -56,7 +56,7 @@ abstract class AbstractPerformanceTest {
 
     private void runTest(AbstractTest test) {
         // Create the repository directory
-        File dir = new File(new File("/tmp/target", "repository"), name + "-" + test);
+        File dir = new File("/tmp/stone/repository", name + "-" + test);
         dir.mkdirs();
 
         try {
@@ -101,7 +101,7 @@ abstract class AbstractPerformanceTest {
     private void writeReport(
             String test, String name, DescriptiveStatistics statistics)
             throws IOException {
-        File report = new File("/tmp/target", test + ".txt");
+        File report = new File("/tmp/stone/reports", test + ".txt");
 
         boolean needsPrefix = !report.exists();
         PrintWriter writer = new PrintWriter(
