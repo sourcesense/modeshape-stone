@@ -125,7 +125,7 @@ public class PaxConfigurations {
     }
 
     public static Option stone_in_memory() {
-        return stone("in-memory");
+        return composite(commonsIO(), commonsMath(), commonsCollections(), stone("in-memory"));
     }
 
     public static Option stone_h2() {
