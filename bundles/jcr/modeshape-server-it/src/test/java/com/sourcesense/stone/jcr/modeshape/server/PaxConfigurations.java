@@ -4,9 +4,9 @@ import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.exam.CoreOptions.felix;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
-import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 import static org.ops4j.pax.exam.CoreOptions.when;
-import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.*;
+import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
+import static org.ops4j.pax.exam.container.def.PaxRunnerOptions.vmOption;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 
@@ -33,6 +33,7 @@ public class PaxConfigurations {
 
     static final String LUCENE_GROUP = "org.apache.lucene";
     static final String JCR_GROUP = "javax.jcr";
+    static final String APACHE_COMMONS_GROUP = "org.apache.commons";
     static final String GOOGLE_COLLECTIONS_GROUP = "com.google.collections";
     static final String JCIP_GROUP = "net.jcip";
     static final String STONE_GROUP = "com.sourcesense.stone";
@@ -68,6 +69,7 @@ public class PaxConfigurations {
 
     public static Option stoneInMemoryConfiguration() {
         return composite(stoneDependencies(), stone_in_memory());
+//        return composite(externalDependencies(), stone_in_memory());
     }
 
     static Option stoneDependencies() {
@@ -125,7 +127,35 @@ public class PaxConfigurations {
     }
 
     public static Option stone_h2() {
-        return stone("h2");
+        return composite(commonsIO(), commonsMath(), modeshapeJPA(), externalDependencies(), stone("h2"));
+    }
+
+    static Option externalDependencies() {
+        return mavenBundle(STONE_GROUP, "com.sourcesense.stone.external.dependencies", STONE_VERSION);
+    }
+
+    static Option h2() {
+        return composite(mavenBundle("com.h2database", "h2", "1.3.152"));
+    }
+
+    static Option hibernate() {
+        return composite(wrappedBundle(mavenBundle("org.hibernate", "hibernate-core", "3.6.1.Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-entitymanager", "3.6.1.Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-annotations", "3.5.2-Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-c3p0", "3.5.2-Final")),
+                         wrappedBundle(mavenBundle("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api", "1.0.0.Final")));
+    }
+
+    static Option modeshapeJPA() {
+        return composite(mavenBundle(MODESHAPE_GROUP, "modeshape-connector-store-jpa", MODESHAPE_VERSION));
+    }
+
+    static Option commonsMath() {
+        return composite(mavenBundle(APACHE_COMMONS_GROUP, "commons-math", "2.1"));
+    }
+
+    static Option commonsIO() {
+        return composite(mavenBundle("commons-io", "commons-io", "1.4"));
     }
 
     public static Option stone_postgres() {
