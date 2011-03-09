@@ -77,11 +77,13 @@ public class PaxConfigurations {
     }
 
     public static Option stoneH2Configuration() {
-        return composite(stoneDependencies(), stone_h2());
+//        return composite(stoneDependencies(), stone_h2());
+        return composite(externalDependencies(), stone_h2());
     }
 
     public static Option stonePostgresConfiguration() {
-        return composite(stoneDependencies(), stone_postgres());
+//        return composite(stoneDependencies(), stone_postgres());
+        return composite(externalDependencies(), stone_postgres());
     }
 
     public static Option jcr() {
