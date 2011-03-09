@@ -36,7 +36,7 @@ abstract class AbstractPerformanceTest {
     public void testPerformance() throws Exception {
         runTest(new ReadPropertyTest());
         runTest(new SetPropertyTest());
-        runTest(new SmallFileReadTest());
+        /* runTest(new SmallFileReadTest());
         runTest(new SmallFileWriteTest());
         runTest(new BigFileReadTest());
         runTest(new BigFileWriteTest());
@@ -51,7 +51,7 @@ abstract class AbstractPerformanceTest {
         runTest(new CreateManyChildNodesTest());
         runTest(new UpdateManyChildNodesTest());
         runTest(new TransientManyChildNodesTest());
-        runTest(new PathBasedQueryTest());
+        runTest(new PathBasedQueryTest()); */
     }
 
     private void runTest(AbstractTest test) {
@@ -101,7 +101,12 @@ abstract class AbstractPerformanceTest {
     private void writeReport(
             String test, String name, DescriptiveStatistics statistics)
             throws IOException {
-        File report = new File("/tmp/stone/reports", test + ".txt");
+        File parent = new File("/tmp/stone/reports");
+        if (!parent.exists()) {
+            parent.mkdirs();
+        }
+
+        File report = new File(parent, test + ".txt");
 
         boolean needsPrefix = !report.exists();
         PrintWriter writer = new PrintWriter(
