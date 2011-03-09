@@ -132,7 +132,7 @@
     -->
 		<dependency>
 			<groupId>net.jcip</groupId>
-			<artifactId>jcip-annotations</artifactId>
+			<artifactId>com.springsource.net.jcip.annotations</artifactId>
 		</dependency>
 	</dependencies>
 	<reporting>

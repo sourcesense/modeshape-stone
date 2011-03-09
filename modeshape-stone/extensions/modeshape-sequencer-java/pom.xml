@@ -153,7 +153,7 @@
 		-->
 		<dependency>
 			<groupId>net.jcip</groupId>
-			<artifactId>jcip-annotations</artifactId>
+			<artifactId>com.springsource.net.jcip.annotations</artifactId>
 		</dependency>
 		<!-- 
 			Eclipse Java Development Tools (JDT) parser and its (many) required libraries

@@ -31,7 +31,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="net.jcip:jcip-annotations:1.0">
+      <library name="net.jcip:com.springsource.net.jcip.annotations:1.0">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../../.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar!/" />
         </CLASSES>

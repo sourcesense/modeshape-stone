@@ -1222,8 +1222,8 @@
 			<!-- Java Concurrency in Practice annotations -->
 			<dependency>
 				<groupId>net.jcip</groupId>
-				<artifactId>jcip-annotations</artifactId>
-				<version>1.0</version>
+				<artifactId>com.springsource.net.jcip.annotations</artifactId>
+				<version>1.0.0</version>
 				<scope>compile</scope>
 			</dependency>
 			<!-- Java Content Repository API -->

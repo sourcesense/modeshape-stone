@@ -166,14 +166,14 @@ public class MavenIdTest {
                                                                                                              "jdk1.4")}));
         assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4"),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4")}));
-        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4,net.jcip:jcip-annotations:1.0"), is(new MavenId[] {
-            new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"), new MavenId("net.jcip", "jcip-annotations", "1.0")}));
-        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4,,net.jcip:jcip-annotations:1.0,"),
+        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4,net.jcip:jcip.annotations:1.0"), is(new MavenId[] {
+            new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"), new MavenId("net.jcip", "jcip.annotations", "1.0")}));
+        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4,,net.jcip:jcip.annotations:1.0,"),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"),
-                       new MavenId("net.jcip", "jcip-annotations", "1.0")}));
-        assertThat(MavenId.createClasspath(",,org.modeshape:modeshape-maven:1.0:jdk1.4,, net.jcip: jcip-annotations:1.0 ,,"),
+                       new MavenId("net.jcip", "jcip.annotations", "1.0")}));
+        assertThat(MavenId.createClasspath(",,org.modeshape:modeshape-maven:1.0:jdk1.4,, net.jcip: jcip.annotations:1.0 ,,"),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"),
-                       new MavenId("net.jcip", "jcip-annotations", "1.0")}));
+                       new MavenId("net.jcip", "jcip.annotations", "1.0")}));
     }
 
     @Test
@@ -182,15 +182,15 @@ public class MavenIdTest {
         assertThat(MavenId.createClasspath((String[])null), is(new MavenId[] {}));
         assertThat(MavenId.createClasspath(new String[] {null, null}), is(new MavenId[] {}));
 
-        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4", "net.jcip:jcip-annotations:1.0"),
+        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4", "net.jcip:com.springsource.net.jcip.annotations:1.0"),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"),
-                       new MavenId("net.jcip", "jcip-annotations", "1.0")}));
-        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4", "", "net.jcip:jcip-annotations:1.0", ""),
+                       new MavenId("net.jcip", "com.springsource.net.jcip.annotations", "1.0")}));
+        assertThat(MavenId.createClasspath("org.modeshape:modeshape-maven:1.0:jdk1.4", "", "net.jcip:com.springsource.net.jcip.annotations:1.0", ""),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"),
-                       new MavenId("net.jcip", "jcip-annotations", "1.0")}));
-        assertThat(MavenId.createClasspath(" org.modeshape:modeshape-maven:1.0:jdk1.4", " net.jcip: jcip-annotations:1.0"),
+                       new MavenId("net.jcip", "com.springsource.net.jcip.annotations", "1.0")}));
+        assertThat(MavenId.createClasspath(" org.modeshape:modeshape-maven:1.0:jdk1.4", " net.jcip: com.springsource.net.jcip.annotations:1.0"),
                    is(new MavenId[] {new MavenId("org.modeshape", "modeshape-maven", "1.0", "jdk1.4"),
-                       new MavenId("net.jcip", "jcip-annotations", "1.0")}));
+                       new MavenId("net.jcip", "com.springsource.net.jcip.annotations", "1.0")}));
     }
 
     @Test

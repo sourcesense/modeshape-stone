@@ -11,7 +11,7 @@
 			<outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.extension}</outputFileNameMapping>
 			<excludes>
 				<!-- No need to include the JCIP annotations -->
-				<exclude>net.jcip:jcip-annotations</exclude>
+				<exclude>net.jcip:com.springsource.net.jcip.annotations</exclude>
 				<!-- Don't include the ModeShape core libraries and their dependencies -->
 				<exclude>org.modeshape:modeshape-common</exclude>
 				<exclude>org.modeshape:modeshape-graph</exclude>
