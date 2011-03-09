@@ -85,9 +85,9 @@
                             org.tartarus.snowball.*;version=2.4.1,
 
                             org.hibernate.*; version=3.3.2;-split-package:=merge-last,
-<!--
+
                             org.postgresql.*;
--->
+
                             com.h2database.*,
                             antlr.*;
                             javassist.*,
