@@ -80,19 +80,23 @@
                             com.google.common.*;version=1.0,
                             net.jcip.annotations.*;version=1.0,
                             org.joda.time.*;version=1.6,
--->
+
                             org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                             org.tartarus.snowball.*;version=2.4.1,
-<!--
+-->
                             org.hibernate.*; version=3.3.2;-split-package:=merge-last,
+<!--
                             org.postgresql.*;
+-->
+                            com.h2database.*,
                             antlr.*;
                             javassist.*,
                             com.mchange.*,
--->
-<!--
+
                             javax.persistence.*;-split-package:=merge-last,
+<!--
                             javax.transaction.*,
+-->
                             org.dom4j.*,
 -->
 <!--
@@ -433,6 +437,12 @@
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>
             <version>2.7.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.152</version>
         </dependency>
     </dependencies>
 </project>
