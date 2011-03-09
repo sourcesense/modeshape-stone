@@ -1,14 +1,11 @@
 package com.sourcesense.stone.jcr.modeshape.server.performances;
 
 import static com.sourcesense.stone.jcr.modeshape.server.IntegrationTestUtil.getSlingRepositoryFromServiceList;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.jcr.Credentials;
 import javax.jcr.Repository;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
@@ -18,7 +15,6 @@ import org.junit.Test;
 import org.modeshape.jcr.api.SecurityContextCredentials;
 import org.ops4j.pax.exam.Inject;
 import org.osgi.framework.BundleContext;
-
 import com.sourcesense.stone.jcr.modeshape.server.security.CustomSecurityContext;
 
 abstract class AbstractPerformanceTest {
@@ -44,26 +40,25 @@ abstract class AbstractPerformanceTest {
     }
 
     @Test
-    @Ignore
-    public final void testPerformance() throws Exception {
+    public void testPerformance() throws Exception {
         runTest(new ReadPropertyTest());
-        runTest(new SetPropertyTest());
-        runTest(new SmallFileReadTest());
-        runTest(new SmallFileWriteTest());
-        runTest(new BigFileReadTest());
-        runTest(new BigFileWriteTest());
-        runTest(new ConcurrentReadTest());
-        runTest(new ConcurrentReadWriteTest());
-        runTest(new SimpleSearchTest());
-        runTest(new SQL2SearchTest());
-        runTest(new DescendantSearchTest());
-        runTest(new SQL2DescendantSearchTest());
-        runTest(new TwoWayJoinTest());
-        runTest(new ThreeWayJoinTest());
-        runTest(new CreateManyChildNodesTest());
-        runTest(new UpdateManyChildNodesTest());
-        runTest(new TransientManyChildNodesTest());
-        runTest(new PathBasedQueryTest());
+//        runTest(new SetPropertyTest());
+//        runTest(new SmallFileReadTest());
+//        runTest(new SmallFileWriteTest());
+//        runTest(new BigFileReadTest());
+//        runTest(new BigFileWriteTest());
+//        runTest(new ConcurrentReadTest());
+//        runTest(new ConcurrentReadWriteTest());
+//        runTest(new SimpleSearchTest());
+//        runTest(new SQL2SearchTest());
+//        runTest(new DescendantSearchTest());
+//        runTest(new SQL2DescendantSearchTest());
+//        runTest(new TwoWayJoinTest());
+//        runTest(new ThreeWayJoinTest());
+//        runTest(new CreateManyChildNodesTest());
+//        runTest(new UpdateManyChildNodesTest());
+//        runTest(new TransientManyChildNodesTest());
+//        runTest(new PathBasedQueryTest());
     }
 
     private void runTest(AbstractTest test) {
