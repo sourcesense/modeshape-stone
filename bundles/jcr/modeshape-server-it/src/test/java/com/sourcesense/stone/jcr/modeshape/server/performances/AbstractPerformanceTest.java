@@ -12,6 +12,7 @@ import javax.jcr.Repository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.modeshape.jcr.api.SecurityContextCredentials;
@@ -35,6 +36,11 @@ abstract class AbstractPerformanceTest {
 
     public AbstractPerformanceTest(String name) {
         this.name = name;
+    }
+
+    @Before
+    public void setUp() {
+        new File(System.getProperty("sling.home")).delete();
     }
 
     @Test
