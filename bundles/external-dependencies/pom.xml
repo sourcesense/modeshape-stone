@@ -76,14 +76,14 @@
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
                         <Export-Package>
-<!--
+
                             com.google.common.*;version=1.0,
                             net.jcip.annotations.*;version=1.0,
                             org.joda.time.*;version=1.6,
 
                             org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                             org.tartarus.snowball.*;version=2.4.1,
--->
+
                             org.hibernate.*; version=3.3.2;-split-package:=merge-last,
 <!--
                             org.postgresql.*;
@@ -99,7 +99,7 @@
 -->
                             org.dom4j.*,
 -->
-<!--
+
                             org.modeshape.*;version=${modeshape.version},
 
                             org.modeshape.common.*;version=${modeshape.version},
@@ -157,7 +157,7 @@
                             org.modeshape.repository.util.*;version=${modeshape.version},
                             org.modeshape.search.lucene.*;version=${modeshape.version},
                             org.modeshape.search.lucene.query.*;version=${modeshape.version},
--->
+
                         </Export-Package>
                         <Private-Package>
                         </Private-Package>
