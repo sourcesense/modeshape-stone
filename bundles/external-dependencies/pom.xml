@@ -88,8 +88,8 @@
 
                             org.postgresql.*;
 
-                            com.h2database.*,
-                            antlr.*;
+                            org.h2.*,
+                            antlr.*,
                             javassist.*,
                             com.mchange.*,
 
