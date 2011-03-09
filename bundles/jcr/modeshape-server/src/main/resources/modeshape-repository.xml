@@ -33,8 +33,8 @@
             mode:description="The database store for our content"
             mode:driverClassName="${JDBC.driverClassName}"
             mode:url="${JDBC.url}"
-            mode:password="${JDBC.username}"
-            mode:username="${JDBC.password}"
+            mode:password="${JDBC.password}"
+            mode:username="${JDBC.username}"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
     </mode:sources>
