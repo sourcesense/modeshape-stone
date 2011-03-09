@@ -94,11 +94,10 @@
                             com.mchange.*,
 
                             javax.persistence.*;-split-package:=merge-last,
-<!--
+
                             javax.transaction.*,
--->
+
                             org.dom4j.*,
--->
 
                             org.modeshape.*;version=${modeshape.version},
 
