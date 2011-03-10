@@ -63,17 +63,9 @@ public class PaxConfigurations {
         return composite(slingBasicConfiguration());
     }
 
-    static Option slingCommonsLog() {
-        return mavenBundle(SLING_GROUP, "org.apache.sling.commons.log", SLING_VERSION);
-    }
-
     public static Option stoneInMemoryConfiguration() {
 //         return composite(stoneDependencies(), stone_in_memory());
         return composite(externalDependencies(), stone_in_memory());
-    }
-
-    static Option stoneDependencies() {
-        return composite(joda(), jcip(), googleCommons(), lucene(), modeshape());
     }
 
     public static Option stoneH2Configuration() {
@@ -132,34 +124,6 @@ public class PaxConfigurations {
         return composite(commonsIO(), commonsMath(), commonsCollections(), stone("h2"));
     }
 
-    static Option externalDependencies() {
-        return mavenBundle(STONE_GROUP, "com.sourcesense.stone.external.dependencies", STONE_VERSION);
-    }
-
-    static Option h2() {
-        return composite(mavenBundle("com.h2database", "h2", "1.3.152"));
-    }
-
-    static Option hibernate() {
-        return composite(wrappedBundle(mavenBundle("org.hibernate", "hibernate-core", "3.6.1.Final")),
-                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-entitymanager", "3.6.1.Final")),
-                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-annotations", "3.5.2-Final")),
-                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-c3p0", "3.5.2-Final")),
-                         wrappedBundle(mavenBundle("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api", "1.0.0.Final")));
-    }
-
-    static Option modeshapeJPA() {
-        return composite(mavenBundle(MODESHAPE_GROUP, "modeshape-connector-store-jpa", MODESHAPE_VERSION));
-    }
-
-    static Option commonsMath() {
-        return composite(mavenBundle(APACHE_COMMONS_GROUP, "commons-math", "2.1"));
-    }
-
-    static Option commonsIO() {
-        return composite(mavenBundle("commons-io", "commons-io", "1.4"));
-    }
-
     public static Option stone_postgres() {
         return composite(commonsIO(), commonsMath(), commonsCollections(), stone("postgres"));
     }
@@ -196,6 +160,42 @@ public class PaxConfigurations {
     public static Option debug() {
         boolean debugIsEnabled = Boolean.getBoolean("debug");
         return composite(when(debugIsEnabled).useOptions(vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005")));
+    }
+
+    static Option slingCommonsLog() {
+        return mavenBundle(SLING_GROUP, "org.apache.sling.commons.log", SLING_VERSION);
+    }
+
+    static Option stoneDependencies() {
+        return composite(joda(), jcip(), googleCommons(), lucene(), modeshape());
+    }
+
+    static Option externalDependencies() {
+        return mavenBundle(STONE_GROUP, "com.sourcesense.stone.external.dependencies", STONE_VERSION);
+    }
+
+    static Option h2() {
+        return composite(mavenBundle("com.h2database", "h2", "1.3.152"));
+    }
+
+    static Option hibernate() {
+        return composite(wrappedBundle(mavenBundle("org.hibernate", "hibernate-core", "3.6.1.Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-entitymanager", "3.6.1.Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-annotations", "3.5.2-Final")),
+                         wrappedBundle(mavenBundle("org.hibernate", "hibernate-c3p0", "3.5.2-Final")),
+                         wrappedBundle(mavenBundle("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api", "1.0.0.Final")));
+    }
+
+    static Option modeshapeJPA() {
+        return composite(mavenBundle(MODESHAPE_GROUP, "modeshape-connector-store-jpa", MODESHAPE_VERSION));
+    }
+
+    static Option commonsMath() {
+        return composite(mavenBundle(APACHE_COMMONS_GROUP, "commons-math", "2.1"));
+    }
+
+    static Option commonsIO() {
+        return composite(mavenBundle("commons-io", "commons-io", "1.4"));
     }
 
     private static MavenArtifactUrlReference createStoneServerArtifactReference( String classifier ) {

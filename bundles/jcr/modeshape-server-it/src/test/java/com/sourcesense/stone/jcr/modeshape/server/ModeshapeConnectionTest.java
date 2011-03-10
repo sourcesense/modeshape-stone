@@ -1,8 +1,8 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
