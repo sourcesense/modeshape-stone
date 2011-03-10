@@ -25,8 +25,11 @@ class ConcurrentReadTest extends AbstractTest {
 
     protected Node root;
 
+    private long start;
+
     public void beforeSuite() throws Exception {
-        this.logger.info("Initializing storage with {} nodes");
+        long start = System.currentTimeMillis();
+        this.logger.info("Initializing storage with {}x{} nodes", NODE_COUNT, NODE_COUNT);
 
         session = loginWriter();
         root = session.getRootNode().addNode("testroot", "nt:unstructured");
@@ -38,12 +41,13 @@ class ConcurrentReadTest extends AbstractTest {
             session.save();
         }
 
-        this.logger.info("Done! Initializing {} readers", READER_COUNT);
+        this.logger.info("Done in {}ms - Initializing {} readers", (System.currentTimeMillis() - start), READER_COUNT);
 
         for (int i = 0; i < READER_COUNT; i++) {
-            this.logger.info("Adding {} reader");
             addBackgroundJob(new Reader());
         }
+
+        this.start = System.currentTimeMillis();
     }
 
     private class Reader implements Runnable {
@@ -56,15 +60,6 @@ class ConcurrentReadTest extends AbstractTest {
             try {
                 int i = random.nextInt(NODE_COUNT);
                 int j = random.nextInt(NODE_COUNT);
-
-                logger.info("[{}] looking for node testroot/node{}/node{}",
-                        new Object[] {
-                            Thread.currentThread().getName(),
-                            i,
-                            j
-                        }
-                );
-
                 session.getRootNode().getNode(
                         "testroot/node" + i + "/node" + j);
             } catch (RepositoryException e) {
@@ -82,6 +77,9 @@ class ConcurrentReadTest extends AbstractTest {
     }
 
     public void afterSuite() throws Exception {
+        this.logger.info("Test completed in {}ms, cleaning up the repo", (System.currentTimeMillis() - this.start));
+        long start = System.currentTimeMillis();
+
         for (int i = 0; i < NODE_COUNT; i++) {
             root.getNode("node" + i).remove();
             session.save();
@@ -89,6 +87,8 @@ class ConcurrentReadTest extends AbstractTest {
 
         root.remove();
         session.save();
+
+        this.logger.info("Cleanup completed in {}ms, test over", (System.currentTimeMillis() - start));
     }
 
 }
