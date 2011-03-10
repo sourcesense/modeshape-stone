@@ -32,8 +32,8 @@
             mode:retryLimit="3"
             mode:description="The database store for our content"
             mode:driverClassName="org.postgresql.Driver"
-            mode:url="${JDBC.url}"
-            mode:username="jdbc:postgresql://localhost:5432/stone"
+            mode:url="jdbc:postgresql://localhost:5432/stone"
+            mode:username="postgres"
             mode:password="FILL-ME-AND-DONT-COMMIT"
             mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
