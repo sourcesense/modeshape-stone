@@ -57,8 +57,6 @@ class TwoWayJoinTest extends AbstractTest {
                 logger.info("Added child " + child + " to node " + node);
             }
             session.save();
-
-            logger.info("Session saved");
         }
 
         logger.info("Exiting from beforeSuite");

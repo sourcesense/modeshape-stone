@@ -59,8 +59,8 @@ public abstract class AbstractPerformanceTest {
         runTest(new SetPropertyTest());
         runTest(new SmallFileReadTest());
         runTest(new SmallFileWriteTest());
-        // runTest(new BigFileReadTest());
-        // runTest(new BigFileWriteTest());
+        runTest(new BigFileReadTest());
+        runTest(new BigFileWriteTest());
         runTest(new ConcurrentReadTest());
         runTest(new ConcurrentReadWriteTest());
         runTest(new SimpleSearchTest());
