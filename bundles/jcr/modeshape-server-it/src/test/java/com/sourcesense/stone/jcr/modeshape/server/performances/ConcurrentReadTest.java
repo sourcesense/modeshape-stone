@@ -6,21 +6,28 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Test case that traverses 10k unstructured nodes (100x100) while
  * 50 concurrent readers randomly access nodes from within this tree.
  */
 class ConcurrentReadTest extends AbstractTest {
 
-    protected static final int NODE_COUNT = 10;
+    protected static final int NODE_COUNT = 100;
 
     private static final int READER_COUNT = getScale(20);
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private Session session;
 
     protected Node root;
 
     public void beforeSuite() throws Exception {
+        this.logger.info("Initializing storage with {} nodes");
+
         session = loginWriter();
         root = session.getRootNode().addNode("testroot", "nt:unstructured");
         for (int i = 0; i < NODE_COUNT; i++) {
@@ -31,7 +38,10 @@ class ConcurrentReadTest extends AbstractTest {
             session.save();
         }
 
+        this.logger.info("Done! Initializing {} readers", READER_COUNT);
+
         for (int i = 0; i < READER_COUNT; i++) {
+            this.logger.info("Adding {} reader");
             addBackgroundJob(new Reader());
         }
     }
@@ -46,6 +56,15 @@ class ConcurrentReadTest extends AbstractTest {
             try {
                 int i = random.nextInt(NODE_COUNT);
                 int j = random.nextInt(NODE_COUNT);
+
+                logger.info("[{}] looking for node testroot/node{}/node{}",
+                        new Object[] {
+                            Thread.currentThread().getName(),
+                            i,
+                            j
+                        }
+                );
+
                 session.getRootNode().getNode(
                         "testroot/node" + i + "/node" + j);
             } catch (RepositoryException e) {
