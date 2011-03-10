@@ -12,7 +12,7 @@ import javax.jcr.Session;
  */
 class ConcurrentReadTest extends AbstractTest {
 
-    protected static final int NODE_COUNT = 100;
+    protected static final int NODE_COUNT = 10;
 
     private static final int READER_COUNT = getScale(20);
 
