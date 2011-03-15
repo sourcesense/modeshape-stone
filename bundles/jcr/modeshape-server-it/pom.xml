@@ -682,6 +682,18 @@
             <version>${paxexam.version}</version>
             <scope>test</scope>
         </dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.modeshape</groupId>
+            <artifactId>modeshape-web-jcr</artifactId>
+            <version>2.4.0.Final-stone-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <profiles>

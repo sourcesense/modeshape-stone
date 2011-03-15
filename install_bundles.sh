@@ -29,7 +29,6 @@ JODA_TIME_HOME="./joda-time/JodaTime"
 MODESHAPE_HOME="./modeshape-stone"
 MODESHAPE_SERVER_HOME="./bundles/jcr/modeshape-server"
 EXTERNAL_DEPENDENCIES_HOME="./bundles/external-dependencies"
-WEBCONSOLE_SECURITY_HOME="./bundles/extensions/webconsole-security-provider"
 
 GOOGLE_COLLECTIONS="$GOOGLE_COLLECTIONS_HOME/build/dist/google-collect-snapshot/google-collect-$GOOGLE_VERSION.jar"
 install_bundle $GOOGLE_COLLECTIONS
@@ -66,6 +65,3 @@ install_bundle $MODESHAPE_SERVER
 
 EXTERNAL_DEPENDENCIES="$EXTERNAL_DEPENDENCIES_HOME/target/com.sourcesense.stone.external.dependencies-$STONE_VERSION.jar"
 install_bundle $EXTERNAL_DEPENDENCIES
-
-WEBCONSOLE_SECURITY="$WEBCONSOLE_SECURITY_HOME/target/com.sourcesense.stone.extensions.webconsolesecurityprovider-$STONE_VERSION.jar"
-install_bundle $WEBCONSOLE_SECURITY

@@ -39,7 +39,6 @@
         <module>external-dependencies</module>
         <module>jcr/com.sourcesense.stone.jcr.base</module>
         <module>jcr/modeshape-server</module>
-        <module>extensions/webconsole-security-provider</module>
         <module>jcr/modeshape-server-it</module>
     </modules>
 
