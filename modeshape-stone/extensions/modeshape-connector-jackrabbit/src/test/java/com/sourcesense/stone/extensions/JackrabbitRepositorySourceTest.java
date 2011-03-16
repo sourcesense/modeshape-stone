@@ -1,95 +1,129 @@
 package com.sourcesense.stone.extensions;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import java.lang.reflect.Field;
+import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
+import org.modeshape.graph.connector.RepositorySourceCapabilities;
 
 public class JackrabbitRepositorySourceTest {
 
+    private JackrabbitRepositorySource repositorySource;
+
+    @Before
+    public void setup() {
+        repositorySource = new JackrabbitRepositorySource();
+    }
+    
+    
     @Test( expected = RuntimeException.class )
     public void shoulThrowAnExceptionWhenGetReferenceIsCalled() throws Exception {
-        new JackrabbitRepositorySource().getReference();
+        repositorySource.getReference();
     }
 
     @Test
     public void shouldSetRepositoryContextOnInitialize() throws Exception {
         RepositoryContext aContext = mock(RepositoryContext.class);
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
+        repositorySource.initialize(aContext);
 
-        jackrabbitRepositorySource.initialize(aContext);
-
-        Object repositoryContextValue = getFieldValue(jackrabbitRepositorySource, "repositoryContext");
+        Object repositoryContextValue = getFieldValue(repositorySource, "repositoryContext");
         assertNotNull(repositoryContextValue);
     }
 
     @Test
     public void shouldHaveField_name_WithAnnotation_Description() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-
-        checkDescriptionAnnotation(jackrabbitRepositorySource, "name");
+        checkDescriptionAnnotation(repositorySource, "name");
     }
 
     @Test
     public void shouldHaveField_retryLimit_WithAnnotation_Description() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-        
-        checkDescriptionAnnotation(jackrabbitRepositorySource, "retryLimit");
+        checkDescriptionAnnotation(repositorySource, "retryLimit");
     }
     
     @Test
     public void shouldHaveField_name_WithAnnotation_Label() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-
-        checkLabelAnnotation(jackrabbitRepositorySource, "name");
+        checkLabelAnnotation(repositorySource, "name");
     }
 
     @Test
     public void shouldHaveField_retryLimit_WithAnnotation_Label() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-        
-        checkLabelAnnotation(jackrabbitRepositorySource, "retryLimit");
+        checkLabelAnnotation(repositorySource, "retryLimit");
     }
     
     @Test
     public void shouldHaveField_name_WithAnnotation_Category() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-        
-        Field field = getField(jackrabbitRepositorySource, "name");
-        
-        Category categoryAnnotation = field.getAnnotation(Category.class);
-        
-        assertNotNull(categoryAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
-        assertEquals("namePropertyCategory", categoryAnnotation.value());
+        checkCategoryAnnotation(repositorySource, "name");
     }
 
     @Test
     public void shouldHaveField_retryLimit_WithAnnotation_Category() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-        
-        Field field = getField(jackrabbitRepositorySource, "retryLimit");
-        
-        Category categoryAnnotation = field.getAnnotation(Category.class);
-        
-        assertNotNull(categoryAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
-        assertEquals("retryLimitPropertyCategory", categoryAnnotation.value());
+        checkCategoryAnnotation(repositorySource, "retryLimit");
     }
-    
+
     @Test
     public void shouldReturnAJackrabbitRepositoryConnection() throws Exception {
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
-        
-        RepositoryConnection repositoryConnection = jackrabbitRepositorySource.getConnection();
+        RepositoryConnection repositoryConnection = repositorySource.getConnection();
         assertTrue(repositoryConnection instanceof JackrabbitRepositoryConnection);
     }
 
+    @Test
+    public void shouldAllowAnyNotNegativeIntegerForRetryLimit() throws Exception {
+        repositorySource.setRetryLimit(10);
+        
+        assertEquals(10, repositorySource.getRetryLimit());
+    }
+
+    @Test
+    public void shouldAvoidNegativeValuesForRetryLimit() throws Exception {
+        repositorySource.setRetryLimit(-4);
+        
+        assertEquals(0, repositorySource.getRetryLimit());
+    }
+    
+    @Test
+    public void shouldSupportSameNameSiblingsCapabilities() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+        
+        assertTrue(sourceCapabilities.supportsSameNameSiblings());
+    }
+    
+    @Test
+    public void shoudlSupportUpdates() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+        
+        assertTrue(sourceCapabilities.supportsUpdates());
+    }
+    
+    @Test
+    public void shouldNotSupportEvents() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+        
+        assertFalse(sourceCapabilities.supportsEvents());
+    }
+    
+    @Test
+    public void shouldSupportWorkspaceCreation() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+        
+        assertTrue(sourceCapabilities.supportsCreatingWorkspaces());
+    }
+    
+    @Test
+    public void shouldSupportReferenceCreation() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+        
+        assertTrue(sourceCapabilities.supportsReferences());
+    }
+    
     private void checkDescriptionAnnotation( JackrabbitRepositorySource jackrabbitRepositorySource,
                                              String fieldName ) throws NoSuchFieldException {
         Field field = getField(jackrabbitRepositorySource, fieldName);
@@ -111,6 +145,17 @@ public class JackrabbitRepositorySourceTest {
         assertNotNull(labelAnnotation);
         assertEquals(JackrabbitConnectorI18n.class, labelAnnotation.i18n());
         assertEquals(fieldName+"PropertyLabel", labelAnnotation.value());
+    }
+
+    private void checkCategoryAnnotation( JackrabbitRepositorySource jackrabbitRepositorySource,
+                                          String fieldName ) throws NoSuchFieldException {
+        Field field = getField(jackrabbitRepositorySource, fieldName);
+        
+        Category categoryAnnotation = field.getAnnotation(Category.class);
+        
+        assertNotNull(categoryAnnotation);
+        assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
+        assertEquals(fieldName+"PropertyCategory", categoryAnnotation.value());
     }
 
     private Object getFieldValue( JackrabbitRepositorySource jackrabbitRepositorySource,

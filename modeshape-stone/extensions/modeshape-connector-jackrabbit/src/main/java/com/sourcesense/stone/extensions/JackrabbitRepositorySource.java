@@ -27,6 +27,8 @@ public class JackrabbitRepositorySource implements RepositorySource {
 
     private RepositoryContext repositoryContext;
 
+    private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
+
     @Override
     public Reference getReference() throws NamingException {
         throw new RuntimeException("Method getReference not yet implemented");
@@ -49,16 +51,17 @@ public class JackrabbitRepositorySource implements RepositorySource {
 
     @Override
     public int getRetryLimit() {
-        return 0;
+        return retryLimit;
     }
 
     @Override
-    public void setRetryLimit( int limit ) {
+    public void setRetryLimit( int retryLimit ) {
+        this.retryLimit = retryLimit < 0 ? 0 : retryLimit;
     }
 
     @Override
     public RepositorySourceCapabilities getCapabilities() {
-        return null;
+        return capabilities;
     }
 
     @Override
