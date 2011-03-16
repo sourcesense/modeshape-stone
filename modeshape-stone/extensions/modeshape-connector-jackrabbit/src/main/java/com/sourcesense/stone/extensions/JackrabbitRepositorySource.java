@@ -2,26 +2,39 @@ package com.sourcesense.stone.extensions;
 
 import javax.naming.NamingException;
 import javax.naming.Reference;
+import net.jcip.annotations.ThreadSafe;
+import org.modeshape.common.annotation.Category;
+import org.modeshape.common.annotation.Description;
+import org.modeshape.common.annotation.Label;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
 import org.modeshape.graph.connector.RepositorySource;
 import org.modeshape.graph.connector.RepositorySourceCapabilities;
 import org.modeshape.graph.connector.RepositorySourceException;
 
+@ThreadSafe
 public class JackrabbitRepositorySource implements RepositorySource {
+
+    @Description( i18n = JackrabbitConnectorI18n.class, value = "namePropertyDescription" )
+    @Label( i18n = JackrabbitConnectorI18n.class, value = "namePropertyLabel" )
+    @Category( i18n = JackrabbitConnectorI18n.class, value = "namePropertyCategory" )
+    private volatile String name;
+    
+    private RepositoryContext repositoryContext;
 
     @Override
     public Reference getReference() throws NamingException {
-        return null;
+        throw new RuntimeException("Method getReference not yet implemented");
     }
 
     @Override
     public void initialize( RepositoryContext context ) throws RepositorySourceException {
+        this.repositoryContext = context;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
