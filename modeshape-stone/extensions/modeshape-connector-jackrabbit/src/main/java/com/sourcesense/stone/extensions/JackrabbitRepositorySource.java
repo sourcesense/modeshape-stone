@@ -19,7 +19,12 @@ public class JackrabbitRepositorySource implements RepositorySource {
     @Label( i18n = JackrabbitConnectorI18n.class, value = "namePropertyLabel" )
     @Category( i18n = JackrabbitConnectorI18n.class, value = "namePropertyCategory" )
     private volatile String name;
-    
+
+    @Description( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyDescription" )
+    @Label( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyLabel" )
+    @Category( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyCategory" )
+    private volatile int retryLimit;
+
     private RepositoryContext repositoryContext;
 
     @Override
@@ -39,7 +44,7 @@ public class JackrabbitRepositorySource implements RepositorySource {
 
     @Override
     public RepositoryConnection getConnection() throws RepositorySourceException {
-        return null;
+        return new JackrabbitRepositoryConnection();
     }
 
     @Override

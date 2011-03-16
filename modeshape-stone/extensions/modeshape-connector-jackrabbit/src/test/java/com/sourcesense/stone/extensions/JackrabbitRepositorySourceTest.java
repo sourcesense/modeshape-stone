@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
+import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
 
 public class JackrabbitRepositorySourceTest {
@@ -31,26 +32,28 @@ public class JackrabbitRepositorySourceTest {
     public void shouldHaveField_name_WithAnnotation_Description() throws Exception {
         JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
 
-        Field field = getField(jackrabbitRepositorySource, "name");
+        checkDescriptionAnnotation(jackrabbitRepositorySource, "name");
+    }
 
-        Description descriptionAnnotation = field.getAnnotation(Description.class);
+    @Test
+    public void shouldHaveField_retryLimit_WithAnnotation_Description() throws Exception {
+        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
         
-        assertNotNull(descriptionAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, descriptionAnnotation.i18n());
-        assertEquals("namePropertyDescription", descriptionAnnotation.value());
+        checkDescriptionAnnotation(jackrabbitRepositorySource, "retryLimit");
     }
     
     @Test
     public void shouldHaveField_name_WithAnnotation_Label() throws Exception {
         JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
 
-        Field field = getField(jackrabbitRepositorySource, "name");
+        checkLabelAnnotation(jackrabbitRepositorySource, "name");
+    }
 
-        Label labelAnnotation = field.getAnnotation(Label.class);
+    @Test
+    public void shouldHaveField_retryLimit_WithAnnotation_Label() throws Exception {
+        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
         
-        assertNotNull(labelAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, labelAnnotation.i18n());
-        assertEquals("namePropertyLabel", labelAnnotation.value());
+        checkLabelAnnotation(jackrabbitRepositorySource, "retryLimit");
     }
     
     @Test
@@ -64,6 +67,50 @@ public class JackrabbitRepositorySourceTest {
         assertNotNull(categoryAnnotation);
         assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
         assertEquals("namePropertyCategory", categoryAnnotation.value());
+    }
+
+    @Test
+    public void shouldHaveField_retryLimit_WithAnnotation_Category() throws Exception {
+        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
+        
+        Field field = getField(jackrabbitRepositorySource, "retryLimit");
+        
+        Category categoryAnnotation = field.getAnnotation(Category.class);
+        
+        assertNotNull(categoryAnnotation);
+        assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
+        assertEquals("retryLimitPropertyCategory", categoryAnnotation.value());
+    }
+    
+    @Test
+    public void shouldReturnAJackrabbitRepositoryConnection() throws Exception {
+        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource();
+        
+        RepositoryConnection repositoryConnection = jackrabbitRepositorySource.getConnection();
+        assertTrue(repositoryConnection instanceof JackrabbitRepositoryConnection);
+    }
+
+    private void checkDescriptionAnnotation( JackrabbitRepositorySource jackrabbitRepositorySource,
+                                             String fieldName ) throws NoSuchFieldException {
+        Field field = getField(jackrabbitRepositorySource, fieldName);
+    
+        Description descriptionAnnotation = field.getAnnotation(Description.class);
+        String annotationName = "Description";
+        
+        assertNotNull(descriptionAnnotation);
+        assertEquals(JackrabbitConnectorI18n.class, descriptionAnnotation.i18n());
+        assertEquals(fieldName+"Property"+annotationName, descriptionAnnotation.value());
+    }
+
+    private void checkLabelAnnotation( JackrabbitRepositorySource jackrabbitRepositorySource,
+                                       String fieldName ) throws NoSuchFieldException {
+        Field field = getField(jackrabbitRepositorySource, fieldName);
+    
+        Label labelAnnotation = field.getAnnotation(Label.class);
+        
+        assertNotNull(labelAnnotation);
+        assertEquals(JackrabbitConnectorI18n.class, labelAnnotation.i18n());
+        assertEquals(fieldName+"PropertyLabel", labelAnnotation.value());
     }
 
     private Object getFieldValue( JackrabbitRepositorySource jackrabbitRepositorySource,
