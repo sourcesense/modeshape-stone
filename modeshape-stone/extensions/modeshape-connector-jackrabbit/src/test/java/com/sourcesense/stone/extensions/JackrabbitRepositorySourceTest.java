@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import java.lang.reflect.Field;
 import net.jcip.annotations.ThreadSafe;
+import org.apache.jackrabbit.spi2dav.Spi2davRepositoryServiceFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.common.annotation.Category;
@@ -45,7 +46,7 @@ public class JackrabbitRepositorySourceTest {
         ThreadSafe threadSafe = repositorySource.getClass().getAnnotation(ThreadSafe.class);
         assertNotNull(threadSafe);
     }
-    
+
     @Test
     public void shouldHaveField_name_WithAnnotation_Description() throws Exception {
         checkDescriptionAnnotation(repositorySource, "name");
@@ -54,6 +55,11 @@ public class JackrabbitRepositorySourceTest {
     @Test
     public void shouldHaveField_retryLimit_WithAnnotation_Description() throws Exception {
         checkDescriptionAnnotation(repositorySource, "retryLimit");
+    }
+    
+    @Test
+    public void shouldHaveField_url_WithAnnotation_Description() throws Exception {
+        checkDescriptionAnnotation(repositorySource, "url");
     }
 
     @Test
@@ -67,6 +73,11 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
+    public void shouldHaveField_url_WithAnnotation_Label() throws Exception {
+        checkLabelAnnotation(repositorySource, "url");
+    }
+    
+    @Test
     public void shouldHaveField_name_WithAnnotation_Category() throws Exception {
         checkCategoryAnnotation(repositorySource, "name");
     }
@@ -77,11 +88,22 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
+    public void shouldHaveField_url_WithAnnotation_Category() throws Exception {
+        checkCategoryAnnotation(repositorySource, "url");
+    }
+    
+    @Test
     public void shouldReturnAJackrabbitRepositoryConnection() throws Exception {
         RepositoryConnection repositoryConnection = repositorySource.getConnection();
         assertTrue(repositoryConnection instanceof JackrabbitRepositoryConnection);
     }
 
+    @Test
+    public void shouldSetParameterURIForServiceFactory() throws Exception {
+        
+    }
+    
+    
     @Test
     public void shouldAllowAnyNotNegativeIntegerForRetryLimit() throws Exception {
         repositorySource.setRetryLimit(10);
@@ -169,14 +191,14 @@ public class JackrabbitRepositorySourceTest {
     public void shouldDeleteReferencesOnClose() throws Exception {
         RepositoryContext aContext = mock(RepositoryContext.class);
         repositorySource.initialize(aContext);
-        
+
         Object repositorySourceValue = getFieldValue(repositorySource, "repositoryContext");
         assertNotNull(repositorySourceValue);
-        
+
         repositorySource.close();
         Object newRepositorySourceValue = getFieldValue(repositorySource, "repositoryContext");
         assertNull(newRepositorySourceValue);
-        
+
     }
 
     private Object getFieldValue( JackrabbitRepositorySource jackrabbitRepositorySource,

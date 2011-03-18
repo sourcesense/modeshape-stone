@@ -2,6 +2,7 @@ package com.sourcesense.stone.extensions;
 
 import java.util.concurrent.TimeUnit;
 import javax.transaction.xa.XAResource;
+import org.apache.jackrabbit.spi.RepositoryService;
 import org.modeshape.graph.ExecutionContext;
 import org.modeshape.graph.cache.CachePolicy;
 import org.modeshape.graph.connector.RepositoryConnection;
@@ -12,7 +13,7 @@ public class JackrabbitRepositoryConnection implements RepositoryConnection{
 
     private final JackrabbitRepositorySource repositorySource;
 
-    public JackrabbitRepositoryConnection( JackrabbitRepositorySource repositorySource ) {
+    public JackrabbitRepositoryConnection( JackrabbitRepositorySource repositorySource, RepositoryService repositoryService ) {
         this.repositorySource = repositorySource;
     }
 
@@ -29,8 +30,7 @@ public class JackrabbitRepositoryConnection implements RepositoryConnection{
     @Override
     public boolean ping( long time,
                          TimeUnit unit ) throws InterruptedException {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override

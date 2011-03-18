@@ -1,8 +1,13 @@
 package com.sourcesense.stone.extensions;
 
+import java.util.HashMap;
+import java.util.Map;
+import javax.jcr.RepositoryException;
 import javax.naming.NamingException;
 import javax.naming.Reference;
 import net.jcip.annotations.ThreadSafe;
+import org.apache.jackrabbit.spi.RepositoryService;
+import org.apache.jackrabbit.spi2dav.Spi2davRepositoryServiceFactory;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
@@ -25,9 +30,18 @@ public class JackrabbitRepositorySource implements RepositorySource {
     @Category( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyCategory" )
     private volatile int retryLimit;
 
+    @Description( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyDescription" )
+    @Label( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyLabel" )
+    @Category( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyCategory" )
+    private volatile String url;
+    
     private RepositoryContext repositoryContext;
 
     private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
+
+    private RepositoryService repositoryService;
+
+    private Spi2davRepositoryServiceFactory spi2davRepositoryServiceFactory;
 
     @Override
     public Reference getReference() throws NamingException {
@@ -37,6 +51,7 @@ public class JackrabbitRepositorySource implements RepositorySource {
     @Override
     public void initialize( RepositoryContext context ) throws RepositorySourceException {
         this.repositoryContext = context;
+        this.spi2davRepositoryServiceFactory = new Spi2davRepositoryServiceFactory();
     }
 
     @Override
@@ -50,7 +65,11 @@ public class JackrabbitRepositorySource implements RepositorySource {
     
     @Override
     public RepositoryConnection getConnection() throws RepositorySourceException {
-        return new JackrabbitRepositoryConnection(this);
+        return new JackrabbitRepositoryConnection(this, repositoryService);
+    }
+
+    protected Spi2davRepositoryServiceFactory getSpi2davRepositoryServiceFactory() {
+        return this.spi2davRepositoryServiceFactory;
     }
 
     @Override
@@ -71,5 +90,13 @@ public class JackrabbitRepositorySource implements RepositorySource {
     @Override
     public void close() {
         repositoryContext = null;
+    }
+    
+    public String getUrl() {
+        return url;
+    }
+    
+    public void setUrl( String url ) {
+        this.url = url;
     }
 }
