@@ -66,5 +66,6 @@ public class JackrabbitRepositorySource implements RepositorySource {
 
     @Override
     public void close() {
+        repositoryContext = null;
     }
 }
