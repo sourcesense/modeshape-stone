@@ -44,9 +44,13 @@ public class JackrabbitRepositorySource implements RepositorySource {
         return name;
     }
 
+    public void setName( String name ) {
+        this.name = name;
+    }
+    
     @Override
     public RepositoryConnection getConnection() throws RepositorySourceException {
-        return new JackrabbitRepositoryConnection();
+        return new JackrabbitRepositoryConnection(this);
     }
 
     @Override

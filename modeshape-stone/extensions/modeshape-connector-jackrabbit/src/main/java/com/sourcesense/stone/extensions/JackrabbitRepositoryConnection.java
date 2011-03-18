@@ -10,15 +10,19 @@ import org.modeshape.graph.request.Request;
 
 public class JackrabbitRepositoryConnection implements RepositoryConnection{
 
+    private final JackrabbitRepositorySource repositorySource;
+
+    public JackrabbitRepositoryConnection( JackrabbitRepositorySource repositorySource ) {
+        this.repositorySource = repositorySource;
+    }
+
     @Override
     public String getSourceName() {
-        // TODO Auto-generated method stub
-        return null;
+        return repositorySource.getName();
     }
 
     @Override
     public XAResource getXAResource() {
-        // TODO Auto-generated method stub
         return null;
     }
 
