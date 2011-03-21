@@ -4,11 +4,11 @@ import javax.jcr.Credentials;
 import javax.jcr.RepositoryException;
 import javax.naming.Reference;
 import net.jcip.annotations.ThreadSafe;
-import org.apache.jackrabbit.spi2dav.Spi2davRepositoryServiceFactory;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
 import org.modeshape.common.i18n.I18n;
+import org.modeshape.connector.jcr.JcrConnectorI18n;
 import org.modeshape.connector.jcr.JcrRepositorySource;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
@@ -18,9 +18,9 @@ import org.modeshape.graph.connector.RepositorySourceException;
 @ThreadSafe
 public class JackrabbitRepositorySource extends JcrRepositorySource {
 
-    @Description( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyDescription" )
-    @Label( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyLabel" )
-    @Category( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyCategory" )
+    @Description( i18n = JcrConnectorI18n.class, value = "urlPropertyDescription" )
+    @Label( i18n = JcrConnectorI18n.class, value = "urlPropertyLabel" )
+    @Category( i18n = JcrConnectorI18n.class, value = "urlPropertyCategory" )
     private volatile String url;
     
     private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
@@ -45,7 +45,7 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
     @Override
     public RepositoryConnection getConnection() throws RepositorySourceException {
         if (null == url || 0 == url.trim().length()) {
-            I18n msg = JackrabbitConnectorI18n.propertyIsRequired;
+            I18n msg = JcrConnectorI18n.propertyIsRequired;
             throw new RepositorySourceException(url, msg.text("url"));
         }
         

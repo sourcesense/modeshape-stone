@@ -45,5 +45,4 @@ public class WebdavRepositoryConfig implements RepositoryConfig {
     public RepositoryService getRepositoryService() throws RepositoryException {
         return webdavRepositoryService;
     }
-
 }

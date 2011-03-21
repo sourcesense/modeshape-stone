@@ -5,16 +5,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import java.lang.reflect.Field;
+import javax.jcr.Credentials;
+import javax.jcr.Repository;
 import net.jcip.annotations.ThreadSafe;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
-import org.modeshape.connector.jcr.JcrRepositoryConnection;
-import org.modeshape.graph.connector.RepositoryConnection;
+import org.modeshape.connector.jcr.JcrConnectorI18n;
 import org.modeshape.graph.connector.RepositorySourceCapabilities;
 import org.modeshape.graph.connector.RepositorySourceException;
 
@@ -85,11 +89,37 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
-    @Ignore("Thinking about how to unit test it")
-    public void shouldReturnAJackrabbitRepositoryConnection() throws Exception {
-        repositorySource.setUrl("http://some.valid.url");
-        RepositoryConnection repositoryConnection = repositorySource.getConnection();
-        assertTrue(repositoryConnection instanceof JcrRepositoryConnection);
+    public void shouldReturnAJackrabbitRepositoryConnectionUsingAllInjectedFactories() throws Exception {
+        final CredentialsFactory mockedCredentialsFactory = mock(CredentialsFactory.class);
+        final RepositoryFactory mockedRepositoryFactory = mock(RepositoryFactory.class);
+        final RepositoryConnectionFactory mockedRepositoryConnectionFactory = mock(RepositoryConnectionFactory.class);
+
+        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource() {
+
+            @Override
+            protected RepositoryFactory getRepositoryFactory() {
+                return mockedRepositoryFactory;
+            }
+
+            @Override
+            protected CredentialsFactory getCredentialsFactory() {
+                return mockedCredentialsFactory;
+            }
+
+            protected RepositoryConnectionFactory getRepositoryConnectionFactory() {
+                return mockedRepositoryConnectionFactory;
+            };
+        };
+
+        jackrabbitRepositorySource.setUrl("http://some.valid.url");
+        jackrabbitRepositorySource.setUsername("scott");
+        jackrabbitRepositorySource.setPassword("tiger");
+        
+        jackrabbitRepositorySource.getConnection();
+        
+        verify(mockedRepositoryFactory).createRepository("http://some.valid.url");
+        verify(mockedCredentialsFactory).createCredentials("scott", "tiger");
+        verify(mockedRepositoryConnectionFactory).createRepositoryConnection(eq(jackrabbitRepositorySource), (Repository)anyObject(), (Credentials)anyObject());
     }
 
     @Test
@@ -149,7 +179,7 @@ public class JackrabbitRepositorySourceTest {
         String annotationName = "Description";
 
         assertNotNull(descriptionAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, descriptionAnnotation.i18n());
+        assertEquals(JcrConnectorI18n.class, descriptionAnnotation.i18n());
         assertEquals(fieldName + "Property" + annotationName, descriptionAnnotation.value());
     }
 
@@ -160,7 +190,7 @@ public class JackrabbitRepositorySourceTest {
         Label labelAnnotation = field.getAnnotation(Label.class);
 
         assertNotNull(labelAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, labelAnnotation.i18n());
+        assertEquals(JcrConnectorI18n.class, labelAnnotation.i18n());
         assertEquals(fieldName + "PropertyLabel", labelAnnotation.value());
     }
 
@@ -171,7 +201,7 @@ public class JackrabbitRepositorySourceTest {
         Category categoryAnnotation = field.getAnnotation(Category.class);
 
         assertNotNull(categoryAnnotation);
-        assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
+        assertEquals(JcrConnectorI18n.class, categoryAnnotation.i18n());
         assertEquals(fieldName + "PropertyCategory", categoryAnnotation.value());
     }
 
