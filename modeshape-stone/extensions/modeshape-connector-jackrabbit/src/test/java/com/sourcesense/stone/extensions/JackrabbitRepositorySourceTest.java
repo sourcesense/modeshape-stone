@@ -7,7 +7,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import java.lang.reflect.Field;
+import javax.jcr.SimpleCredentials;
 import net.jcip.annotations.ThreadSafe;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,6 +17,7 @@ import org.junit.Test;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
+import org.modeshape.connector.jcr.JcrRepositoryConnection;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
 import org.modeshape.graph.connector.RepositorySourceCapabilities;
@@ -117,11 +120,11 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("Thinking about how to unit test it")
     public void shouldReturnAJackrabbitRepositoryConnection() throws Exception {
         repositorySource.setUrl("http://some.valid.url");
         RepositoryConnection repositoryConnection = repositorySource.getConnection();
-        assertTrue(repositoryConnection instanceof JackrabbitRepositoryConnection);
+        assertTrue(repositoryConnection instanceof JcrRepositoryConnection);
     }
 
     @Test

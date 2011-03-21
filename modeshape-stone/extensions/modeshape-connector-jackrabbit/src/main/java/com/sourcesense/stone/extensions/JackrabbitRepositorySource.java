@@ -5,15 +5,11 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.naming.Reference;
 import net.jcip.annotations.ThreadSafe;
-import org.apache.jackrabbit.jcr2spi.RepositoryImpl;
-import org.apache.jackrabbit.jcr2spi.config.RepositoryConfig;
-import org.apache.jackrabbit.spi.RepositoryService;
 import org.apache.jackrabbit.spi2dav.Spi2davRepositoryServiceFactory;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
 import org.modeshape.common.i18n.I18n;
-import org.modeshape.connector.jcr.JcrRepositoryConnection;
 import org.modeshape.connector.jcr.JcrRepositorySource;
 import org.modeshape.graph.connector.RepositoryConnection;
 import org.modeshape.graph.connector.RepositoryContext;
@@ -39,12 +35,12 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
     private volatile String url;
     
     private RepositoryContext repositoryContext;
-
     private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
-
-    private RepositoryService repositoryService;
-
     private Spi2davRepositoryServiceFactory spi2davRepositoryServiceFactory;
+
+    private CredentialsFactory credentialsFactory;
+    private RepositoryFactory repositoryFactory;
+    private RepositoryConnectionFactory repositoryConnectionFactory;
 
     @Override
     public synchronized Reference getReference() {
@@ -55,15 +51,9 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
     public void initialize( RepositoryContext context ) throws RepositorySourceException {
         this.repositoryContext = context;
         this.spi2davRepositoryServiceFactory = new Spi2davRepositoryServiceFactory();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName( String name ) {
-        this.name = name;
+        this.credentialsFactory = new CredentialsFactory();
+        this.repositoryFactory = new RepositoryFactory();
+        this.repositoryConnectionFactory = new RepositoryConnectionFactory();
     }
     
     @Override
@@ -75,14 +65,13 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
         
         Repository repository = null;
         try {
-            RepositoryConfig config = new WebdavRepositoryConfig(url);
-            repository = RepositoryImpl.create(config);
+            repository = repositoryFactory.createRepository(url);
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
         
-        Credentials credentials = null;
-        return new JcrRepositoryConnection(this, repository, credentials);
+        Credentials credentials = credentialsFactory.createCredentials(getUsername(), getPassword());
+        return repositoryConnectionFactory.createRepositoryConnection(this, repository, credentials);
     }
 
     protected Spi2davRepositoryServiceFactory getSpi2davRepositoryServiceFactory() {
