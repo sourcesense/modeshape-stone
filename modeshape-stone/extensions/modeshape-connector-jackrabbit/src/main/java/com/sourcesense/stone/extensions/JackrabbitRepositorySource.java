@@ -1,7 +1,6 @@
 package com.sourcesense.stone.extensions;
 
 import javax.jcr.Credentials;
-import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.naming.Reference;
 import net.jcip.annotations.ThreadSafe;
@@ -19,24 +18,12 @@ import org.modeshape.graph.connector.RepositorySourceException;
 @ThreadSafe
 public class JackrabbitRepositorySource extends JcrRepositorySource {
 
-    @Description( i18n = JackrabbitConnectorI18n.class, value = "namePropertyDescription" )
-    @Label( i18n = JackrabbitConnectorI18n.class, value = "namePropertyLabel" )
-    @Category( i18n = JackrabbitConnectorI18n.class, value = "namePropertyCategory" )
-    private volatile String name;
-
-    @Description( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyDescription" )
-    @Label( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyLabel" )
-    @Category( i18n = JackrabbitConnectorI18n.class, value = "retryLimitPropertyCategory" )
-    private volatile int retryLimit;
-
     @Description( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyDescription" )
     @Label( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyLabel" )
     @Category( i18n = JackrabbitConnectorI18n.class, value = "urlPropertyCategory" )
     private volatile String url;
     
-    private RepositoryContext repositoryContext;
     private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
-    private Spi2davRepositoryServiceFactory spi2davRepositoryServiceFactory;
 
     private CredentialsFactory credentialsFactory;
     private RepositoryFactory repositoryFactory;
@@ -49,8 +36,7 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
     
     @Override
     public void initialize( RepositoryContext context ) throws RepositorySourceException {
-        this.repositoryContext = context;
-        this.spi2davRepositoryServiceFactory = new Spi2davRepositoryServiceFactory();
+        super.initialize(context);
         this.credentialsFactory = new CredentialsFactory();
         this.repositoryFactory = new RepositoryFactory();
         this.repositoryConnectionFactory = new RepositoryConnectionFactory();
@@ -63,29 +49,14 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
             throw new RepositorySourceException(url, msg.text("url"));
         }
         
-        Repository repository = null;
         try {
-            repository = repositoryFactory.createRepository(url);
+            setRepository(getRepositoryFactory().createRepository(url));
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
         
-        Credentials credentials = credentialsFactory.createCredentials(getUsername(), getPassword());
-        return repositoryConnectionFactory.createRepositoryConnection(this, repository, credentials);
-    }
-
-    protected Spi2davRepositoryServiceFactory getSpi2davRepositoryServiceFactory() {
-        return this.spi2davRepositoryServiceFactory;
-    }
-
-    @Override
-    public int getRetryLimit() {
-        return retryLimit;
-    }
-
-    @Override
-    public void setRetryLimit( int retryLimit ) {
-        this.retryLimit = retryLimit < 0 ? 0 : retryLimit;
+        Credentials credentials = getCredentialsFactory().createCredentials(getUsername(), getPassword());
+        return getRepositoryConnectionFactory().createRepositoryConnection(this, getRepository(), credentials);
     }
 
     @Override
@@ -93,16 +64,23 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
         return capabilities;
     }
 
-    @Override
-    public void close() {
-        repositoryContext = null;
-    }
-    
     public String getUrl() {
         return url;
     }
     
     public void setUrl( String url ) {
         this.url = url;
+    }
+
+    protected RepositoryFactory getRepositoryFactory() {
+        return repositoryFactory;
+    }
+
+    protected CredentialsFactory getCredentialsFactory() {
+        return credentialsFactory;
+    }
+
+    protected RepositoryConnectionFactory getRepositoryConnectionFactory() {
+        return repositoryConnectionFactory;
     }
 }

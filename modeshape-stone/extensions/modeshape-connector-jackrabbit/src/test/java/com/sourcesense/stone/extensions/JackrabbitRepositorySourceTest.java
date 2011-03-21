@@ -3,13 +3,9 @@ package com.sourcesense.stone.extensions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import java.lang.reflect.Field;
-import javax.jcr.SimpleCredentials;
 import net.jcip.annotations.ThreadSafe;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,7 +15,6 @@ import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
 import org.modeshape.connector.jcr.JcrRepositoryConnection;
 import org.modeshape.graph.connector.RepositoryConnection;
-import org.modeshape.graph.connector.RepositoryContext;
 import org.modeshape.graph.connector.RepositorySourceCapabilities;
 import org.modeshape.graph.connector.RepositorySourceException;
 
@@ -38,12 +33,12 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
-    public void shouldSetRepositoryContextOnInitialize() throws Exception {
-        RepositoryContext aContext = mock(RepositoryContext.class);
-        repositorySource.initialize(aContext);
+    public void shouldSetFactoriesOnInitialize() throws Exception {
+        repositorySource.initialize(null);
 
-        Object repositoryContextValue = getFieldValue(repositorySource, "repositoryContext");
-        assertNotNull(repositoryContextValue);
+        assertNotNull(getFieldValue(repositorySource, "credentialsFactory"));
+        assertNotNull(getFieldValue(repositorySource, "repositoryFactory"));
+        assertNotNull(getFieldValue(repositorySource, "repositoryConnectionFactory"));
     }
 
     @Test
@@ -53,43 +48,13 @@ public class JackrabbitRepositorySourceTest {
     }
 
     @Test
-    public void shouldHaveField_name_WithAnnotation_Description() throws Exception {
-        checkDescriptionAnnotation(repositorySource, "name");
-    }
-
-    @Test
-    public void shouldHaveField_retryLimit_WithAnnotation_Description() throws Exception {
-        checkDescriptionAnnotation(repositorySource, "retryLimit");
-    }
-
-    @Test
     public void shouldHaveField_url_WithAnnotation_Description() throws Exception {
         checkDescriptionAnnotation(repositorySource, "url");
     }
 
     @Test
-    public void shouldHaveField_name_WithAnnotation_Label() throws Exception {
-        checkLabelAnnotation(repositorySource, "name");
-    }
-
-    @Test
-    public void shouldHaveField_retryLimit_WithAnnotation_Label() throws Exception {
-        checkLabelAnnotation(repositorySource, "retryLimit");
-    }
-
-    @Test
     public void shouldHaveField_url_WithAnnotation_Label() throws Exception {
         checkLabelAnnotation(repositorySource, "url");
-    }
-
-    @Test
-    public void shouldHaveField_name_WithAnnotation_Category() throws Exception {
-        checkCategoryAnnotation(repositorySource, "name");
-    }
-
-    @Test
-    public void shouldHaveField_retryLimit_WithAnnotation_Category() throws Exception {
-        checkCategoryAnnotation(repositorySource, "retryLimit");
     }
 
     @Test
@@ -208,20 +173,6 @@ public class JackrabbitRepositorySourceTest {
         assertNotNull(categoryAnnotation);
         assertEquals(JackrabbitConnectorI18n.class, categoryAnnotation.i18n());
         assertEquals(fieldName + "PropertyCategory", categoryAnnotation.value());
-    }
-
-    @Test
-    public void shouldDeleteReferencesOnClose() throws Exception {
-        RepositoryContext aContext = mock(RepositoryContext.class);
-        repositorySource.initialize(aContext);
-
-        Object repositorySourceValue = getFieldValue(repositorySource, "repositoryContext");
-        assertNotNull(repositorySourceValue);
-
-        repositorySource.close();
-        Object newRepositorySourceValue = getFieldValue(repositorySource, "repositoryContext");
-        assertNull(newRepositorySourceValue);
-
     }
 
     private Object getFieldValue( JackrabbitRepositorySource jackrabbitRepositorySource,
