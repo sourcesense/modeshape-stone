@@ -49,7 +49,7 @@ import org.osgi.service.log.LogService;
  * @scr.reference name="Log" interface="org.osgi.service.log.LogService"
  *                policy="dynamic" cardinality="0..1"
  * @scr.property name="java.naming.factory.initial"
- *               value="org.modeshape.common.naming.DummyInitialContextFactory"
+ *               value="org.modeshape.common.naming.SingletonInitialContextFactory"
  *               label="%jndi.factory.name"
  *               description="%jndi.factory.description"
  * @scr.property name="java.naming.provider.url" value="localhost"
