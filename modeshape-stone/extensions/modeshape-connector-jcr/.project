@@ -1,15 +1,7 @@
 <projectDescription>
   <name>modeshape-connector-jcr</name>
   <comment>ModeShape Connector that interfaces with a JCR instance running in the same process.</comment>
-  <projects>
-    <project>modeshape-cnd</project>
-    <project>modeshape-common</project>
-    <project>modeshape-graph</project>
-    <project>modeshape-jcr</project>
-    <project>modeshape-jcr-api</project>
-    <project>modeshape-repository</project>
-    <project>modeshape-search-lucene</project>
-  </projects>
+  <projects/>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>

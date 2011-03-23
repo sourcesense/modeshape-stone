@@ -114,6 +114,7 @@
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>com.springsource.net.jcip.annotations</artifactId>
+      <version>1.0.0</version>
     </dependency>
   </dependencies>
   <reporting>

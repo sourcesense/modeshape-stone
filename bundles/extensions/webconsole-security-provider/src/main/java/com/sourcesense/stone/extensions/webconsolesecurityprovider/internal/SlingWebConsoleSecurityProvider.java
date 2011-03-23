@@ -48,7 +48,6 @@ public class SlingWebConsoleSecurityProvider implements WebConsoleSecurityProvid
     public Object authenticate( String user,
                                 String password ) {
         log.info("********** Attempting to authenticate " + user);
-        
         return "adminadmin".equals(user + password) ? true : null;
     }
 
