@@ -167,6 +167,12 @@
             <version>1.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>com.sourcesense.stone.extensions.</groupId>
+        	<artifactId>modeshape-connector-jackrabbit</artifactId>
+        	<version>1.0-SNAPSHOT</version>
+        	<scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>

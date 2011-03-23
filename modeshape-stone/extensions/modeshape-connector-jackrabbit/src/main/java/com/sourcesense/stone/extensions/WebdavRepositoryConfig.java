@@ -26,22 +26,18 @@ public class WebdavRepositoryConfig implements RepositoryConfig {
         webdavRepositoryService = new RepositoryServiceImpl(url, idFactory, nFactory, pFactory, vFactory);
     }
 
-    @Override
     public CacheBehaviour getCacheBehaviour() {
         return null;
     }
 
-    @Override
     public int getItemCacheSize() {
-        return 0;
+        return 100;
     }
 
-    @Override
     public int getPollTimeout() {
         return 0;
     }
 
-    @Override
     public RepositoryService getRepositoryService() throws RepositoryException {
         return webdavRepositoryService;
     }

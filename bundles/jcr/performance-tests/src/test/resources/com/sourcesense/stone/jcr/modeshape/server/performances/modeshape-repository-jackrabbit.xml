@@ -23,6 +23,10 @@
                 <mode:option jcr:name="jaasLoginConfigName"
                     mode:value="modeshape-jcr" />
             </mode:options>
+            
+            <jcr:nodeTypes>
+            	<mode:resource>src/test/resources/com/sourcesense/stone/jcr/modeshape/server/performances/jackrabbit_builtin_nodetypes.cnd</mode:resource>
+            </jcr:nodeTypes>
         </mode:repository>
     </mode:repositories>
 
@@ -35,7 +39,7 @@
             mode:url="http://localhost:8080/server"
             mode:password="admin"
             mode:username="admin"
-            mode:defaultWorkspaceName="default"
+            mode:defaultWorkspaceName="test"
             mode:autoGenerateSchema="create" />
     </mode:sources>
 

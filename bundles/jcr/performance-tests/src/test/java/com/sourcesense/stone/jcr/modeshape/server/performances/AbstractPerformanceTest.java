@@ -91,6 +91,7 @@ public abstract class AbstractPerformanceTest {
                 writeReport(test.toString(), name, statistics);
             }
         } catch (Throwable t) {
+            t.printStackTrace();
             System.out.println(
                     "Unable to run " + test + ": " + t.getMessage());
         } finally {
