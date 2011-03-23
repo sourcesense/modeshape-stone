@@ -30,12 +30,12 @@ import javax.naming.spi.InitialContextFactory;
 
 /**
  * The factory for a simple and limited JNDI implementation that can be used in unit tests for code that
- * {@link Context#lookup(String) looks up} objects. See {@link DummyInitialContext} for how to use this implementation.
+ * {@link Context#lookup(String) looks up} objects. See {@link SingletonInitialContext} for how to use this implementation.
  * @author Luca Stancapiano
  */
-public class DummyInitialContextFactory implements InitialContextFactory {
+public class SingletonInitialContextFactory implements InitialContextFactory {
 
-    private static DummyInitialContext SINGLETON;
+    private static SingletonInitialContext SINGLETON;
 
     /**
      * {@inheritDoc}
@@ -44,8 +44,8 @@ public class DummyInitialContextFactory implements InitialContextFactory {
         return getInstance(environment);
     }
 
-    public static synchronized DummyInitialContext getInstance( Hashtable<?, ?> environment ) {
-        if (SINGLETON == null) SINGLETON = new DummyInitialContext(environment);
+    public static synchronized SingletonInitialContext getInstance( Hashtable<?, ?> environment ) {
+        if (SINGLETON == null) SINGLETON = new SingletonInitialContext(environment);
         return SINGLETON;
 
     }

@@ -46,10 +46,10 @@ import org.modeshape.common.SystemFailureException;
  * 
  * @author Luca Stancapiano
  */
-public class DummyInitialContext implements Context {
+public class SingletonInitialContext implements Context {
 
     public static void setup() {
-        System.setProperty("java.naming.factory.initial", DummyInitialContextFactory.class.getName());
+        System.setProperty("java.naming.factory.initial", SingletonInitialContextFactory.class.getName());
     }
 
     public static void register( String name, Object obj ) {
@@ -73,13 +73,13 @@ public class DummyInitialContext implements Context {
     }
 
     public static void tearDown() {
-        DummyInitialContextFactory.tearDown();
+    	SingletonInitialContextFactory.tearDown();
     }
 
     private final Map<String, Object> environment = new ConcurrentHashMap<String, Object>();
     private final ConcurrentHashMap<String, Object> registry = new ConcurrentHashMap<String, Object>();
 
-    /* package */DummyInitialContext( Hashtable<?, ?> environment ) {
+    /* package */SingletonInitialContext( Hashtable<?, ?> environment ) {
         for (Map.Entry<?, ?> entry : environment.entrySet()) {
             this.environment.put(entry.getKey().toString(), entry.getValue());
         }

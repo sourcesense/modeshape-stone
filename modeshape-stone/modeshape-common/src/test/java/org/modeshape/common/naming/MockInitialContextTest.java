@@ -49,12 +49,12 @@ public class MockInitialContextTest {
 
     @After
     public void afterEach() {
-        DummyInitialContext.tearDown();
+        SingletonInitialContext.tearDown();
     }
 
     @Test
     public void shouldCreateInitialContextAndRegisterAnObject() throws Exception {
-        DummyInitialContext.register(this.validName, this.registeredObject);
+    	SingletonInitialContext.register(this.validName, this.registeredObject);
         for (int i = 0; i != 10; ++i) {
             assertThat(new InitialContext().lookup(this.validName), is(sameInstance(this.registeredObject)));
         }
@@ -64,12 +64,12 @@ public class MockInitialContextTest {
     public void shouldTearDownMockInitialContextUponRequest() throws Exception {
         // Set it up ...
         // (Don't want to use 'expected', since the NamingException could be thrown here and we wouldn't know the difference)
-        DummyInitialContext.register(this.validName, this.registeredObject);
+    	SingletonInitialContext.register(this.validName, this.registeredObject);
         for (int i = 0; i != 10; ++i) {
             assertThat(new InitialContext().lookup(this.validName), is(sameInstance(this.registeredObject)));
         }
         // Tear it down ...
-        DummyInitialContext.tearDown();
+        SingletonInitialContext.tearDown();
         try {
             new InitialContext().lookup(this.validName);
             throw new AssertionFailedError("Failed to throw exception");
