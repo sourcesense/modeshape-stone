@@ -183,6 +183,11 @@ public class PaxConfigurations {
 				"org.apache.felix.http.jetty", "2.0.5-SNAPSHOT"));
 	}
 
+	public static Option slingWeb() {
+		return composite(mavenBundle(SLING_GROUP,
+				"org.apache.sling.extensions.webconsolesecurityprovider", "SLING_VERSION"));
+	}
+
 	public static Option googleCommons() {
 		return wrappedBundle(mavenBundle(GOOGLE_COLLECTIONS_GROUP,
 				"google-collections", GOOGLE_COLLECTIONS_VERSION));

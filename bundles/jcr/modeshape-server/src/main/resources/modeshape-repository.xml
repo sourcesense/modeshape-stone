@@ -36,7 +36,7 @@
             mode:password="${JDBC.password}"
             mode:username="${JDBC.username}"
             mode:defaultWorkspaceName="test"
-            mode:autoGenerateSchema="create" />
+            mode:autoGenerateSchema="${JDBC.autoGenerateSchema}" />
     </mode:sources>
 
     <mode:mimeTypeDetectors>
