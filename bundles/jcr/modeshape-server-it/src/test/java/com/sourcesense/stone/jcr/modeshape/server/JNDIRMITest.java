@@ -29,7 +29,7 @@ public class JNDIRMITest {
 	public void connectionRetrieved() throws Exception {
 
 		RepositoryAccessor  repositoryAccessor = new RepositoryAccessor();
-		Repository repository = repositoryAccessor.getRepositoryFromURL("jndi://modeshape:java.naming.factory.initial=org.modeshape.common.naming.DummyInitialContextFactory,java.naming.provider.url=localhost");
+		Repository repository = repositoryAccessor.getRepositoryFromURL("jndi://modeshape:java.naming.factory.initial=org.modeshape.common.naming.SingletonInitialContextFactory,java.naming.provider.url=localhost");
 		assertNotNull(repository);
 	}
 }
