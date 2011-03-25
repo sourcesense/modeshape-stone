@@ -1,5 +1,7 @@
 package com.sourcesense.stone.jaas.modeshape;
 
+import javax.security.auth.login.Configuration;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
@@ -13,6 +15,8 @@ import org.osgi.framework.ServiceListener;
 public class Activator implements BundleActivator, ServiceListener {
 
 	private BundleContext bundleContext;
+
+	private Configuration oldConfiguration;
 
 	/**
 	 * {@inheritDoc}
@@ -31,6 +35,13 @@ public class Activator implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		this.bundleContext = bundleContext;
+		try {
+			oldConfiguration = Configuration.getConfiguration();
+		} catch (SecurityException se) {
+			// oldConfiguration remains null
+		}
+		Configuration.setConfiguration(new StoneConfiguration());
+
 	}
 
 	/**
@@ -38,5 +49,6 @@ public class Activator implements BundleActivator, ServiceListener {
 	 */
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
+		Configuration.setConfiguration(oldConfiguration);
 	}
 }
