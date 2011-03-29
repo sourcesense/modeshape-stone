@@ -1,33 +1,58 @@
 package com.sourcesense.stone.extensions;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import net.jcip.annotations.ThreadSafe;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
 import org.modeshape.connector.jcr.JcrConnectorI18n;
+import org.modeshape.connector.jcr.JcrRepositorySource;
+import org.modeshape.graph.ExecutionContext;
+import org.modeshape.graph.Subgraph;
+import org.modeshape.graph.connector.RepositoryConnection;
+import org.modeshape.graph.connector.RepositoryContext;
 import org.modeshape.graph.connector.RepositorySourceCapabilities;
 import org.modeshape.graph.connector.RepositorySourceException;
+import org.modeshape.graph.observe.Observer;
 
 public class JackrabbitRepositorySourceTest {
 
     private JackrabbitRepositorySource repositorySource;
+    
+    @Mock
+    private CredentialsFactory mockedCredentialsFactory;
+    
+    @Mock
+    private RepositoryFactory mockedRepositoryFactory;
+    
+    @Mock
+    private RepositoryConnectionFactory mockedRepositoryConnectionFactory;
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this);
         repositorySource = new JackrabbitRepositorySource();
     }
 
@@ -90,38 +115,45 @@ public class JackrabbitRepositorySourceTest {
 
     @Test
     public void shouldReturnAJackrabbitRepositoryConnectionUsingAllInjectedFactories() throws Exception {
-        final CredentialsFactory mockedCredentialsFactory = mock(CredentialsFactory.class);
-        final RepositoryFactory mockedRepositoryFactory = mock(RepositoryFactory.class);
-        final RepositoryConnectionFactory mockedRepositoryConnectionFactory = mock(RepositoryConnectionFactory.class);
-
-        JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource() {
-
-            @Override
-            protected RepositoryFactory getRepositoryFactory() {
-                return mockedRepositoryFactory;
-            }
-
-            @Override
-            protected CredentialsFactory getCredentialsFactory() {
-                return mockedCredentialsFactory;
-            }
-
-            protected RepositoryConnectionFactory getRepositoryConnectionFactory() {
-                return mockedRepositoryConnectionFactory;
-            };
-        };
-
-        jackrabbitRepositorySource.setUrl("http://some.valid.url");
-        jackrabbitRepositorySource.setUsername("scott");
-        jackrabbitRepositorySource.setPassword("tiger");
+        JackrabbitRepositorySource jackrabbitRepositorySource = setupJackrabbitRepositorySource();
         
         jackrabbitRepositorySource.getConnection();
         
         verify(mockedRepositoryFactory).createRepository("http://some.valid.url");
         verify(mockedCredentialsFactory).createCredentials("scott", "tiger");
-        verify(mockedRepositoryConnectionFactory).createRepositoryConnection(eq(jackrabbitRepositorySource), (Repository)anyObject(), (Credentials)anyObject());
     }
 
+    @Test
+    public void shouldAllowMultipleConnectionsToBeOpenAtTheSameTime() throws Exception {
+        JackrabbitRepositorySource jackrabbitRepositorySource = setupJackrabbitRepositorySource();
+        
+        List<RepositoryConnection> connections = new ArrayList<RepositoryConnection>();
+        try {
+            for (int i = 0; i != 10; ++i) {
+                RepositoryConnection conn = jackrabbitRepositorySource.getConnection();
+                assertThat(conn, is(notNullValue()));
+                connections.add(conn);
+            }
+        } finally {
+            // Close all open connections ...
+            for (RepositoryConnection conn : connections) {
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    @Test
+    public void shouldHaveDefaultRetryLimit() {
+        assertThat(repositorySource.getRetryLimit(), is(JcrRepositorySource.DEFAULT_RETRY_LIMIT));
+    }
+    
     @Test
     public void shouldAllowAnyNotNegativeIntegerForRetryLimit() throws Exception {
         repositorySource.setRetryLimit(10);
@@ -133,21 +165,42 @@ public class JackrabbitRepositorySourceTest {
     public void shouldAvoidNegativeValuesForRetryLimit() throws Exception {
         repositorySource.setRetryLimit(-4);
 
-        assertEquals(0, repositorySource.getRetryLimit());
+        assertThat(repositorySource.getRetryLimit(), equalTo(0));
     }
 
     @Test
-    public void shouldSupportSameNameSiblingsCapabilities() throws Exception {
-        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
-
-        assertFalse(sourceCapabilities.supportsSameNameSiblings());
+    public void shouldAllowSettingURL() {
+        repositorySource.setUrl("Something");
+        assertThat(repositorySource.getUrl(), is("Something"));
+        
+        repositorySource.setUrl("another url");
+        assertThat(repositorySource.getUrl(), is("another url"));
+    }
+    
+    @Test
+    public void shouldAllowSettingURLToNull() {
+        repositorySource.setUrl("some url");
+        repositorySource.setUrl(null);
+        assertThat(repositorySource.getUrl(), is(nullValue()));
+    }
+    
+    @Test
+    public void shouldReturnNonNullCapabilities() {
+        assertThat(repositorySource.getCapabilities(), is(notNullValue()));
     }
 
     @Test
-    public void shoudlSupportUpdates() throws Exception {
+    public void shouldSupportSameNameSiblings() throws Exception {
         RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
 
-        assertTrue(sourceCapabilities.supportsUpdates());
+        assertThat(sourceCapabilities.supportsSameNameSiblings(), is(true));
+    }
+    
+    @Test
+    public void shouldSupportUpdates() throws Exception {
+        RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
+
+        assertThat(sourceCapabilities.supportsUpdates(), is(true));
     }
 
     @Test
@@ -169,6 +222,51 @@ public class JackrabbitRepositorySourceTest {
         RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
 
         assertTrue(sourceCapabilities.supportsReferences());
+    }
+
+    private JackrabbitRepositorySource setupJackrabbitRepositorySource() {
+        final JackrabbitRepositorySource jackrabbitRepositorySource = new JackrabbitRepositorySource() {
+    
+            @Override
+            protected RepositoryFactory getRepositoryFactory() {
+                return mockedRepositoryFactory;
+            }
+    
+            @Override
+            protected CredentialsFactory getCredentialsFactory() {
+                return mockedCredentialsFactory;
+            }
+            
+        };
+    
+        jackrabbitRepositorySource.setUrl("http://some.valid.url");
+        jackrabbitRepositorySource.setUsername("scott");
+        jackrabbitRepositorySource.setPassword("tiger");
+        
+        final ExecutionContext context = new ExecutionContext();
+        jackrabbitRepositorySource.initialize(new RepositoryContext(){
+
+            public ExecutionContext getExecutionContext() {
+                return context;
+            }
+
+            public org.modeshape.graph.connector.RepositoryConnectionFactory getRepositoryConnectionFactory() {
+                return new org.modeshape.graph.connector.RepositoryConnectionFactory(){
+
+                    public RepositoryConnection createConnection( String sourceName ) throws RepositorySourceException {
+                        return jackrabbitRepositorySource.getConnection();
+                    }};
+            }
+
+            public Observer getObserver() {
+                return null;
+            }
+
+            public Subgraph getConfiguration( int depth ) {
+                return null;
+            }});
+        
+        return jackrabbitRepositorySource;
     }
 
     private void checkDescriptionAnnotation( JackrabbitRepositorySource jackrabbitRepositorySource,

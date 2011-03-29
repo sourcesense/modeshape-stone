@@ -22,7 +22,7 @@ public class JackrabbitRepositorySource extends JcrRepositorySource {
     private static final boolean SUPPORTS_CREATING_WORKSPACES = true;
     private static final boolean SUPPORTS_EVENTS = false;
     private static final boolean SUPPORTS_UPDATES = true;
-    private static final boolean SUPPORTS_SAME_NAME_SIBLINGS = false;
+    private static final boolean SUPPORTS_SAME_NAME_SIBLINGS = true;
 
     @Description( i18n = JcrConnectorI18n.class, value = "urlPropertyDescription" )
     @Label( i18n = JcrConnectorI18n.class, value = "urlPropertyLabel" )
