@@ -8,6 +8,11 @@
   <name>ModeShape Connector to Jackrabbit via WebDAV</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+  <dependency>
+      <groupId>org.modeshape</groupId>
+      <artifactId>modeshape-jcr</artifactId>
+      <version>2.4.0.Final-stone-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>org.modeshape</groupId>
       <artifactId>modeshape-graph</artifactId>
@@ -48,6 +53,47 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+    <!-- JAAS implementation used by the JCR implementation in unit tests -->
+    <dependency>
+      <groupId>org.jboss.security</groupId>
+      <artifactId>jboss-idtrust</artifactId>
+      <version>2.0.2.CR1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.security</groupId>
+      <artifactId>jboss-security-spi-bare</artifactId>
+      <version>2.0.2.SP6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.security</groupId>
+      <artifactId>jbosssx-bare</artifactId>
+      <version>2.0.2.SP6</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>apache-xalan</groupId>
+          <artifactId>xalan</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>apache-xalan</groupId>
+          <artifactId>serializer</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>apache-httpclient</groupId>
+          <artifactId>commons-httpclient</artifactId>
+        </exclusion>
+        <exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate</artifactId>
+				</exclusion>
+        <exclusion>
+					<groupId>org.jboss.security</groupId>
+					<artifactId>jboss-xacml</artifactId>
+				</exclusion>
+      </exclusions>
+    </dependency>
     <!-- Unit testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -71,13 +117,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.5.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
+      <version>1.6.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

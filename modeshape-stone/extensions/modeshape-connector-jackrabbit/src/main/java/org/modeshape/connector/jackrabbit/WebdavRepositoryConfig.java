@@ -1,4 +1,4 @@
-package com.sourcesense.stone.extensions;
+package org.modeshape.connector.jackrabbit;
 
 import javax.jcr.RepositoryException;
 import org.apache.jackrabbit.jcr2spi.config.CacheBehaviour;

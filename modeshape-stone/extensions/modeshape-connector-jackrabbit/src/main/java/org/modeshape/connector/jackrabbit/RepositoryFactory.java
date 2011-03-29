@@ -1,4 +1,4 @@
-package com.sourcesense.stone.extensions;
+package org.modeshape.connector.jackrabbit;
 
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;

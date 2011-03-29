@@ -1,4 +1,4 @@
-package com.sourcesense.stone.extensions;
+package org.modeshape.connector.jackrabbit;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -22,6 +22,9 @@ import org.mockito.MockitoAnnotations;
 import org.modeshape.common.annotation.Category;
 import org.modeshape.common.annotation.Description;
 import org.modeshape.common.annotation.Label;
+import org.modeshape.connector.jackrabbit.CredentialsFactory;
+import org.modeshape.connector.jackrabbit.JackrabbitRepositorySource;
+import org.modeshape.connector.jackrabbit.RepositoryFactory;
 import org.modeshape.connector.jcr.JcrConnectorI18n;
 import org.modeshape.connector.jcr.JcrRepositorySource;
 import org.modeshape.graph.ExecutionContext;
