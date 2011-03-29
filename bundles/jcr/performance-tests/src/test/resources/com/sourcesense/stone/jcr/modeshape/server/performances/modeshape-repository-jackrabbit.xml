@@ -25,7 +25,7 @@
             </mode:options>
             
             <jcr:nodeTypes>
-            	<mode:resource>src/test/resources/com/sourcesense/stone/jcr/modeshape/server/performances/jackrabbit_builtin_nodetypes.cnd</mode:resource>
+            	<mode:resource>./src/test/resources/com/sourcesense/stone/jcr/modeshape/server/performances/jackrabbit_builtin_nodetypes.cnd</mode:resource>
             </jcr:nodeTypes>
         </mode:repository>
     </mode:repositories>

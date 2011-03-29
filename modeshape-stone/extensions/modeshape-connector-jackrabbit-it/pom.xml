@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+| Copyright 2011 Sourcesense
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+| http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.sourcesense.stone.extensions</groupId>
+  <artifactId>modeshape-connector-jackrabbit-it</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>modeshape-connector-jackrabbit</name>
+  <properties>
+    <sling.version>2.1.0</sling.version>
+    <osgi.version>4.1.0</osgi.version>
+    <jcr.version>2.0</jcr.version>
+    <modeshape.version>2.4.0.Final-stone-SNAPSHOT</modeshape.version>
+    <jackrabbit.version>2.3-SNAPSHOT</jackrabbit.version>
+    <modeshape.connector.jackrabbit.version>1.0-SNAPSHOT</modeshape.connector.jackrabbit.version>
+    <slf4j.version>1.5.11</slf4j.version>
+    <paxexam.version>1.2.3</paxexam.version>
+    <junit.version>4.4</junit.version>
+    <mockito.version>1.8.4</mockito.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>javax.jcr</groupId>
+      <artifactId>jcr</artifactId>
+      <version>${jcr.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.sling</groupId>
+      <artifactId>org.apache.sling.jcr.api</artifactId>
+      <version>${sling.version}</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>com.sourcesense.stone</groupId>
+      <artifactId>com.sourcesense.stone.jcr.base</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>${osgi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>${osgi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.modeshape</groupId>
+      <artifactId>modeshape-jcr</artifactId>
+      <version>${modeshape.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.modeshape</groupId>
+      <artifactId>modeshape-common</artifactId>
+      <version>${modeshape.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sourcesense.stone.extensions</groupId>
+      <artifactId>modeshape-connector-jackrabbit</artifactId>
+      <version>${modeshape.connector.jackrabbit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    -->
+  </dependencies>
+</project>

@@ -1,24 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>modeshape-jdbc</name>
-  <comment>JDBC driver to allow clients to query a ModeShape JCR repository with JCR-SQL2.</comment>
-  <projects>
-    <project>modeshape-classloader-maven</project>
-    <project>modeshape-cnd</project>
-    <project>modeshape-common</project>
-    <project>modeshape-graph</project>
-    <project>modeshape-jcr</project>
-    <project>modeshape-jcr-api</project>
-    <project>modeshape-repository</project>
-    <project>modeshape-search-lucene</project>
-    <project>modeshape-web-jcr-rest-client</project>
-    <project>modeshape-web-jcr-rest-war</project>
-  </projects>
-  <buildSpec>
-    <buildCommand>
-      <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
-  </buildSpec>
-  <natures>
-    <nature>org.eclipse.jdt.core.javanature</nature>
-  </natures>
+	<name>modeshape-jdbc</name>
+	<comment>JDBC driver to allow clients to query a ModeShape JCR repository with JCR-SQL2.</comment>
+	<projects>
+		<project>modeshape-classloader-maven</project>
+		<project>modeshape-cnd</project>
+		<project>modeshape-common</project>
+		<project>modeshape-graph</project>
+		<project>modeshape-jcr</project>
+		<project>modeshape-jcr-api</project>
+		<project>modeshape-repository</project>
+		<project>modeshape-search-lucene</project>
+		<project>modeshape-web-jcr-rest-client</project>
+		<project>modeshape-web-jcr-rest-war</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.maven.ide.eclipse.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
 </projectDescription>

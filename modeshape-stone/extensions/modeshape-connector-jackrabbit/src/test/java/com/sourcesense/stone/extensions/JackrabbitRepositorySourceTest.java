@@ -140,7 +140,7 @@ public class JackrabbitRepositorySourceTest {
     public void shouldSupportSameNameSiblingsCapabilities() throws Exception {
         RepositorySourceCapabilities sourceCapabilities = repositorySource.getCapabilities();
 
-        assertTrue(sourceCapabilities.supportsSameNameSiblings());
+        assertFalse(sourceCapabilities.supportsSameNameSiblings());
     }
 
     @Test

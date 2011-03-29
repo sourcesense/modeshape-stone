@@ -18,12 +18,18 @@ import org.modeshape.graph.connector.RepositorySourceException;
 @ThreadSafe
 public class JackrabbitRepositorySource extends JcrRepositorySource {
 
+    private static final boolean SUPPORTS_REFERENCES = true;
+    private static final boolean SUPPORTS_CREATING_WORKSPACES = true;
+    private static final boolean SUPPORTS_EVENTS = false;
+    private static final boolean SUPPORTS_UPDATES = true;
+    private static final boolean SUPPORTS_SAME_NAME_SIBLINGS = false;
+
     @Description( i18n = JcrConnectorI18n.class, value = "urlPropertyDescription" )
     @Label( i18n = JcrConnectorI18n.class, value = "urlPropertyLabel" )
     @Category( i18n = JcrConnectorI18n.class, value = "urlPropertyCategory" )
     private volatile String url;
     
-    private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(true, true, false, true, true);
+    private volatile RepositorySourceCapabilities capabilities = new RepositorySourceCapabilities(SUPPORTS_SAME_NAME_SIBLINGS, SUPPORTS_UPDATES, SUPPORTS_EVENTS, SUPPORTS_CREATING_WORKSPACES, SUPPORTS_REFERENCES);
 
     private CredentialsFactory credentialsFactory;
     private RepositoryFactory repositoryFactory;

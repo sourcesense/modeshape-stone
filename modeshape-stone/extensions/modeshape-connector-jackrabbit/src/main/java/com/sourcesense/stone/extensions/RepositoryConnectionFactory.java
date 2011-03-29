@@ -16,7 +16,9 @@ public class RepositoryConnectionFactory {
                                                             Repository repository,
                                                             Credentials credentials ) {
         logger.info("Creating a repository connection");
-        return new JcrRepositoryConnection(repositorySource, repository, credentials);
+        JcrRepositoryConnection jcrRepositoryConnection = new JcrRepositoryConnection(repositorySource, repository, credentials);
+        logger.info("Repository connection created");
+        return jcrRepositoryConnection;
     }
 
 }
