@@ -10,17 +10,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import javax.jcr.Credentials;
-import javax.jcr.Repository;
 import net.jcip.annotations.ThreadSafe;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -47,9 +42,6 @@ public class JackrabbitRepositorySourceTest {
     @Mock
     private RepositoryFactory mockedRepositoryFactory;
     
-    @Mock
-    private RepositoryConnectionFactory mockedRepositoryConnectionFactory;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
