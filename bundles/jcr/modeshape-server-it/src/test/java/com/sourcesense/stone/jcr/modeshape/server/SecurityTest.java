@@ -2,11 +2,12 @@ package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.felixWeb;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.modeshapeWeb;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.modeshapeJPA;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneH2Configuration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.modeshapeWeb;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneH2Configuration;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
@@ -42,25 +44,25 @@ import org.osgi.framework.BundleContext;
 @RunWith(JUnit4TestRunner.class)
 public class SecurityTest {
 
-    @Inject
-    BundleContext bundleContext;
-    
-    @Configuration
-    public Option[] configuration() {
-        FileUtils.delete(new File("/tmp/sling"));
-        return options(debug(),
-                slingFullConfiguration(),
-                stoneH2Configuration(),
-                modeshapeWeb(),
-                modeshapeJPA(),
-                felixWeb(),
-                mavenBundle(PaxConfigurations.STONE_GROUP,
-                            "com.sourcesense.stone.bundle.test",
-                            PaxConfigurations.STONE_VERSION));
-    }
-    
+	@Inject
+	BundleContext bundleContext;
 
-    HttpServletRequest request = new HttpServletRequest() {
+	@Configuration
+	public Option[] configuration() {
+		FileUtils.delete(new File("/tmp/sling"));
+		return options(
+				debug(),
+				slingFullConfiguration(),
+				stoneH2Configuration(),
+				modeshapeWeb(),
+				modeshapeJPA(),
+				felixWeb(),
+				mavenBundle(PaxConfigurations.STONE_GROUP,
+						"com.sourcesense.stone.bundle.test",
+						PaxConfigurations.STONE_VERSION));
+	}
+
+	HttpServletRequest request = new HttpServletRequest() {
 
 		@Override
 		public Object getAttribute(String name) {
@@ -84,7 +86,7 @@ public class SecurityTest {
 		public void setCharacterEncoding(String env)
 				throws UnsupportedEncodingException {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -174,13 +176,13 @@ public class SecurityTest {
 		@Override
 		public void setAttribute(String name, Object o) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void removeAttribute(String name) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -331,7 +333,7 @@ public class SecurityTest {
 					// TODO Auto-generated method stub
 					return "admin";
 				}
-				
+
 			};
 		}
 
@@ -394,28 +396,53 @@ public class SecurityTest {
 			// TODO Auto-generated method stub
 			return false;
 		}
-    	
-    };
-    
+
+	};
+
 	@Test
 	public void loginAndInsert() throws Exception {
-        SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
 
-        Session session = slingRepository.login(new SecurityContextCredentials(new ServletSecurityContext(request)));
-        assertNotNull(session);
-        
-        session.getRootNode().addNode("/prova");
-        session.save();
+		Session session = slingRepository.login(new SecurityContextCredentials(
+				new ServletSecurityContext(request)));
+		assertNotNull(session);
+
+		session.getRootNode().addNode("/prova");
+		session.save();
 	}
-    
+
 	@Test
 	public void loginAndRead() throws Exception {
-        SlingRepository slingRepository = IntegrationTestUtil.getSlingRepositoryFromServiceList(bundleContext);
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
 
-        Session session = slingRepository.login(new SecurityContextCredentials(new ServletSecurityContext(request)));
-        assertNotNull(session);
-        
-        Node prova = session.getRootNode().getNode("prova");
-        assertNotNull(prova);
+		Session session = slingRepository.login(new SecurityContextCredentials(
+				new ServletSecurityContext(request)));
+		assertNotNull(session);
+
+		Node prova = session.getRootNode().getNode("prova");
+		assertNotNull(prova);
+	}
+
+	@Test
+	public void loginFromSling() throws Exception {
+		SlingRepository slingRepository = IntegrationTestUtil
+				.getSlingRepositoryFromServiceList(bundleContext);
+
+		try {
+			javax.security.auth.login.Configuration configuration = javax.security.auth.login.Configuration
+					.getConfiguration();
+			assertNotNull(configuration);
+		} catch (SecurityException se) {
+			fail();
+		}
+
+		Session session = slingRepository.login(new SimpleCredentials("admin",
+				"admin".toCharArray()));
+		assertNotNull(session);
+
+		Node prova = session.getRootNode().getNode("prova");
+		assertNotNull(prova);
 	}
 }
