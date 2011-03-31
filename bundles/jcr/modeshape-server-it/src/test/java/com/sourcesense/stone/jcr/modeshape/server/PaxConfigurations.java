@@ -57,7 +57,8 @@ public class PaxConfigurations {
 	public static Option slingFullConfiguration() {
 		return composite(slingBasicConfiguration(), felixWeb(),
 				stonePostgresConfiguration(), stoneDependencies(),
-				modeshapeWeb(), hibernate());
+				modeshapeWeb(), hibernate(), slingWeb(),
+				slingJAAS());
 	}
 
 	public static Option stoneInMemoryConfiguration() {
@@ -184,8 +185,13 @@ public class PaxConfigurations {
 	}
 
 	public static Option slingWeb() {
-		return composite(mavenBundle(SLING_GROUP,
-				"org.apache.sling.extensions.webconsolesecurityprovider", "SLING_VERSION"));
+		return composite(mavenBundle(STONE_GROUP,
+				"com.sourcesense.stone.extensions.webconsolesecurityprovider", STONE_VERSION));
+	}
+
+	public static Option slingJAAS() {
+		return composite(mavenBundle(STONE_GROUP,
+				"com.sourcesense.stone.jaas.jaas-login-registration", STONE_VERSION));
 	}
 
 	public static Option googleCommons() {
