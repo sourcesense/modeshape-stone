@@ -4,7 +4,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.jcr.Credentials;
+import javax.jcr.LoginException;
 import javax.jcr.Repository;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
+
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Modified;
@@ -45,10 +52,34 @@ public class SlingWebConsoleSecurityProvider implements WebConsoleSecurityProvid
     }
 
     @Override
-    public Object authenticate( String user,
+    public Object authenticate( String userName,
                                 String password ) {
-        log.info("********** Attempting to authenticate " + user);
-        return "adminadmin".equals(user + password) ? true : null;
+        final Credentials creds = new SimpleCredentials(userName,
+                (password == null) ? new char[0] : password.toCharArray());
+            Session session = null;
+            ClassLoader ccl = Thread.currentThread().getContextClassLoader(); 
+            try {
+            	Thread.currentThread().setContextClassLoader(getClass().getClassLoader()); 
+                session = repository.login(creds);
+                return true;
+            } catch (LoginException re) {
+                log.info(
+                    "authenticate: User "
+                        + userName
+                        + " failed to authenticate with the repository for Web Console access",
+                    re);
+            } catch (RepositoryException re) {
+                log.info("authenticate: Generic problem trying grant User "
+                    + userName + " access to the Web Console", re);
+            } finally {
+            	Thread.currentThread().setContextClassLoader(ccl); 
+                if (session != null) {
+                    session.logout();
+                }
+            }
+
+            // no success (see log)
+            return null;
     }
 
     @Override
