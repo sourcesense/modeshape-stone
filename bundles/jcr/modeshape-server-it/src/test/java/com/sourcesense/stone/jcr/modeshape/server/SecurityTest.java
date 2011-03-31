@@ -2,6 +2,7 @@ package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.felixWeb;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingWeb;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.modeshapeJPA;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.modeshapeWeb;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
@@ -56,7 +57,6 @@ public class SecurityTest {
 				stoneH2Configuration(),
 				modeshapeWeb(),
 				modeshapeJPA(),
-				felixWeb(),
 				mavenBundle(PaxConfigurations.STONE_GROUP,
 						"com.sourcesense.stone.bundle.test",
 						PaxConfigurations.STONE_VERSION));
