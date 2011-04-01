@@ -165,7 +165,9 @@
 		<module>extensions/modeshape-connector-jcr</module>
 		<module>extensions/modeshape-connector-store-jpa</module>
 		<module>extensions/modeshape-connector-jdbc-metadata</module>
+<!--
 		<module>extensions/modeshape-connector-jackrabbit</module>
+-->
 		<module>extensions/modeshape-mimetype-detector-aperture</module>
 		<module>web</module>
 		<module>utils/modeshape-jpa-ddl-gen</module>

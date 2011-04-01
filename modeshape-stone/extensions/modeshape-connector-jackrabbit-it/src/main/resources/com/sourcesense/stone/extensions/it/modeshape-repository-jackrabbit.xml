@@ -15,8 +15,10 @@
 		<mode:repository jcr:name="test" mode:source="test">
 			<mode:options jcr:primaryType="mode:options">
 				<mode:option jcr:name="jaasLoginConfigName" mode:value="modeshape-jcr" />
+				<!--
 				<systemSourceName jcr:primaryType="mode:option"
 					mode:value="default@test" />
+				-->
 			</mode:options>
 
 			<jcr:nodeTypes>

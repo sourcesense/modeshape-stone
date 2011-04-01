@@ -1,10 +1,8 @@
 package com.sourcesense.stone.extensions.it;
 
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 import javax.jcr.Workspace;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.modeshape.jcr.JcrConfiguration;
 import org.modeshape.jcr.JcrEngine;
 import org.modeshape.jcr.JcrRepository;
@@ -50,15 +48,7 @@ public class Modeshape2JackrabbitConnectorIT {
             logger.info("Got root node: " + rootNode.getPath());
             Workspace workspace = session.getWorkspace();
             logger.info("Current workspace: " + workspace.getName());
-            
-//            NodeIterator children = rootNode.getNodes();
-//            while (children.hasNext()) {
-//                Node node = children.nextNode();
-//                logger.info("We are now at: " + node.getPath());
-//            }
-            
             rootNode.addNode("childNode", "nt:unstructured");
-            
             session.save();
             session.logout();
             logger.info("Logged out");
