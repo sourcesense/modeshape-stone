@@ -1,11 +1,7 @@
 package org.modeshape.connector.jackrabbit;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import javax.jcr.Repository;
 import org.junit.AfterClass;
-import org.modeshape.connector.jackrabbit.JackrabbitRepositorySource;
-import org.modeshape.connector.jackrabbit.RepositoryFactory;
 import org.modeshape.graph.Graph;
 import org.modeshape.graph.connector.RepositorySource;
 import org.modeshape.graph.connector.test.ReadableConnectorTest;
@@ -14,33 +10,42 @@ import org.modeshape.jcr.JcrEngine;
 public class JackrabbitConnectorReadableTest extends ReadableConnectorTest {
 
     private static JcrEngine engine;
-    private static RepositoryFactory repositoryFactory;
+    private Repository carsRepository;
 
     @Override
     protected RepositorySource setUpSource() throws Exception {
 
         if (null == engine) {
             engine = JackrabbitConnectorTestUtil.loadEngine();
-            Repository carsRepository = engine.getRepository(JackrabbitConnectorTestUtil.CARS_REPOSITORY_NAME);
-            Repository aircraftRepository = engine.getRepository(JackrabbitConnectorTestUtil.AIRCRAFT_REPOSITORY_NAME);
-
-            repositoryFactory = mock(RepositoryFactory.class);
-            when(repositoryFactory.createRepository("http://localhost:8080/server/cars")).thenReturn(carsRepository);
-            when(repositoryFactory.createRepository("http://localhost:8080/server/aircraft")).thenReturn(aircraftRepository);
+            carsRepository = engine.getRepository(JackrabbitConnectorTestUtil.CARS_REPOSITORY_NAME);
         }
 
         JackrabbitRepositorySource source = new JackrabbitRepositorySource() {
-            @Override
-            protected RepositoryFactory getRepositoryFactory() {
-                return super.getRepositoryFactory();
-            }
-        };
 
+            @Override
+            public String getName() {
+                return "Cars source";
+            }
+            
+            @Override
+            protected synchronized Repository getRepository() {
+                return carsRepository;
+            }
+
+        };
+        source.setUrl("http://localhost:8080/server");
+        source.setUsername("admin");
+        source.setPassword("admin");
         return source;
     }
 
     @Override
     public void afterEach() throws Exception {
+
+        try {
+            engine.getGraph(JackrabbitConnectorTestUtil.CARS_SOURCE_NAME).delete("/");
+        } catch (Exception e) {
+        }
         shutdownRepository();
     }
 

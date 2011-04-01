@@ -15,10 +15,7 @@ public class JackrabbitConnectorTestUtil {
     protected static final String JAAS_POLICY_NAME = "modeshape-jcr";
 
     public static final String CARS_REPOSITORY_NAME = "Cars";
-    public static final String AIRCRAFT_REPOSITORY_NAME = "Aircraft";
-
     protected static final String CARS_SOURCE_NAME = "Cars Source";
-    protected static final String AIRCRAFT_SOURCE_NAME = "Aircraft Source";
 
     static {
         String configFile = JAAS_CONFIG_FILE_PATH;
@@ -50,23 +47,9 @@ public class JackrabbitConnectorTestUtil {
         .setDescription("JCR Repository with cars")
         .setSource(CARS_SOURCE_NAME)
         .addNodeTypes(classLoader.getResource("cars.cnd"))
+        .addNodeTypes(classLoader.getResource("jackrabbit_builtin_nodetypes.cnd"))
         .setOption(Option.JAAS_LOGIN_CONFIG_NAME,JAAS_POLICY_NAME);
         
-        configuration
-        .repositorySource(AIRCRAFT_SOURCE_NAME)
-        .setProperty("url", "http://localhost:8080/server")
-        .setProperty("username", "admin")
-        .setProperty("password", "admin")
-        .usingClass(JackrabbitRepositorySource.class.getName())
-        .loadedFromClasspath()
-        .setDescription("Repository source with aircraft")
-        .and()
-        .repository(AIRCRAFT_REPOSITORY_NAME)
-        .setDescription("JCR Repository with aircraft")
-        .setSource(AIRCRAFT_SOURCE_NAME)
-        .addNodeTypes(classLoader.getResource("aircraft.cnd"))
-        .setOption(Option.JAAS_LOGIN_CONFIG_NAME,JAAS_POLICY_NAME);
-
         configuration.save();
 
         JcrEngine engine = configuration.build();
@@ -80,7 +63,6 @@ public class JackrabbitConnectorTestUtil {
 
         try {
             engine.getGraph(CARS_SOURCE_NAME).importXmlFrom(classLoader.getResource("cars.xml").toURI()).into("/");
-            engine.getGraph(AIRCRAFT_SOURCE_NAME).importXmlFrom(classLoader.getResource("aircraft.xml").toURI()).into("/");
         } catch (Throwable t) {
             throw new SystemFailureException("Could not import the content into the repositories", t);
         }
