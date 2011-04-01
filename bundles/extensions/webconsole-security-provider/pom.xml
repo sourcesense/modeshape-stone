@@ -219,6 +219,12 @@ org.apache.jackrabbit.api.security.user,version=2.1.1 from org.apache.jackrabbit
             <version>2.0</version>
         </dependency>
         
+    	<dependency>
+      		<groupId>org.modeshape</groupId>
+      		<artifactId>modeshape-jcr</artifactId>
+      		<version>2.4.0.Final-stone-SNAPSHOT</version>
+    	</dependency>
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
