@@ -85,13 +85,13 @@
           <artifactId>commons-httpclient</artifactId>
         </exclusion>
         <exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate</artifactId>
-				</exclusion>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+        </exclusion>
         <exclusion>
-					<groupId>org.jboss.security</groupId>
-					<artifactId>jboss-xacml</artifactId>
-				</exclusion>
+            <groupId>org.jboss.security</groupId>
+            <artifactId>jboss-xacml</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!-- Unit testing -->
