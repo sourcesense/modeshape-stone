@@ -55,15 +55,11 @@ public class PaxConfigurations {
 	}
 
 	public static Option slingFullConfiguration() {
-		return composite(slingBasicConfiguration(), felixWeb(),
-				stonePostgresConfiguration(), stoneDependencies(),
-				modeshapeWeb(), hibernate(), slingWeb(),
-				slingJAAS());
+		return composite(slingBasicConfiguration(), felixWeb(),stoneJAASLoginResistration());
 	}
 
 	public static Option stoneInMemoryConfiguration() {
-		// return composite(stoneDependencies(), stone_in_memory());
-		return composite(externalDependencies(), stone_in_memory());
+		 return composite(stoneDependencies(), stone_in_memory());
 	}
 
 	public static Option stoneH2Configuration() {
@@ -184,12 +180,12 @@ public class PaxConfigurations {
 				"org.apache.felix.http.jetty", "2.0.5-SNAPSHOT"));
 	}
 
-	public static Option slingWeb() {
+	public static Option stoneWebConsoleSecurityProvider() {
 		return composite(mavenBundle(STONE_GROUP,
 				"com.sourcesense.stone.extensions.webconsolesecurityprovider", STONE_VERSION));
 	}
 
-	public static Option slingJAAS() {
+	public static Option stoneJAASLoginResistration() {
 		return composite(mavenBundle(STONE_GROUP,
 				"com.sourcesense.stone.jaas.jaas-login-registration", STONE_VERSION));
 	}
@@ -230,7 +226,7 @@ public class PaxConfigurations {
 	}
 
 	static Option hibernate() {
-		return composite(/*
+		return composite(
 				wrappedBundle(mavenBundle("org.hibernate", "hibernate-core",
 						"3.6.1.Final")),
 				wrappedBundle(mavenBundle("org.hibernate",
@@ -240,7 +236,7 @@ public class PaxConfigurations {
 				wrappedBundle(mavenBundle("org.hibernate", "hibernate-c3p0",
 						"3.5.2-Final")),
 				wrappedBundle(mavenBundle("org.hibernate.javax.persistence",
-						"hibernate-jpa-2.0-api", "1.0.0.Final"))*/);
+						"hibernate-jpa-2.0-api", "1.0.0.Final")));
 	}
 
 	static Option modeshapeJPA() {
