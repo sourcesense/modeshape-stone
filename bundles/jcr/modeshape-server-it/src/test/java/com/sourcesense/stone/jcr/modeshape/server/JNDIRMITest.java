@@ -4,9 +4,11 @@ import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.sling
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
 import static org.junit.Assert.assertNotNull;
 import static org.ops4j.pax.exam.CoreOptions.options;
+import java.io.File;
 import javax.jcr.Repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
@@ -22,7 +24,7 @@ public class JNDIRMITest {
     
     @Configuration
     public Option[] configuration() {
-        IntegrationTestUtil.deletePreviousRepositoryConfiguration();
+        FileUtils.delete(new File("/tmp/sling"));
         return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     

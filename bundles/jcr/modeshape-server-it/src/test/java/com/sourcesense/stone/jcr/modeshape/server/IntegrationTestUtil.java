@@ -1,6 +1,5 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -86,14 +85,5 @@ public class IntegrationTestUtil {
         ServiceReference slingRepositoryServiceReference = bundleContext.getServiceReference(SlingRepository.class.getName());
         SlingRepository slingRepository = (SlingRepository)bundleContext.getService(slingRepositoryServiceReference);
         return slingRepository;
-    }
-
-    public static void deletePreviousRepositoryConfiguration() {
-        String slingConfigurationPath = "/tmp/sling";
-        String modeshapeConfigurationPath = slingConfigurationPath + "/modeshape";
-        String modeshapeConfigurationFilePath = modeshapeConfigurationPath + "/modeshape-repository.xml";
-        new File(modeshapeConfigurationFilePath).delete();
-        new File(modeshapeConfigurationPath).delete();
-        new File(slingConfigurationPath).delete();
     }
 }
