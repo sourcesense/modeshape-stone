@@ -1,19 +1,21 @@
 package com.sourcesense.stone.jcr.modeshape.server;
 
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingFullConfiguration;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
+import java.io.File;
 import javax.jcr.Node;
 import javax.jcr.Session;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modeshape.jcr.api.SecurityContextCredentials;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
@@ -33,8 +35,9 @@ public class ModeshapeConnectionTest {
 
     @Configuration
     public Option[] configuration() {
+        FileUtils.delete(new File("/tmp/sling"));
         return options(debug(),
-                       slingFullConfiguration(),
+                       slingBasicConfiguration(),
                        stoneInMemoryConfiguration(),
                        mavenBundle(PaxConfigurations.STONE_GROUP,
                                    "com.sourcesense.stone.bundle.test",

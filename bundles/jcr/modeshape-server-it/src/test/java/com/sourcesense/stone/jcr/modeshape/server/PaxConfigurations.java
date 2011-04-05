@@ -230,7 +230,7 @@ public class PaxConfigurations {
 	}
 
 	static Option hibernate() {
-		return composite(
+		return composite(/*
 				wrappedBundle(mavenBundle("org.hibernate", "hibernate-core",
 						"3.6.1.Final")),
 				wrappedBundle(mavenBundle("org.hibernate",
@@ -240,7 +240,7 @@ public class PaxConfigurations {
 				wrappedBundle(mavenBundle("org.hibernate", "hibernate-c3p0",
 						"3.5.2-Final")),
 				wrappedBundle(mavenBundle("org.hibernate.javax.persistence",
-						"hibernate-jpa-2.0-api", "1.0.0.Final")));
+						"hibernate-jpa-2.0-api", "1.0.0.Final"))*/);
 	}
 
 	static Option modeshapeJPA() {
