@@ -1,8 +1,8 @@
 package com.sourcesense.stone.jcr.modeshape.server;
+import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.slingBasicConfiguration;
 import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.stoneInMemoryConfiguration;
-import static com.sourcesense.stone.jcr.modeshape.server.PaxConfigurations.debug;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import javax.jcr.Repository;
 import org.junit.Test;
@@ -22,6 +22,7 @@ public class JNDIRMITest {
     
     @Configuration
     public Option[] configuration() {
+        IntegrationTestUtil.deletePreviousRepositoryConfiguration();
         return options(debug(), slingBasicConfiguration(), stoneInMemoryConfiguration());
     }
     
