@@ -12,6 +12,7 @@ import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 
 public class PaxConfigurations {
 
+
     /**
      * this class cannot be instantiated
      */
@@ -30,6 +31,9 @@ public class PaxConfigurations {
     static final String SLF4J_VERSION = "1.5.11";
     static final String SLING_VERSION = "2.1.0";
     static final String JACKRABBIT_VERSION = "2.0.0";
+    static final String MODESHAPE_VERSION = "2.4.0.Final-stone-SNAPSHOT";
+//    private static final String FELIX_WEB_VERSION = "2.0.5-SNAPSHOT";
+    private static final String FELIX_WEB_VERSION = "2.2.0";
 
     static final String LUCENE_GROUP = "org.apache.lucene";
     static final String JCR_GROUP = "javax.jcr";
@@ -43,7 +47,6 @@ public class PaxConfigurations {
     static final String SLING_GROUP = "org.apache.sling";
     static final String OSGI_GROUP = "org.osgi";
     static final String SLF4J_GROUP = "org.slf4j";
-    static final String MODESHAPE_VERSION = "2.4.0.Final-stone-SNAPSHOT";
     static final String MODESHAPE_GROUP = "org.modeshape";
 
     public static Option slingBasicConfiguration() {
@@ -156,7 +159,7 @@ public class PaxConfigurations {
     }
 
     public static Option felixWeb() {
-        return composite(mavenBundle(FELIX_GROUP, "org.apache.felix.http.jetty", "2.0.5-SNAPSHOT"));
+        return composite(mavenBundle(FELIX_GROUP, "org.apache.felix.http.jetty", FELIX_WEB_VERSION));
     }
 
     public static Option stoneWebConsoleSecurityProvider() {
