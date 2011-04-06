@@ -1,72 +1,48 @@
-Apache Sling
-============
+=== What's this?
 
-Bringing Back the Fun!
+Stone is a project created to test how to replace the embedded JCR Repository in Sling with another
+implementation (JBoss ModeShape).
 
-Apache Sling is a web framework that uses a Java
-Content Repository, such as Apache Jackrabbit, to store and manage content.
+The project includes OSGI bundles you need to install into Sling, along with some bundles that
+are basically a replacement for existing ones.
 
-Sling applications use either scripts or Java servlets, selected based on
-simple name conventions, to process HTTP requests in a RESTful way.
+The project also includes a patched version of ModeShape, created mainly because we had problems
+with dynamic classloading in an OSGI context.
 
-The embedded Apache Felix OSGi framework and console provide a dynamic
-runtime environment, where  code and content bundles can be loaded, unloaded
-and reconfigured at runtime.
+BEWARE: at the moment the project is in an unfinished state, so IT'S NOT READY FOR PRODUCTION
 
-As the first web framework dedicated to JSR-170 Java Content Repositories,
-Sling makes it very simple to implement simple applications, while providing
-an enterprise-level framework for more complex applications.
+=== How to build the project
 
-See http://sling.apache.org for more information.
+To build the project you need maven.
+From the 'stone' directory, simply run
 
-Getting started
----------------
+mvn install
 
-You need a Java 5 (or higher) JDK and Maven 2 (http://maven.apache.org/,
-version 2.0.7 or higher) to build Sling.
+We suggest you to set maven options with something like this:
 
-Sling depends on artifacts and plugins available only in the Incubator Maven
-repository at Apache. You can make this repository available to Maven by
-adding the following profile in your ~/.m2/settings.xml configuration file:
+export MAVEN_OPTS="-Xmx512M -XX:MaxPermSize=512M"
 
-    <?xml version="1.0"?>
-    <settings>
-      <profiles>
-        <profile>
-          <id>apache-incubation</id>
-          <activation>
-            <activeByDefault>true</activeByDefault>
-          </activation>
-          <repositories>
-            <repository>
-              <id>apache.incubating</id>
-              <name>Apache Incubating Repository</name>
-              <url>http://people.apache.org/repo/m2-incubating-repository</url>
-            </repository>
-          </repositories>
-          <pluginRepositories>
-            <pluginRepository>
-              <id>apache.incubating.plugins</id>
-              <name>Apache Incubating Plugin Repository</name>
-              <url>http://people.apache.org/repo/m2-incubating-repository</url>
-            </pluginRepository>
-          </pluginRepositories>
-        </profile>
-      </profiles>
-    </settings>
+== About third-parties directory
 
-Once you have everything in place, run
+We had to patch the build process of some libraries ModeShape depends on because they originally
+didn't create OSGI compliant jars.
+The libraries are:
 
-    MAVEN_OPTS=-Xmx256m mvn clean install
+google-collections
+joda-time
 
-in this directory. This will build, test and install the Sling modules
-in your local Maven repository.
+The build of these libraries is not included with the main one, so you need to run the build process
+for these manually.
 
-Some modules might not be listed in the pom.xml found in this directory,
-those won't be built by the above command. If you need one of these 
-modules, run "mvn clean install" in the directory that contains its
-pom.xml file.
+The library google-collection uses ant; to create the bundle run the following command:
 
-To get started with Sling, start the launchpad/launchpad-webapp module,
-see README.txt in that module's directory.
+ant osgi
+
+=== Installation
+
+After you have successfully built the project, you have to manually install the bundles into Sling.
+The bundles you need to install are:
+
+
+=== Sandboxes
 
