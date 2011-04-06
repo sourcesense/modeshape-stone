@@ -1,4 +1,4 @@
 Bundle-SymbolicName: com.google.common.collections
 Export-Package: com.google.common.collect
 Private-Package: com.google.common.annotation, com.google.common.base
-Version: 1.0-rc3
+Bundle-Version: 1.0-rc3
