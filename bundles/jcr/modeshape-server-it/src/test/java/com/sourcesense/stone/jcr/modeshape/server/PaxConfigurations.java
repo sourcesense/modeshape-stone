@@ -32,7 +32,6 @@ public class PaxConfigurations {
     static final String SLING_VERSION = "2.1.0";
     static final String JACKRABBIT_VERSION = "2.0.0";
     static final String MODESHAPE_VERSION = "2.4.0.Final-stone-SNAPSHOT";
-//    private static final String FELIX_WEB_VERSION = "2.0.5-SNAPSHOT";
     private static final String FELIX_WEB_VERSION = "2.2.0";
 
     static final String LUCENE_GROUP = "org.apache.lucene";
