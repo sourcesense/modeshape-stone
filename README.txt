@@ -24,25 +24,22 @@ export MAVEN_OPTS="-Xmx512M -XX:MaxPermSize=512M"
 
 == About third-parties directory
 
-We had to patch the build process of some libraries ModeShape depends on because they originally
-didn't create OSGI compliant jars.
-The libraries are:
+We had to patch the build process of google-collections library because that is
+a deprecated library, we plan to change the modeshape dependency on it to
+it's new version Guava.
 
-google-collections
-joda-time
+The build of the library is not included with the main one, so you need to run
+the build process for these manually.
 
-The build of these libraries is not included with the main one, so you need to run the build process
-for these manually.
-
-The library google-collection uses ant; to create the bundle run the following command:
+The library google-collection uses ant; to create the bundle run the
+following command:
 
 ant osgi
 
 === Installation
 
-After you have successfully built the project, you have to manually install the bundles into Sling.
-The bundles you need to install are:
+TODO
 
+=== About Sandboxes
 
-=== Sandboxes
-
+TODO
