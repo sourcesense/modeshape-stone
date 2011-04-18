@@ -1,0 +1,6 @@
+Bundle-ManifestVersion: 2
+Bundle-Name: Lucene Core
+Bundle-SymbolicName: lucene-core
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 3.2
+Export-Package: org.apache.lucene.analysis, org.apache.lucene.analysis.standard, org.apache.lucene.analysis.tokenattributes, org.apache.lucene.document, org.apache.lucene.util, org.apache.lucene.index, org.apache.lucene.queryParser, org.apache.lucene.search, org.apache.lucene.store

@@ -1,0 +1,9 @@
+Bundle-ManifestVersion: 2
+Bundle-Name: Lucene Queries
+Bundle-SymbolicName: lucene-queries
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 3.2
+Export-Package: org.apache.lucene.search.regex
+Import-Package: org.apache.lucene.search
+
+

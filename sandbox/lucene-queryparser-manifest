@@ -1,0 +1,6 @@
+Bundle-ManifestVersion: 2
+Bundle-Name: Lucene Query Parser
+Bundle-SymbolicName: lucene-queryparser
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 3.2
+Export-Package: org.apache.lucene.queryParser.complexPhrase

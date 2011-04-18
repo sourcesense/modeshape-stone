@@ -76,11 +76,6 @@
                     <instructions>
                         <Bundle-Category>sling,jcr,modeshape</Bundle-Category>
                         <Export-Package>
-
-                            com.google.common.*;version=1.0,
-                            net.jcip.annotations.*;version=1.0.0,
-                            org.joda.time.*;version=1.6,
-
                             org.apache.lucene.*;version=3.0.2;-split-package:=merge-last,
                             org.tartarus.snowball.*;version=2.4.1,
 
@@ -330,18 +325,6 @@
             <artifactId>mockito-all</artifactId>
             <version>1.8.5</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>1.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0-rc3</version>
         </dependency>
 
         <dependency>

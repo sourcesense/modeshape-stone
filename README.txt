@@ -56,6 +56,16 @@ third-parties/google-collections-read-only/build/dist/google-collect-snapshot/go
 ~/.m2/repository/joda-time/joda-time/1.6.2/joda-time-1.6.2.jar
 stone/modeshape-stone/modeshape-jcr/target/modeshape-jcr-2.4.0.Final-stone-SNAPSHOT.jar
 
+PATCHED VERSION of lucene-core (See 'About Sandboxes' below)
+PATCHED VERSION of lucene-analyzer (See 'About Sandboxes' below)
+
+stone/modeshape-stone/modeshape-cnd/target/modeshape-cnd-2.4.0.Final-stone-SNAPSHOT.jar
+stone/modeshape-stone/modeshape-jcr-api/target/modeshape-jcr-api-2.4.0.Final-stone-SNAPSHOT.jar
+stone/modeshape-stone/modeshape-repository/target/modeshape-repository-2.4.0.Final-stone-SNAPSHOT.jar
+stone/modeshape-stone/extensions/modeshape-search-lucene/target/modeshape-search-lucene-2.4.0.Final-stone-SNAPSHOT.jar
+
+PATCHED VERSION of lucene-queryparser (See 'About Sandboxes' below)
+PATCHED VERSION of lucene-queries (See 'About Sandboxes' below)
 === About Sandboxes
 
 The sandbox directories contain some experiments we did during the development
