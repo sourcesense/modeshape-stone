@@ -54,7 +54,10 @@ modeshape-stone/modeshape-common/target/modeshape-common-2.4.0.Final-stone-SNAPS
 stone/modeshape-stone/modeshape-graph/target/modeshape-graph-2.4.0.Final-stone-SNAPSHOT.jar
 third-parties/google-collections-read-only/build/dist/google-collect-snapshot/google-collect-snapshot.jar
 ~/.m2/repository/joda-time/joda-time/1.6.2/joda-time-1.6.2.jar
+stone/modeshape-stone/modeshape-jcr/target/modeshape-jcr-2.4.0.Final-stone-SNAPSHOT.jar
 
 === About Sandboxes
 
-TODO
+The sandbox directories contain some experiments we did during the development
+process. Since they are experiments, they aren't supposed to properly work or
+thery are in an unfinished state.
