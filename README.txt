@@ -38,7 +38,22 @@ ant osgi
 
 === Installation
 
-TODO
+After you have successfully built the project, you have to manually install the
+bundles into Sling. Depending on the source you need to use with modeshape, you
+have to choose one amongst the following:
+
+bundles/jcr/modeshape-server/target/com.sourcesense.stone.jcr.modeshape.server-1.0.0-SNAPSHOT-in-memory.jar
+bundles/jcr/modeshape-server/target/com.sourcesense.stone.jcr.modeshape.server-1.0.0-SNAPSHOT-h2.jar
+bundles/jcr/modeshape-server/target/com.sourcesense.stone.jcr.modeshape.server-1.0.0-SNAPSHOT-postgres.jar
+
+Then you have to install the bundles the server depends on.
+
+bundles/jcr/com.sourcesense.stone.jcr.base/target/com.sourcesense.stone.jcr.base-1.0.0-SNAPSHOT.jar
+modeshape-stone/modeshape-common/target/modeshape-common-2.4.0.Final-stone-SNAPSHOT.jar
+~/.m2/repository/net/jcip/com.springsource.net.jcip.annotations/1.0.0/com.springsource.net.jcip.annotations-1.0.0.jar
+stone/modeshape-stone/modeshape-graph/target/modeshape-graph-2.4.0.Final-stone-SNAPSHOT.jar
+third-parties/google-collections-read-only/build/dist/google-collect-snapshot/google-collect-snapshot.jar
+~/.m2/repository/joda-time/joda-time/1.6.2/joda-time-1.6.2.jar
 
 === About Sandboxes
 
