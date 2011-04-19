@@ -32,7 +32,7 @@ The build of the library is not included with the main one, so you need to run
 the build process for these manually.
 
 The library google-collection uses ant; to create the bundle run the
-following command:
+following command from its directory:
 
 ant osgi
 
@@ -66,20 +66,40 @@ third-parties/google-collections-read-only/build/dist/google-collect-snapshot/go
 ~/.m2/repository/joda-time/joda-time/1.6.2/joda-time-1.6.2.jar
 stone/modeshape-stone/modeshape-jcr/target/modeshape-jcr-2.4.0.Final-stone-SNAPSHOT.jar
 
-PATCHED VERSION of lucene-core (See 'About Sandboxes' below)
-PATCHED VERSION of lucene-analyzer (See 'About Sandboxes' below)
+PATCHED VERSION of lucene-core (See 'Patching Lucene' below)
+PATCHED VERSION of lucene-analyzer (See 'Patching Lucene' below)
 
 stone/modeshape-stone/modeshape-cnd/target/modeshape-cnd-2.4.0.Final-stone-SNAPSHOT.jar
 stone/modeshape-stone/modeshape-jcr-api/target/modeshape-jcr-api-2.4.0.Final-stone-SNAPSHOT.jar
 stone/modeshape-stone/modeshape-repository/target/modeshape-repository-2.4.0.Final-stone-SNAPSHOT.jar
 stone/modeshape-stone/extensions/modeshape-search-lucene/target/modeshape-search-lucene-2.4.0.Final-stone-SNAPSHOT.jar
 
-PATCHED VERSION of lucene-queryparser (See 'About Sandboxes' below)
-PATCHED VERSION of lucene-queries (See 'About Sandboxes' below)
+PATCHED VERSION of lucene-queryparser (See 'Patching Lucene' below)
+PATCHED VERSION of lucene-queries (See 'Patching Lucene' below)
 
 === About Sandboxes
 
 The sandbox directories contain some experiments we did during the development
 process.
-Since they are experiments, some of them aren't supposed to properly work or
-they are in an unfinished state.
+Since they are experiments, some of them aren't supposed to properly work; not
+all of them, at least.
+
+=== Patching Lucene
+
+Into the sandbox directory you can find some text files you should use to "fix"
+the manifest files of lucene.
+We suggest you to download the source distribution of lucene from here:
+
+http://svn.apache.org/repos/asf/lucene/dev/branches/branch_3x
+
+After you "packaged" it, for each of the jars whose bundle reference is
+specified above you must add osgi bundle information to its manifest file.
+
+Example
+lucene-core --> lucene-core-3.2-SNAPSHOT.jar
+
+Run the command:
+
+jar umf lucene-core-manifest <path_to_jar>/lucene-core-3.2-SNAPSHOT.jar
+
+Now you can install the jar in Sling
