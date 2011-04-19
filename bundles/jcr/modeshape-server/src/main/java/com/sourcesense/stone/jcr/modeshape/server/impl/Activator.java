@@ -1,5 +1,7 @@
 package com.sourcesense.stone.jcr.modeshape.server.impl;
 
+import org.modeshape.common.i18n.ClasspathLocalizationRepository;
+import org.modeshape.common.i18n.I18n;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -59,6 +61,12 @@ public class Activator implements BundleActivator, ServiceListener {
             accessManagerFactoryTracker = this.accessManagerFactoryTracker = activatorHelper.createAccessManagerFactoryTracker();
         }
         accessManagerFactoryTracker.open();
+
+        /*
+         * Hack to load the I18n files, hope this works...
+         */
+        ClassLoader bundleClassLoader = new BundleClassLoaderFactory(bundleContext).getClassLoader((String[])null);
+        I18n.setLocalizationRepository(new ClasspathLocalizationRepository(bundleClassLoader));
     }
 
     /**
