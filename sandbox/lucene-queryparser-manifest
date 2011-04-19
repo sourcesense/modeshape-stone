@@ -4,3 +4,4 @@ Bundle-SymbolicName: lucene-queryparser
 Bundle-Vendor: The Apache Software Foundation
 Bundle-Version: 3.2
 Export-Package: org.apache.lucene.queryParser.complexPhrase
+Import-Package: org.apache.lucene.queryParser
