@@ -46,6 +46,9 @@ won't rely on repository authentication policies; this is needed when you'll
 switch-off jackrabbit server and turn-on modeshape.
 If you don't do this, after you start the modeshape repository, you won't be
 able to log-in anymore.
+If you don't need any kind of authentication, you can simply switch-off the
+bundle without further operations.
+
 Depending on the source you need to use with modeshape, you have to choose one
 amongst the following:
 
