@@ -39,8 +39,15 @@ ant osgi
 === Installation
 
 After you have successfully built the project, you have to manually install the
-bundles into Sling. Depending on the source you need to use with modeshape, you
-have to choose one amongst the following:
+bundles into Sling.
+First of all, replace the bundle
+webconsole-security-provider with the one we provide, so that the authentication
+won't rely on repository authentication policies; this is needed when you'll
+switch-off jackrabbit server and turn-on modeshape.
+If you don't do this, after you start the modeshape repository, you won't be
+able to log-in anymore.
+Depending on the source you need to use with modeshape, you have to choose one
+amongst the following:
 
 bundles/jcr/modeshape-server/target/com.sourcesense.stone.jcr.modeshape.server-1.0.0-SNAPSHOT-in-memory.jar
 bundles/jcr/modeshape-server/target/com.sourcesense.stone.jcr.modeshape.server-1.0.0-SNAPSHOT-h2.jar
