@@ -62,9 +62,6 @@ public class Activator implements BundleActivator, ServiceListener {
         }
         accessManagerFactoryTracker.open();
 
-        /*
-         * Hack to load the I18n files, hope this works...
-         */
         ClassLoader bundleClassLoader = new BundleClassLoaderFactory(bundleContext).getClassLoader((String[])null);
         I18n.setLocalizationRepository(new ClasspathLocalizationRepository(bundleClassLoader));
     }

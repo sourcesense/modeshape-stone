@@ -76,8 +76,10 @@ stone/modeshape-stone/extensions/modeshape-search-lucene/target/modeshape-search
 
 PATCHED VERSION of lucene-queryparser (See 'About Sandboxes' below)
 PATCHED VERSION of lucene-queries (See 'About Sandboxes' below)
+
 === About Sandboxes
 
 The sandbox directories contain some experiments we did during the development
-process. Since they are experiments, they aren't supposed to properly work or
-thery are in an unfinished state.
+process.
+Since they are experiments, some of them aren't supposed to properly work or
+they are in an unfinished state.
