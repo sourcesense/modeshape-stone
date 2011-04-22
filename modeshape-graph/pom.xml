@@ -11,9 +11,9 @@
   <packaging>jar</packaging>
   <name>ModeShape Graph</name>
   <url>http://www.modeshape.org</url>
-  
+
   <!--
-  Define the dependencies.  Note that all version and scopes default to those 
+  Define the dependencies.  Note that all version and scopes default to those
   defined in the dependencyManagement section of the parent pom.
   -->
   <dependencies>
@@ -33,10 +33,10 @@
       <artifactId>joda-time</artifactId>
     </dependency>
 	  <dependency>
-         <groupId>com.google.collections</groupId>
-         <artifactId>google-collections</artifactId>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
       </dependency>
-    <!-- 
+    <!--
     Testing (note the scope)
     -->
     <dependency>
@@ -47,8 +47,8 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
     </dependency>
-    <!-- 
-    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing) 
+    <!--
+    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing)
     -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -62,7 +62,7 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-    <!-- 
+    <!--
     Java Concurrency in Practice annotations
     -->
     <dependency>

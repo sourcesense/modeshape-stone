@@ -56,10 +56,10 @@
       <artifactId>modeshape-search-lucene</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
     </dependency>
-    <!-- 
+    <!--
     Testing (note the scope)
     -->
     <dependency>
@@ -79,8 +79,8 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
     </dependency>
-    <!-- 
-    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing) 
+    <!--
+    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing)
     -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -96,14 +96,14 @@
       <artifactId>log4j</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- 
+    <!--
     Java Concurrency in Practice annotations
     -->
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>com.springsource.net.jcip.annotations</artifactId>
     </dependency>
-    <!-- 
+    <!--
       Apache JCR API unit tests (for any JCR implementation), which is a subset of the official TCK
     -->
     <dependency>

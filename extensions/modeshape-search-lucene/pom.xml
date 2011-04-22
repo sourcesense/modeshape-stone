@@ -18,14 +18,14 @@
     parent pom.
   -->
   <dependencies>
-    <!-- 
+    <!--
     ModeShape
     -->
     <dependency>
       <groupId>org.modeshape</groupId>
       <artifactId>modeshape-graph</artifactId>
     </dependency>
-    <!-- 
+    <!--
     Lucene
     -->
     <dependency>
@@ -54,10 +54,10 @@
       <version>3.0.2</version>
     </dependency>
       <dependency>
-         <groupId>com.google.collections</groupId>
-         <artifactId>google-collections</artifactId>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
       </dependency>
-    <!-- 
+    <!--
     Testing (note the scope)
     -->
     <dependency>
@@ -82,8 +82,8 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <!-- 
-    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing) 
+    <!--
+    Logging (require SLF4J API for compiling, but use Log4J and its SLF4J binding for testing)
     -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -97,7 +97,7 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-    <!-- 
+    <!--
     Java Concurrency in Practice annotations
     -->
     <dependency>
