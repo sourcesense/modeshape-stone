@@ -10,14 +10,15 @@
     <description>
         ModeShape is a JCR repository implementation with support for federation and sequencing.
     </description>
+
     <scm>
-        <connection>scm:svn:https://anonsvn.jboss.org/repos/modeshape/tags/modeshape-2.4.0.Final-stone-SNAPSHOT</connection>
-        <developerConnection>scm:svn:https://svn.jboss.org/repos/modeshape/tags/modeshape-2.4.0.Final-stone-SNAPSHOT</developerConnection>
-        <url>http://anonsvn.jboss.org/repos/modeshape/tags/modeshape-2.4.0.Final-stone-SNAPSHOT</url>
+        <connection>scm:git:git://github.com/sourcesense/modeshape-stone.git</connection>
+        <developerConnection>scm:git@github.com:sourcesense/modeshape-stone.git</developerConnection>
+        <url>https://github.com/sourcesense/modeshape-stone</url>
     </scm>
     <issueManagement>
-        <system>jira</system>
-        <url>http://jira.jboss.org/jira/browse/MODE</url>
+        <system>GitHub</system>
+        <url>https://github.com/sourcesense/modeshape-stone/issues</url>
     </issueManagement>
     <licenses>
         <license>
